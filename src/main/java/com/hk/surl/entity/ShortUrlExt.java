@@ -11,4 +11,11 @@ package com.hk.surl.entity;
  * @Version : 1.0
  */
 public class ShortUrlExt extends ShortURL{
+
+    public ShortUrlExt(String longUrl){
+        this.longUrl = longUrl ;
+    }
+
+    public ShortUrlExt() {
+    }
 }

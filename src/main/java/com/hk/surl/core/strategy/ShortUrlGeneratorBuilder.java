@@ -52,6 +52,14 @@ public class ShortUrlGeneratorBuilder  {
     protected CompressStrategy compressStrategy = CompressStrategy.NONE ;
 
 
+    // 构造函数: 传入一个 ShortUrlExt
+    public ShortUrlGeneratorBuilder(ShortUrlExt urlExt) {
+        this.urlExt = urlExt;
+    }
+
+    public ShortUrlGeneratorBuilder() {
+    }
+
     /**
      * @methodName : build()
      * @author : HK意境
