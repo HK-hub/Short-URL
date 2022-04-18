@@ -19,8 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ShortURL {
 
-    String url ;
+    String longUrl ;
     String shortUrl ;
-
 
 }

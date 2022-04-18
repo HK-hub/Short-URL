@@ -23,8 +23,8 @@ public class LombokTest {
 
         System.out.println("test lombok");
         ShortURL shortURL = new ShortURL("http://localhost:8080/123456-fioggreo", "http://localhost:8080/ghetjh");
-        System.out.println(shortURL.getShortUrl()+","+shortURL.getUrl());
-        log.info("url:{}, shortUrl:{}",shortURL.getUrl(),shortURL.getShortUrl());
+        System.out.println(shortURL.getShortUrl()+","+shortURL.getShortUrl());
+        log.info("url:{}, shortUrl:{}",shortURL.getLongUrl(),shortURL.getShortUrl());
 
     }
 

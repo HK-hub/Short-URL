@@ -1,21 +1,18 @@
 package com.hk.surl.core.strategy;
 
-import com.hk.surl.entity.ShortUrlExt;
-
 /**
  * @author : HK意境
  * @ClassName : GenerateStrategy
- * @date : 2022/4/14 9:58
- * @description :
+ * @date : 2022/4/18 14:00
+ * @description : 短链接生成算法策略
  * @Todo :
  * @Bug :
  * @Modified :
  * @Version : 1.0
  */
-public abstract class GenerateStrategy {
+public interface GenerateStrategy {
 
-    protected ShortUrlExt urlExt ;
-    protected String longUrl ;
-    protected String shortUrl ;
+    public String provideShortUrl(Generator generator );
+
 
 }
