@@ -7,13 +7,26 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Short-URL" />
+        <module name="url-system" />
+        <module name="url-service" />
+        <module name="url-domain" />
+        <module name="url-core" />
+        <module name="url-common" />
+        <module name="url-interface" />
+        <module name="url-web" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Short-URL" options="-parameters" />
+      <module name="url-common" options="-parameters" />
+      <module name="url-core" options="-parameters" />
+      <module name="url-domain" options="-parameters" />
+      <module name="url-interface" options="-parameters" />
+      <module name="url-service" options="-parameters" />
+      <module name="url-system" options="-parameters" />
+      <module name="url-web" options="-parameters" />
     </option>
   </component>
 </project>
