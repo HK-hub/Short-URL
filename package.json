@@ -1,0 +1,24 @@
+{
+    "name": "short-url-website",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "vitepress dev docs --open",
+        "build": "vitepress build docs",
+        "serve": "vitepress serve docs",
+        "docs:dev": "vitepress dev docs",
+        "docs:build": "vitepress build docs",
+        "docs:serve": "vitepress serve docs"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "vitepress": "^0.22.4",
+        "vitepress-theme-demoblock": "^1.4.2"
+    },
+    "dependencies": {
+        "vuepress-theme-yilia-plus": "^1.0.0"
+    }
+}

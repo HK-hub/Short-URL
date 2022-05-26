@@ -1,0 +1,53 @@
+.home .home-hero .tagline {
+  white-space: pre;
+  width: 40%;
+}
+
+
+
+pre.vue-container {
+  border-left-width: 0.5rem;
+  border-left-style: solid;
+  border-color: #42b983;
+  border-radius: 0px;
+
+  & > code {
+    font-size: 14px !important;
+
+    & > p {
+      margin: -5px 0 -20px 0;
+    }
+
+    code {
+      background-color: #42b983 !important;
+      padding: 3px 5px;
+      border-radius: 3px;
+      color: #000;
+    }
+
+    em {
+      color: #808080;
+      font-weight: light;
+    }
+  }
+}
+
+div[class*='language-'].line-numbers-mode::after {
+  /* height: 90%; */
+  /* top: 50%;
+  transform: translateY(-52%); */
+}
+
+div[class*='language-'] pre, div[class*='language-'] pre[class*='language-'] {
+  /* * 滚动条整体部分 */
+  &::-webkit-scrollbar {
+    /* height: 10px;
+    width: 7px;
+    background: rgba(0, 0, 0, 0.1); */
+    /* 高宽分别对应横竖滚动条的尺寸 */
+    /* width: 10px;
+    height: 10px;
+    background: #ccc;
+    border-radius: 0; */
+  }
+}
