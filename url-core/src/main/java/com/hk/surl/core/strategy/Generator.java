@@ -1,9 +1,9 @@
 package com.hk.surl.core.strategy;
 
-import com.hk.surl.core.strategy.enums.CompressStrategy;
-import com.hk.surl.core.strategy.enums.EncryptStrategy;
-import com.hk.surl.core.strategy.enums.ExpirationStrategy;
-import com.hk.surl.core.strategy.enums.SyncStrategy;
+import com.hk.surl.core.enums.CompressStrategy;
+import com.hk.surl.core.enums.EncryptStrategy;
+import com.hk.surl.core.enums.ExpirationStrategy;
+import com.hk.surl.core.enums.SyncStrategy;
 import com.hk.surl.core.strategy.encrypt.EncryptUrlStrategy;
 import com.hk.surl.entity.ShortURL;
 import com.hk.surl.entity.ShortUrlExt;

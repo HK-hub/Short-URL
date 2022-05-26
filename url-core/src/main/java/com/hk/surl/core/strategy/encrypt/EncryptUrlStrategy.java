@@ -2,7 +2,7 @@ package com.hk.surl.core.strategy.encrypt;
 
 import com.hk.surl.core.common.EncryptUtil;
 import com.hk.surl.core.strategy.Generator;
-import com.hk.surl.core.strategy.enums.EncryptStrategy;
+import com.hk.surl.core.enums.EncryptStrategy;
 
 /**
  * @author : HK意境
