@@ -24,6 +24,13 @@
             <artifactId>url-domain</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+
+
+        <!-- 加解密包 -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
     </dependencies>
 
 

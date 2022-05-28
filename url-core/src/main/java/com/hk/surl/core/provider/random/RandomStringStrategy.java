@@ -1,7 +1,7 @@
-package com.hk.surl.core.generate;
+package com.hk.surl.core.provider.random;
 
-import com.hk.surl.core.strategy.GenerateStrategy;
-import com.hk.surl.core.strategy.Generator;
+import com.hk.surl.core.provider.GenerateStrategy;
+import com.hk.surl.core.generator.Generator;
 import lombok.experimental.Accessors;
 
 import java.util.*;

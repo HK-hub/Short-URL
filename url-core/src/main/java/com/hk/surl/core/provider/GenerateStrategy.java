@@ -1,4 +1,6 @@
-package com.hk.surl.core.strategy;
+package com.hk.surl.core.provider;
+
+import com.hk.surl.core.generator.Generator;
 
 /**
  * @author : HK意境

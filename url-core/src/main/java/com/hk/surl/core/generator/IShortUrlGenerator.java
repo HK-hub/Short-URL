@@ -1,4 +1,4 @@
-package com.hk.surl.core.strategy;
+package com.hk.surl.core.generator;
 
 import com.hk.surl.entity.ShortURL;
 

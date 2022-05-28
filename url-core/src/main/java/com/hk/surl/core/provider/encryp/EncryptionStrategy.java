@@ -1,7 +1,7 @@
-package com.hk.surl.core.generate;
+package com.hk.surl.core.provider.encryp;
 
-import com.hk.surl.core.strategy.GenerateStrategy;
-import com.hk.surl.core.strategy.Generator;
+import com.hk.surl.core.provider.GenerateStrategy;
+import com.hk.surl.core.generator.Generator;
 import com.hk.surl.core.strategy.encrypt.EncryptUrlStrategy;
 import com.hk.surl.core.enums.EncryptStrategy;
 
@@ -22,8 +22,10 @@ public class EncryptionStrategy implements GenerateStrategy {
         // 获取源字符串
         String longUrl = generator.getUrlExt().getLongUrl();
         // 获取加密策略
-        EncryptStrategy encryptStrategy = generator.getEncryptStrategy();
-        String encryptUrl = EncryptUrlStrategy.encryptString(generator, longUrl);
+        //EncryptStrategy encryptStrategy = generator.getEncryptStrategy();
+
+        // 拿到的就是目标短链接
+        String encryptUrl = EncryptUrlStrategy.encryptString(generator);
         return encryptUrl ;
     }
 }

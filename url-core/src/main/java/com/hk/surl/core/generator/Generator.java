@@ -1,11 +1,12 @@
-package com.hk.surl.core.strategy;
+package com.hk.surl.core.generator;
 
 import com.hk.surl.core.enums.CompressStrategy;
 import com.hk.surl.core.enums.EncryptStrategy;
 import com.hk.surl.core.enums.ExpirationStrategy;
 import com.hk.surl.core.enums.SyncStrategy;
+import com.hk.surl.core.provider.GenerateStrategy;
 import com.hk.surl.core.strategy.encrypt.EncryptUrlStrategy;
-import com.hk.surl.entity.ShortURL;
+import com.hk.surl.domain.entity.ShortUrl;
 import com.hk.surl.entity.ShortUrlExt;
 import lombok.Data;
 
@@ -51,8 +52,8 @@ public class Generator implements IShortUrlGenerator {
 
 
     @Override
-    public ShortURL generate() {
-        ShortURL shortURL = null ;
+    public ShortUrl generate() {
+        ShortUrl shortURL = null ;
 
         // 线程安全配置
         if(SyncStrategy.SYNC == this.syncStrategy){
@@ -61,7 +62,7 @@ public class Generator implements IShortUrlGenerator {
             shortURL = this.doGenerateWithoutSync();
         }
         // 加密策略进行加密
-        String encryptString = EncryptUrlStrategy.encryptString(this, shortURL.getShortUrl());
+        String encryptString = EncryptUrlStrategy.encryptString(this);
         System.out.println(encryptString);
         return shortURL ;
     }
@@ -81,15 +82,15 @@ public class Generator implements IShortUrlGenerator {
      * @Modified :
      * @Version : 1.0
      */
-    private synchronized ShortURL  doGenerateWithSync(){
-        ShortURL shortURL = doGenerateWithoutSync();
+    private synchronized ShortUrl  doGenerateWithSync(){
+        ShortUrl shortURL = doGenerateWithoutSync();
         return shortURL ;
     }
 
     // 不启用线程安全策略
-    private ShortURL doGenerateWithoutSync(){
+    private ShortUrl doGenerateWithoutSync(){
         String targetUrl = generateStrategy.provideShortUrl(this);
-        ShortURL shortUrl = new ShortURL();
+        ShortUrl shortUrl = new ShortUrl();
         shortUrl.setShortUrl(targetUrl);
         return shortUrl;
     }

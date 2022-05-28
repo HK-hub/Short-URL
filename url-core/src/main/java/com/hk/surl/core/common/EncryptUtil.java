@@ -16,7 +16,9 @@ import java.security.SecureRandom;
  * @author : HK意境
  * @ClassName : EncryptUtil
  * @date : 2022/4/18 20:25
- * @description : 加密算法
+ * @description : 加密算法: 这里只提共 MD5 加密算法和 HASH2 类的加密算法。
+ *                          MD5： 加密逻辑较为简单，原字符串哪怕是一字节的改变也会导致加密后的字符串的很大变化，并且具有不错的稳定性，抗破解性，准确的说基本上不能逆向
+ *
  * @Todo :
  * @Bug :
  * @Modified :

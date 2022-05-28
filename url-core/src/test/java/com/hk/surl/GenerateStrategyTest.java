@@ -1,9 +1,9 @@
 package com.hk.surl;
 
-import com.hk.surl.core.strategy.Generator;
-import com.hk.surl.core.strategy.ShortUrlGeneratorBuilder;
+import com.hk.surl.core.generator.Generator;
+import com.hk.surl.core.generator.builder.ShortUrlGeneratorBuilder;
 import com.hk.surl.core.enums.LengthStrategy;
-import com.hk.surl.core.generate.SnowFlakeStrategy;
+import com.hk.surl.core.provider.leaf.SnowFlakeStrategy;
 import com.hk.surl.entity.ShortURL;
 import org.junit.Test;
 

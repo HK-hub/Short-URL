@@ -1,10 +1,11 @@
-package com.hk.surl.core.strategy;
+package com.hk.surl.core.generator.builder;
 
 import com.hk.surl.core.enums.CompressStrategy;
 import com.hk.surl.core.enums.EncryptStrategy;
 import com.hk.surl.core.enums.ExpirationStrategy;
 import com.hk.surl.core.enums.SyncStrategy;
-import com.hk.surl.entity.ShortURL;
+import com.hk.surl.core.generator.Generator;
+import com.hk.surl.core.provider.GenerateStrategy;
 import com.hk.surl.entity.ShortUrlExt;
 import lombok.Data;
 import lombok.experimental.Accessors;

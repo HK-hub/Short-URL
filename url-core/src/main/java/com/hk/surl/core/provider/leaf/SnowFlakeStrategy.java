@@ -1,8 +1,8 @@
-package com.hk.surl.core.generate;
+package com.hk.surl.core.provider.leaf;
 
 import com.hk.surl.core.common.IdWorker;
-import com.hk.surl.core.strategy.GenerateStrategy;
-import com.hk.surl.core.strategy.Generator;
+import com.hk.surl.core.provider.GenerateStrategy;
+import com.hk.surl.core.generator.Generator;
 import com.hk.surl.core.enums.EncryptStrategy;
 import lombok.Data;
 
@@ -19,7 +19,7 @@ import lombok.Data;
 @Data
 public class SnowFlakeStrategy implements GenerateStrategy {
 
-    private IdWorker idWorker = new IdWorker();
+    private static IdWorker idWorker = new IdWorker();
 
 
     /**
@@ -63,7 +63,7 @@ public class SnowFlakeStrategy implements GenerateStrategy {
         SnowFlakeStrategy snowFlakeStrategy = new SnowFlakeStrategy();
 
         for (int i = 0; i < 10; i++) {
-            String url = ""+snowFlakeStrategy.getIdWorker().nextId();
+            String url = ""+SnowFlakeStrategy.idWorker.nextId();
             System.out.println();
             String head = url.substring(0,4);
             String body = url.substring((url.length() / 2) - 2, (url.length() / 2) + 2);
