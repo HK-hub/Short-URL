@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
  * @since 2022-05-26
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @TableName("tb_short_url")
 @ApiModel(value="ShortUrl对象", description="短链接表")
@@ -53,4 +55,7 @@ public class ShortUrl implements Serializable {
     private Boolean deleted;
 
 
+    public ShortUrl(String shortUrl) {
+        this.shortUrl = shortUrl;
+    }
 }

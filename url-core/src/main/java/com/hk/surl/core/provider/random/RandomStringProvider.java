@@ -8,7 +8,7 @@ import java.util.*;
 
 /**
  * @author : HK意境
- * @ClassName : RandomStringStrategy
+ * @ClassName : RandomStringProvider
  * @date : 2022/4/14 9:57
  * @description :
  * @Todo :
@@ -17,7 +17,7 @@ import java.util.*;
  * @Version : 1.0
  */
 @Accessors(fluent = true)
-public class RandomStringStrategy implements GenerateStrategy {
+public class RandomStringProvider implements GenerateStrategy {
 
     // 使用配置文件的方式解耦
     //@Value("${short.url.string.pool}")
@@ -31,7 +31,7 @@ public class RandomStringStrategy implements GenerateStrategy {
 
     public static void main(String[] args) {
 
-        new RandomStringStrategy().provideShortUrl(null);
+        new RandomStringProvider().provideShortUrl(null);
 
     }
 
@@ -80,18 +80,28 @@ public class RandomStringStrategy implements GenerateStrategy {
      * @Version : 1.0
      */
     @Override
-    public String provideShortUrl(Generator builder) {
+    public String provideShortUrl(Generator generator) {
         // 先进行扰乱
         if(this.enableShuffle){
             shuffleStringPool();
         }
+        String shortUrl = this.createWithRandom(generator.getLength());
+
+        return shortUrl ;
+    }
+
+    public String createWithRandom(int length){
 
         // 开始进行随机生成
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < builder.getLength(); i++) {
+
+        for (int i = 0; i < length; i++) {
             sb.append(this.stringPool.charAt(random.nextInt(this.stringPool.length())));
         }
         return sb.toString();
     }
+
+
+
 }

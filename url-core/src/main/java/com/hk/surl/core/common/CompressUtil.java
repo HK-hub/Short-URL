@@ -3,9 +3,9 @@ package com.hk.surl.core.common;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.zip.*;
 
 /**
@@ -191,6 +191,58 @@ public class CompressUtil {
         }
 
         return output;
+    }
+
+
+
+    /**
+     * @methodName :stringPathCompress
+     * @author : HK意境
+     * @date : 2022/5/29 19:32
+     * @description : 字符串路径压缩算法
+     * @Todo :
+     * @params :
+         * @param : null
+     * @return : null
+     * @throws:
+     * @Bug : 第一版：字符串存入 map 的时候是有序的存储的，不太合理，容易出现冲突
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    public static String stringPathCompress(String longUrl){
+
+        Map<Character, Integer> charMap = new LinkedHashMap<>();
+
+        for (char c : longUrl.toCharArray()) {
+
+            if (Character.isLetter(c)){
+                if (charMap.containsKey(c)){
+                    charMap.put(c,charMap.get(c)+1);
+                }else{
+                    charMap.put(c,1);
+                }
+            }
+        }
+
+        StringBuilder url = new StringBuilder();
+
+        // 第二版：在第一版的基础上进行首尾计算
+        // 分治合并相邻的, 然后对出现次数取模拼接
+        List<Character> keys = new ArrayList<>(charMap.keySet());
+        System.out.println(keys.size());
+        for (int i = 0, j = keys.size()-1; i < j; i++,j--) {
+            int count = (charMap.get(keys.get(i))+charMap.get(keys.get(j)))/10;
+            url.append(keys.get(i)).append(keys.get(j))
+                    .append(count);
+        }
+
+
+        // 第一版：如果字符串字母数量种类，较多，则最后的短链接长度可能就会较长 26 个字母-> 52 个长度
+        /*charMap.forEach((k,v) -> {
+            url.append(k).append(v);
+        });*/
+
+        return url.toString();
     }
 
 

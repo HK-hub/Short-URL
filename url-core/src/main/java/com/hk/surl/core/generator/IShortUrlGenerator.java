@@ -1,6 +1,6 @@
 package com.hk.surl.core.generator;
 
-import com.hk.surl.entity.ShortURL;
+import com.hk.surl.domain.entity.ShortUrl;
 
 /**
  * @author : HK意境
@@ -28,7 +28,7 @@ public interface IShortUrlGenerator {
      * @Modified :
      * @Version : 1.0
      */
-    public ShortURL generate();
+    public ShortUrl generate();
 
 
 }

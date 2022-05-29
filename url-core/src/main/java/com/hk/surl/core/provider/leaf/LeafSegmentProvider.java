@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @author : HK意境
- * @ClassName : LeafSegmentStrategy
+ * @ClassName : LeafSegmentProvider
  * @date : 2022/4/18 19:40
  * @description : 美团发号器算法：Leaf-Segment
  * @Todo :
@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(fluent = true)
-public class LeafSegmentStrategy implements GenerateStrategy {
+public class LeafSegmentProvider implements GenerateStrategy {
 
     // 该标签下的最大号码
     private Long maxId ;
@@ -28,10 +28,10 @@ public class LeafSegmentStrategy implements GenerateStrategy {
     // 当前发号器已经分发的到号码
     private Long cunrrent;
 
-    public LeafSegmentStrategy() {
+    public LeafSegmentProvider() {
     }
 
-    public LeafSegmentStrategy(Long maxId, Integer step, Long cunrrent) {
+    public LeafSegmentProvider(Long maxId, Integer step, Long cunrrent) {
         this.maxId = maxId;
         this.step = step;
         this.cunrrent = cunrrent;
@@ -44,5 +44,9 @@ public class LeafSegmentStrategy implements GenerateStrategy {
 
         return null;
     }
+
+
+
+
 
 }

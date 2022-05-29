@@ -7,7 +7,7 @@ import com.hk.surl.core.enums.EncryptStrategy;
 
 /**
  * @author : HK意境
- * @ClassName : EncryptionStrategy
+ * @ClassName : EncryptionProvider
  * @date : 2022/4/18 20:57
  * @description :
  * @Todo :
@@ -15,7 +15,7 @@ import com.hk.surl.core.enums.EncryptStrategy;
  * @Modified :
  * @Version : 1.0
  */
-public class EncryptionStrategy implements GenerateStrategy {
+public class EncryptionProvider implements GenerateStrategy {
 
     @Override
     public String provideShortUrl(Generator generator) {

@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * @author : HK意境
- * @ClassName : CompressStringStrategy
+ * @ClassName : CompressProvider
  * @date : 2022/4/18 21:01
  * @description : 使用压缩算法：这里仅仅提供常见的字符串压缩算法
  *                  - gzip 算法
@@ -19,7 +19,7 @@ import java.nio.charset.StandardCharsets;
  * @Modified :
  * @Version : 1.0
  */
-public class CompressStringStrategy implements GenerateStrategy {
+public class CompressProvider implements GenerateStrategy {
 
     // 使用 压缩工具类进行压缩数据
 

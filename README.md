@@ -73,7 +73,7 @@ public class ShortUrlTest {
 - 发号器算法：`SnowFlakeStrategy`
 - MD5加密截取算法：`Md5Strategy`
 - BASE64编码截取算法：`Base64Strategy`
-- URL压缩算法：`UrlCompressStrategy`
+- URL字符串压缩算法：`UrlCompressStrategy`
 - 分布式ID生成算法：`DistributedIdStrategy`
 
 除此之外还聚合了多种缓存配置，加密配置，线程安全配置等可选可自定义的配置，可以根据自己的需求进行配置。

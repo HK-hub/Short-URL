@@ -3,8 +3,8 @@ package com.hk.surl;
 import com.hk.surl.core.generator.Generator;
 import com.hk.surl.core.generator.builder.ShortUrlGeneratorBuilder;
 import com.hk.surl.core.enums.EncryptStrategy;
-import com.hk.surl.core.provider.random.RandomStringStrategy;
-import com.hk.surl.entity.ShortURL;
+import com.hk.surl.core.provider.random.RandomStringProvider;
+import com.hk.surl.domain.entity.ShortUrl;
 import com.hk.surl.entity.ShortUrlExt;
 import org.junit.Test;
 
@@ -26,13 +26,13 @@ public class ShortUrlTest {
         // 获取 generator 生成器
         Generator generator = new ShortUrlGeneratorBuilder(new ShortUrlExt("https://www.github.com/hk-hub"))
                 .length(6)
-                .generateStrategy(new RandomStringStrategy())
+                .generateStrategy(new RandomStringProvider())
                 .enableCache(false)
                 .encryptStrategy(EncryptStrategy.NONE)
                 .build();
 
         // 使用生成器进行链接生成
-        ShortURL shortURL = generator.generate();
+        ShortUrl shortURL = generator.generate();
 
         System.out.println(shortURL);
     }

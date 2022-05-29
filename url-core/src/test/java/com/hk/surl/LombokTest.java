@@ -1,6 +1,6 @@
 package com.hk.surl;
 
-import com.hk.surl.entity.ShortURL;
+import com.hk.surl.domain.entity.ShortUrl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -22,9 +22,9 @@ public class LombokTest {
     public void getterAndSetterTest(){
 
         System.out.println("test lombok");
-        ShortURL shortURL = new ShortURL("http://localhost:8080/123456-fioggreo", "http://localhost:8080/ghetjh");
+        ShortUrl shortURL = new ShortUrl("http://localhost:8080/123456-fioggreo");
         System.out.println(shortURL.getShortUrl()+","+shortURL.getShortUrl());
-        log.info("url:{}, shortUrl:{}",shortURL.getLongUrl(),shortURL.getShortUrl());
+        log.info("url:{}, shortUrl:{}",shortURL.getShortUrl(),shortURL.getShortUrl());
 
     }
 
