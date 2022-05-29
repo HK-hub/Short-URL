@@ -42,6 +42,9 @@ public class CompressProvider implements GenerateStrategy {
                 // 不压缩
                 shortUrl = longUrl ;
                 break;
+            case PATH:
+                shortUrl = CompressUtil.stringPathCompress(longUrl);
+                break;
             case ZLIB:
                 // 使用 zlib 压缩
                 shortUrl = new String(CompressUtil.zlibCompress(longUrl), StandardCharsets.UTF_8);
@@ -49,13 +52,11 @@ public class CompressProvider implements GenerateStrategy {
             case GZIP:
                 shortUrl = CompressUtil.gzipCompress(longUrl);
                 break;
-
             default:
                 // 默认不采用压缩方式
                 shortUrl = longUrl ;
                 break;
         }
-
 
         // 返回压缩后的短链接
         return shortUrl ;
