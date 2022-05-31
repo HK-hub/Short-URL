@@ -1,9 +1,8 @@
 package com.hk.surl.core.provider.leaf;
 
-import com.hk.surl.core.common.LeafSegmentUtil;
-import com.hk.surl.core.common.SUrlCoreExcption;
-import com.hk.surl.core.provider.GenerateStrategy;
-import com.hk.surl.core.generator.Generator;
+import com.hk.surl.core.common.util.LeafSegmentUtil;
+import com.hk.surl.core.provider.GenerateProvider;
+import com.hk.surl.core.generator.ShortUrlGenerator;
 import com.hk.surl.entity.TinyId;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -18,9 +17,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 /**
@@ -39,7 +35,7 @@ import java.util.concurrent.Executors;
 @Slf4j
 @Data
 @Accessors(fluent = true)
-public class LeafSegmentProvider implements GenerateStrategy {
+public class LeafSegmentProvider implements GenerateProvider {
 
     // 线程池服务
     //public static final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -92,7 +88,7 @@ public class LeafSegmentProvider implements GenerateStrategy {
      * @Version : 1.0.0
      */
     @Override
-    public String provideShortUrl(Generator builder) {
+    public String provideShortUrl(ShortUrlGenerator builder) {
 
         // 获取下一个 id
         this.getNextId(this.tinyIdConfig.getBizType());

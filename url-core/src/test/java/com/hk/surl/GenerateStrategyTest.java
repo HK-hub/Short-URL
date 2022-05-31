@@ -1,8 +1,8 @@
 package com.hk.surl;
 
-import com.hk.surl.core.generator.Generator;
+import com.hk.surl.core.generator.ShortUrlGenerator;
 import com.hk.surl.core.generator.builder.ShortUrlGeneratorBuilder;
-import com.hk.surl.core.enums.LengthStrategy;
+import com.hk.surl.core.enums.strategy.LengthStrategy;
 import com.hk.surl.core.provider.distributed.SnowFlakeProvider;
 import com.hk.surl.domain.entity.ShortUrl;
 import org.junit.Test;
@@ -21,13 +21,22 @@ public class GenerateStrategyTest {
 
     @Test
     public void randomStrategyTest(){
-        Generator generator = new ShortUrlGeneratorBuilder()
+        ShortUrlGenerator generator = new ShortUrlGeneratorBuilder()
                 .generateStrategy(new SnowFlakeProvider())
                 .length(LengthStrategy.LARGE_ENTERPRISE.getLength()).build();
         ShortUrl shortURL = generator.generate();
         System.out.println(shortURL);
 
     }
+
+
+    // 测试 函数接口
+    public void functionalInterfaceTest(){
+
+        new ShortUrlGeneratorBuilder().generateStrategy();
+
+    }
+
 
 
 }

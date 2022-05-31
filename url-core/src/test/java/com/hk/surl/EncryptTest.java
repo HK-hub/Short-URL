@@ -1,10 +1,7 @@
 package com.hk.surl;
 
-import com.hk.surl.core.common.EncryptUtil;
+import com.hk.surl.core.common.util.EncryptUtil;
 import org.junit.Test;
-
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 /**
  * @author : HK意境

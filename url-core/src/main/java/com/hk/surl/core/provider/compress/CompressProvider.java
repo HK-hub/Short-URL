@@ -1,9 +1,9 @@
 package com.hk.surl.core.provider.compress;
 
-import com.hk.surl.core.common.CompressUtil;
-import com.hk.surl.core.provider.GenerateStrategy;
-import com.hk.surl.core.generator.Generator;
-import com.hk.surl.core.enums.CompressStrategy;
+import com.hk.surl.core.common.util.CompressUtil;
+import com.hk.surl.core.provider.GenerateProvider;
+import com.hk.surl.core.generator.ShortUrlGenerator;
+import com.hk.surl.core.enums.strategy.CompressStrategy;
 
 import java.nio.charset.StandardCharsets;
 
@@ -20,15 +20,15 @@ import java.nio.charset.StandardCharsets;
  * @Modified :
  * @Version : 1.0
  */
-public class CompressProvider implements GenerateStrategy {
+public class CompressProvider implements GenerateProvider {
 
     // 使用 压缩工具类进行压缩数据
 
     @Override
-    public String provideShortUrl(Generator generator) {
+    public String provideShortUrl(ShortUrlGenerator generator) {
 
         // 获取长链接字符串
-        String longUrl = generator.getUrlExt().getLongUrl();
+        String longUrl = generator.getUrlExt().longUrl();
 
         // 压缩后的数据缓冲buffer
         String shortUrl;

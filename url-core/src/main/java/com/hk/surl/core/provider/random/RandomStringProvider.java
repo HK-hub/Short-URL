@@ -1,7 +1,7 @@
 package com.hk.surl.core.provider.random;
 
-import com.hk.surl.core.provider.GenerateStrategy;
-import com.hk.surl.core.generator.Generator;
+import com.hk.surl.core.generator.ShortUrlGenerator;
+import com.hk.surl.core.provider.GenerateProvider;
 import lombok.experimental.Accessors;
 
 import java.util.*;
@@ -17,7 +17,7 @@ import java.util.*;
  * @Version : 1.0
  */
 @Accessors(fluent = true)
-public class RandomStringProvider implements GenerateStrategy {
+public class RandomStringProvider implements GenerateProvider {
 
     // 使用配置文件的方式解耦
     //@Value("${short.url.string.pool}")
@@ -80,7 +80,7 @@ public class RandomStringProvider implements GenerateStrategy {
      * @Version : 1.0
      */
     @Override
-    public String provideShortUrl(Generator generator) {
+    public String provideShortUrl(ShortUrlGenerator generator) {
         // 先进行扰乱
         if(this.enableShuffle){
             shuffleStringPool();

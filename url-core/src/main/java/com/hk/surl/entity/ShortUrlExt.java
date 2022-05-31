@@ -1,10 +1,12 @@
 package com.hk.surl.entity;
 
-import com.hk.surl.core.enums.ExpirationStrategy;
+import com.hk.surl.core.enums.param.UrlSourceType;
+import com.hk.surl.core.enums.strategy.ExpirationStrategy;
 import com.hk.surl.domain.entity.ShortUrl;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
@@ -19,6 +21,7 @@ import java.time.LocalDateTime;
  * @Version : 1.0
  */
 @Data
+@Accessors(fluent = true)
 @NoArgsConstructor
 public class ShortUrlExt extends ShortUrl {
 
@@ -51,8 +54,21 @@ public class ShortUrlExt extends ShortUrl {
     private Boolean visible;
 
 
+    // 设置长链接
     public ShortUrlExt(String longUrl) {
         this.longUrl = longUrl;
+    }
+
+    // 设置源数据，和数据类型
+    public ShortUrlExt(String sourceUrl, Integer type){
+        this.longUrl = sourceUrl;
+        this.type = type ;
+    }
+
+
+    // 枚举方式
+    public ShortUrlExt(String sourceUrl, UrlSourceType type){
+        this(sourceUrl, type.getCode());
     }
 
 

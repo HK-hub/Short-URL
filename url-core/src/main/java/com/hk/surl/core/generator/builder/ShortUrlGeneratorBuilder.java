@@ -1,11 +1,11 @@
 package com.hk.surl.core.generator.builder;
 
-import com.hk.surl.core.enums.CompressStrategy;
-import com.hk.surl.core.enums.EncryptStrategy;
-import com.hk.surl.core.enums.ExpirationStrategy;
-import com.hk.surl.core.enums.SyncStrategy;
-import com.hk.surl.core.generator.Generator;
-import com.hk.surl.core.provider.GenerateStrategy;
+import com.hk.surl.core.enums.strategy.CompressStrategy;
+import com.hk.surl.core.enums.strategy.EncryptStrategy;
+import com.hk.surl.core.enums.strategy.ExpirationStrategy;
+import com.hk.surl.core.enums.strategy.SyncStrategy;
+import com.hk.surl.core.generator.ShortUrlGenerator;
+import com.hk.surl.core.provider.GenerateProvider;
 import com.hk.surl.entity.ShortUrlExt;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -30,13 +30,13 @@ public class ShortUrlGeneratorBuilder  {
     protected String shortUrl ;*/
 
     // 选择的算法策略
-    protected GenerateStrategy generateStrategy ;
+    protected GenerateProvider generateStrategy ;
 
     // 是否开启缓存策略, 该缓存策略是指是否缓存在 Redis 里面, 如果有指定Short-URL过期策略的，则动态更具时间决定是否存放在缓存中
     protected Boolean enableCache = false;
 
     // 选择Short-URL 生成后的有效时间
-    protected ExpirationStrategy expireStrategy= ExpirationStrategy.NEVER ;
+    protected ExpirationStrategy expireStrategy= ExpirationStrategy.FOREVER ;
 
     // 是否选择使用线程安全的模式
     protected SyncStrategy syncStrategy =SyncStrategy.DISABLE;
@@ -74,8 +74,8 @@ public class ShortUrlGeneratorBuilder  {
      * @Modified :
      * @Version : 1.0
      */
-    public Generator build(){
-        Generator generator = new Generator();
+    public ShortUrlGenerator build(){
+        ShortUrlGenerator generator = new ShortUrlGenerator();
         BeanUtils.copyProperties(this,generator);
         return generator ;
     }

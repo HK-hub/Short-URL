@@ -1,6 +1,6 @@
 package com.hk.surl;
 
-import com.hk.surl.core.common.DatabaseUtil;
+import com.hk.surl.core.common.util.DatabaseUtil;
 import com.hk.surl.core.provider.leaf.LeafSegmentProvider;
 import com.hk.surl.entity.TinyId;
 import com.mysql.cj.jdbc.Driver;
@@ -10,8 +10,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -161,7 +159,6 @@ public class LeafSegmentTest {
     }
 
 
-
     /**
      * @methodName :providerTest
      * @author : HK意境
@@ -199,7 +196,6 @@ public class LeafSegmentTest {
         log.info("开始时间:{}",s);
         log.info("结束时间:{}",e );
         log.info("时长:{}",(double)(e-s)/1000);
-
     }
 
 }

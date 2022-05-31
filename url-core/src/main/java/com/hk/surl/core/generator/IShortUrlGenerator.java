@@ -12,6 +12,7 @@ import com.hk.surl.domain.entity.ShortUrl;
  * @Modified :
  * @Version : 1.0
  */
+@FunctionalInterface
 public interface IShortUrlGenerator {
 
     /**
@@ -28,7 +29,7 @@ public interface IShortUrlGenerator {
      * @Modified :
      * @Version : 1.0
      */
-    public ShortUrl generate();
+    public abstract ShortUrl generate();
 
 
 }

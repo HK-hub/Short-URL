@@ -1,6 +1,6 @@
 package com.hk.surl;
 
-import com.hk.surl.core.common.DatabaseUtil;
+import com.hk.surl.core.common.util.DatabaseUtil;
 import com.hk.surl.domain.entity.LongUrl;
 import com.mysql.cj.jdbc.Driver;
 import org.junit.Test;

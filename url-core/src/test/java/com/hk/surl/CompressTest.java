@@ -1,13 +1,11 @@
 package com.hk.surl;
 
-import com.hk.surl.core.common.CompressUtil;
+import com.hk.surl.core.common.util.CompressUtil;
 import org.junit.Test;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.zip.GZIPOutputStream;
 

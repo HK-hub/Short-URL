@@ -1,8 +1,8 @@
 package com.hk.surl;
 
-import com.hk.surl.core.generator.Generator;
+import com.hk.surl.core.generator.ShortUrlGenerator;
 import com.hk.surl.core.generator.builder.ShortUrlGeneratorBuilder;
-import com.hk.surl.core.enums.EncryptStrategy;
+import com.hk.surl.core.enums.strategy.EncryptStrategy;
 import com.hk.surl.core.provider.random.RandomStringProvider;
 import com.hk.surl.domain.entity.ShortUrl;
 import com.hk.surl.entity.ShortUrlExt;
@@ -24,7 +24,7 @@ public class ShortUrlTest {
     public void test(){
 
         // 获取 generator 生成器
-        Generator generator = new ShortUrlGeneratorBuilder(new ShortUrlExt("https://www.github.com/hk-hub"))
+        ShortUrlGenerator generator = new ShortUrlGeneratorBuilder(new ShortUrlExt("https://www.github.com/hk-hub"))
                 .length(6)
                 .generateStrategy(new RandomStringProvider())
                 .enableCache(false)

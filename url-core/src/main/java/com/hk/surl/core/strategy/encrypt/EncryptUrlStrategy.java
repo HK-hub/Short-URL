@@ -1,9 +1,9 @@
 package com.hk.surl.core.strategy.encrypt;
 
 
-import com.hk.surl.core.common.EncryptUtil;
-import com.hk.surl.core.generator.Generator;
-import com.hk.surl.core.enums.EncryptStrategy;
+import com.hk.surl.core.common.util.EncryptUtil;
+import com.hk.surl.core.generator.ShortUrlGenerator;
+import com.hk.surl.core.enums.strategy.EncryptStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,10 +22,10 @@ public class EncryptUrlStrategy{
     private static final Logger LOGGER = LoggerFactory.getLogger(EncryptUrlStrategy.class);
 
 
-    public static String encryptString(Generator generator){
+    public static String encryptString(ShortUrlGenerator generator){
 
         // 获取长链接
-        String longUrl = generator.getUrlExt().getLongUrl();
+        String longUrl = generator.getUrlExt().longUrl();
 
         // 获取加密策略
         EncryptStrategy encryptStrategy = generator.getEncryptStrategy();

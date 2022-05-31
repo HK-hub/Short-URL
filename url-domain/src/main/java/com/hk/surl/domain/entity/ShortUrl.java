@@ -37,10 +37,10 @@ public class ShortUrl implements Serializable {
     private String no;
 
     @ApiModelProperty(value = "可见性:1可见，0不可见")
-    private Boolean visible;
+    private Boolean visible = true;
 
     @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
+    private LocalDateTime createTime = LocalDateTime.now();
 
     @ApiModelProperty(value = "过期时间：表示短链接从创建经过到使用到消亡的时间，是指失效的时间： expiration_time=create_time+有效时间")
     private LocalDateTime expirationTime;
@@ -49,10 +49,10 @@ public class ShortUrl implements Serializable {
     private Integer version;
 
     @ApiModelProperty(value = "跟新时间 ")
-    private LocalDateTime updateTime;
+    private LocalDateTime updateTime = LocalDateTime.now();
 
-    @ApiModelProperty(value = "是否可见：1可见，0不可见")
-    private Boolean deleted;
+    @ApiModelProperty(value = "是否删除：1可见，0不可见")
+    private Boolean deleted = false;
 
 
     public ShortUrl(String shortUrl) {

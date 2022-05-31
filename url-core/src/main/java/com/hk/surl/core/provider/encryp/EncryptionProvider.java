@@ -1,9 +1,8 @@
 package com.hk.surl.core.provider.encryp;
 
-import com.hk.surl.core.provider.GenerateStrategy;
-import com.hk.surl.core.generator.Generator;
+import com.hk.surl.core.provider.GenerateProvider;
+import com.hk.surl.core.generator.ShortUrlGenerator;
 import com.hk.surl.core.strategy.encrypt.EncryptUrlStrategy;
-import com.hk.surl.core.enums.EncryptStrategy;
 
 /**
  * @author : HK意境
@@ -15,12 +14,12 @@ import com.hk.surl.core.enums.EncryptStrategy;
  * @Modified :
  * @Version : 1.0
  */
-public class EncryptionProvider implements GenerateStrategy {
+public class EncryptionProvider implements GenerateProvider {
 
     @Override
-    public String provideShortUrl(Generator generator) {
+    public String provideShortUrl(ShortUrlGenerator generator) {
         // 获取源字符串
-        String longUrl = generator.getUrlExt().getLongUrl();
+        String longUrl = generator.getUrlExt().longUrl();
         // 获取加密策略
         //EncryptStrategy encryptStrategy = generator.getEncryptStrategy();
 

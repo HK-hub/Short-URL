@@ -1,10 +1,8 @@
 package com.hk.surl.core.provider.distributed;
 
-import com.baomidou.mybatisplus.annotation.Version;
-import com.hk.surl.core.common.IdWorker;
-import com.hk.surl.core.provider.GenerateStrategy;
-import com.hk.surl.core.generator.Generator;
-import com.hk.surl.core.enums.EncryptStrategy;
+import com.hk.surl.core.common.util.IdWorker;
+import com.hk.surl.core.provider.GenerateProvider;
+import com.hk.surl.core.generator.ShortUrlGenerator;
 import lombok.Data;
 
 /**
@@ -18,7 +16,7 @@ import lombok.Data;
  * @Version : 1.0
  */
 @Data
-public class SnowFlakeProvider implements GenerateStrategy {
+public class SnowFlakeProvider implements GenerateProvider {
 
     public static IdWorker idWorker = new IdWorker();
 
@@ -49,7 +47,7 @@ public class SnowFlakeProvider implements GenerateStrategy {
      * @Version : 1.0
      */
     @Override
-    public String provideShortUrl(Generator generator) {
+    public String provideShortUrl(ShortUrlGenerator generator) {
 
         // 因为雪花算法获取到的分布式ID 是连续的，存在生成后的短链接不安全的问题，所以需要更具加密策略进行选择
         String shortUrl = SnowFlakeProvider.createWithSnowFlake(generator.getLength());
