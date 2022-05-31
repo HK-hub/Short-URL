@@ -21,7 +21,7 @@ public class RandomStringProvider implements GenerateStrategy {
 
     // 使用配置文件的方式解耦
     //@Value("${short.url.string.pool}")
-    private String stringPool = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
+    private String stringPool = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_#&%$*()+=@!~";
 
     // 首先对于StringPool 字符串池种的字符进行混淆后，进行随机
     private Integer shuffleNum = 5;

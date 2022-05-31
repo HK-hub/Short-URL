@@ -2,6 +2,8 @@ package com.hk.surl.core.common;
 
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.hk.surl.entity.TinyId;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -18,7 +20,12 @@ import java.util.List;
  * @Modified :
  * @Version : 1.0
  */
+@Data
+@Slf4j
 public class LeafSegmentUtil {
+
+    // 数据源，用来操作数据库——> 通过 jdbcTemplate
+    private DataSource dataSource ;
 
 
     /**
@@ -57,8 +64,6 @@ public class LeafSegmentUtil {
      */
     public static List<Long> nextId(String bizType, int batchSize){
 
-
-
         return null;
     }
 
@@ -83,7 +88,7 @@ public class LeafSegmentUtil {
 
         // 获取 tinyId 信息
         String sql = "select * from tb_tiny_id where biz_type = ?";
-        List<TinyId> tinyIdList = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(), bizType);
+        List<TinyId> tinyIdList = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TinyId.class), bizType);
 
         TinyId tinyId = new TinyId();
         // 存在该业务配置
