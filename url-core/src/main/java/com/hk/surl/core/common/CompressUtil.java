@@ -231,7 +231,7 @@ public class CompressUtil {
         List<Character> keys = new ArrayList<>(charMap.keySet());
         System.out.println(keys.size());
         for (int i = 0, j = keys.size()-1; i < j; i++,j--) {
-            int count = (charMap.get(keys.get(i))+charMap.get(keys.get(j)))/10;
+            int count = (charMap.get(keys.get(i))+charMap.get(keys.get(j)))%10;
             url.append(keys.get(i)).append(keys.get(j))
                     .append(count);
         }

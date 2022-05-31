@@ -3,9 +3,13 @@ package com.hk.surl;
 import com.hk.surl.core.common.CompressUtil;
 import org.junit.Test;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * @author : HK意境
@@ -64,6 +68,55 @@ public class CompressTest {
         System.out.println(shortUrl);
 
     }
+
+
+    @Test
+    public void gzipCompressTest(){
+
+        String str = "teststring123aaaHIKHJK";
+
+        String compress = compress(str);
+        System.out.println(compress);
+
+    }
+
+
+
+    // gzip 压缩
+    private static String compress(String str)
+    {
+        String str1 = null;
+        ByteArrayOutputStream bos = null;
+        try
+        {
+            bos = new ByteArrayOutputStream();
+            BufferedOutputStream dest = null;
+
+            byte b[] = str.getBytes();
+            GZIPOutputStream gz = new GZIPOutputStream(bos,b.length);
+            gz.write(b,0,b.length);
+            bos.close();
+            gz.close();
+
+        }
+        catch(Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+        System.out.println(bos.toByteArray().length);
+        System.out.println(Arrays.toString(bos.toByteArray()));
+
+        byte[] bytes = bos.toByteArray();
+        StringBuilder sb = new StringBuilder();
+        for (byte aByte : bytes) {
+            sb.append(aByte);
+        }
+        System.out.println(sb);
+        return bos.toString();
+    }
+
+
+
 
 
     // 使用 token 进行提交

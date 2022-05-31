@@ -13,7 +13,8 @@ import java.nio.charset.StandardCharsets;
  * @date : 2022/4/18 21:01
  * @description : 使用压缩算法：这里仅仅提供常见的字符串压缩算法
  *                  - gzip 算法
- *                  -
+ *                  - zlib 算法
+ *                  - path 压缩算法
  * @Todo :
  * @Bug :
  * @Modified :
