@@ -1,0 +1,10 @@
+com\hk\surl\CompressTest.class
+com\hk\surl\SnowFlakeTest.class
+com\hk\surl\EncryptTest.class
+com\hk\surl\JDBCTest.class
+com\hk\surl\RandomTest.class
+com\hk\surl\ShortUrlTest.class
+com\hk\surl\GenerateStrategyTest.class
+com\hk\surl\GeneratorBuilderTest.class
+com\hk\surl\LeafSegmentTest.class
+com\hk\surl\LombokTest.class

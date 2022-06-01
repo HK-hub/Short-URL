@@ -53,14 +53,27 @@ public class ShortUrlGenerator implements IShortUrlGenerator {
 
     // 采用的压缩策略: 默认采用不压缩-> 这里准备弃用了
     protected CompressStrategy compressStrategy = CompressStrategy.NONE ;
-
-
+    
     // 构造函数
     public ShortUrlGenerator(GenerateProvider provider){
         this.provider = provider ;
     }
 
-
+    
+    /**
+     * @methodName : generate
+     * @author : HK意境
+     * @date : 2022/6/1 13:56
+     * @description : 生产 短链接实体
+     * @Todo :
+     * @params : 
+         * @param : null 
+     * @return : ShortUrl 短链接
+     * @throws: 
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
     @Override
     public ShortUrl generate() {
         ShortUrl shortURL = new ShortUrl() ;
@@ -139,6 +152,9 @@ public class ShortUrlGenerator implements IShortUrlGenerator {
     }
 
 
-
-
+    // 设置原始长链接：
+    public void setLongUrl(String longUrl){
+        this.urlExt.longUrl(longUrl);
+    }
+    
 }

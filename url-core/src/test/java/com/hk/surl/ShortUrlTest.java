@@ -20,10 +20,11 @@ import org.junit.Test;
  */
 public class ShortUrlTest {
 
+    // builder 构造器 V1.0.0 版本
     @Test
-    public void test(){
+    public void testBuilderApiV1_0_0(){
 
-        // 获取 generator 生成器
+        /*// 获取 generator 生成器
         ShortUrlGenerator generator = new ShortUrlGeneratorBuilder(new ShortUrlExt("https://www.github.com/hk-hub"))
                 .length(6)
                 .generateStrategy(new RandomStringProvider())
@@ -34,7 +35,15 @@ public class ShortUrlTest {
         // 使用生成器进行链接生成
         ShortUrl shortURL = generator.generate();
 
-        System.out.println(shortURL);
+        System.out.println(shortURL);*/
+    }
+
+
+    // builder 构造器 V1.0.1 版本
+    @Test
+    public void testBuilderApiV1_0_1(){
+
+
     }
 
 

@@ -22,9 +22,10 @@ public class GenerateStrategyTest {
     @Test
     public void randomStrategyTest(){
         ShortUrlGenerator generator = new ShortUrlGeneratorBuilder()
-                .generateStrategy(new SnowFlakeProvider())
+                .provider(new SnowFlakeProvider())
                 .length(LengthStrategy.LARGE_ENTERPRISE.getLength()).build();
         ShortUrl shortURL = generator.generate();
+
         System.out.println(shortURL);
 
     }
@@ -33,7 +34,7 @@ public class GenerateStrategyTest {
     // 测试 函数接口
     public void functionalInterfaceTest(){
 
-        new ShortUrlGeneratorBuilder().generateStrategy();
+        new ShortUrlGeneratorBuilder().provider();
 
     }
 
