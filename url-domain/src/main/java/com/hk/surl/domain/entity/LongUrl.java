@@ -1,6 +1,6 @@
 package com.hk.surl.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,6 +24,10 @@ import java.time.LocalDateTime;
 public class LongUrl implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "id 号")
+    @TableId(type = IdType.ASSIGN_ID)
+    private String id ;
 
     @ApiModelProperty(value = "完整的URL链接，可以是普通http 请求url ,qrcode ，base64等")
     private String url;
@@ -58,14 +62,18 @@ public class LongUrl implements Serializable {
     @ApiModelProperty(value = "乐观锁")
     private Integer version;
 
-    @ApiModelProperty(value = "逻辑删除:0未删除，1已删除 ")
-    private Boolean deleted;
-
     @ApiModelProperty(value = "创建时间")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "更新时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
+
+    @ApiModelProperty(value = "逻辑删除:0未删除，1已删除 ")
+    @TableLogic
+    private Boolean deleted;
+
 
 
 }

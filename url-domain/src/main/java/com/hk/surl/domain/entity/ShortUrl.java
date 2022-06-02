@@ -1,6 +1,6 @@
 package com.hk.surl.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -27,6 +27,10 @@ public class ShortUrl implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "id 号")
+    @TableId(type = IdType.ASSIGN_ID)
+    private String id ;
+
     @ApiModelProperty(value = "生成后的短链接")
     private String shortUrl;
 
@@ -49,9 +53,11 @@ public class ShortUrl implements Serializable {
     private Integer version;
 
     @ApiModelProperty(value = "跟新时间 ")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime = LocalDateTime.now();
 
     @ApiModelProperty(value = "是否删除：1可见，0不可见")
+    @TableLogic
     private Boolean deleted = false;
 
 

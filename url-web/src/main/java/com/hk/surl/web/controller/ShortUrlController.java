@@ -2,6 +2,7 @@ package com.hk.surl.web.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @Version : 1.0
  */
 @RestController
-@RequestMapping("/entity/short-url")
+@RequestMapping("/short-url")
 public class ShortUrlController {
+
+
 
 }

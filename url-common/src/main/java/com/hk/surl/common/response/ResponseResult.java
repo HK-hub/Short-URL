@@ -1,11 +1,10 @@
-package com.hk.complier.hcomplier.common.res;
+package com.hk.surl.common.response;
 
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**

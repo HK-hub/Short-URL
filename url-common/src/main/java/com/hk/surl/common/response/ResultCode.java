@@ -1,4 +1,4 @@
-package com.hk.complier.hcomplier.common.res;
+package com.hk.surl.common.response;
 
 public enum ResultCode {
 

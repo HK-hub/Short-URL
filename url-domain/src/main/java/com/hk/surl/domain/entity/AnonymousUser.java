@@ -1,7 +1,7 @@
 package com.hk.surl.domain.entity;
 
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -36,12 +36,15 @@ public class AnonymousUser implements Serializable {
     private String longUrl;
 
     @ApiModelProperty(value = "匿名用户创建时间")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "更新时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     @ApiModelProperty(value = "逻辑删除")
+    @TableLogic
     private Boolean deleted;
 
 

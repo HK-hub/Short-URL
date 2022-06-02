@@ -80,4 +80,13 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>Github HK-hub Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/HK-hub/Short-URL</url>
+        </repository>
+    </distributionManagement>
+
+
 </project>

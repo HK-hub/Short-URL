@@ -1,11 +1,23 @@
-package com.hk.surl.web;/**
- * @ClassName : ShortUrlWebApplication
+package com.hk.surl.web;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/**
  * @author : HK意境
+ * @ClassName : ShortUrlWebApplication
  * @date : 2022/6/1 16:26
  * @description :
  * @Todo :
  * @Bug :
  * @Modified :
  * @Version : 1.0
- */public class ShortUrlWebApplication {
+ */
+@SpringBootApplication(scanBasePackages = "com.hk.surl")
+public class ShortUrlWebApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(ShortUrlWebApplication.class, args);
+    }
+
 }

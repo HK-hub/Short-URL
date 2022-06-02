@@ -1,6 +1,6 @@
 package com.hk.surl.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -25,6 +25,10 @@ public class AppUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "id 号")
+    @TableId(type = IdType.ASSIGN_ID)
+    private String id ;
+
     @ApiModelProperty(value = "用户名")
     private String username;
 
@@ -44,12 +48,15 @@ public class AppUser implements Serializable {
     private Boolean visible;
 
     @ApiModelProperty(value = "创建时间")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "更新时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     @ApiModelProperty(value = "逻辑删除")
+    @TableLogic
     private Boolean deleted;
 
 

@@ -37,34 +37,53 @@ https://github.com/HK-hub/Short-URL
 
 ```xml
 <dependency>
-    <groupId>com.hk</groupId>
-    <artifactId>short-url-boot-starter</artifactId>
+    <groupId>io.github.hk-hub</groupId>
+    <artifactId>short-url</artifactId>
     <version>1.0.0</version>
 </dependency>
 ```
 
 ## 快速开始
-下面是一个简单的入门简单案例，需要引入我们的一下第三方包: `commons-codec` 来进行加密的操作，除此之外我们的`Short-URL` 还会提供`Template`模板直接进行快速生成：
+下面是一个简单的入门简单案例，在开始之前需要引入我们的Maven依赖坐标。之后我们可以采用建造者创造适合个人业务的生产器了；除此之外我们的`Short-URL` 还会提供`Template`模板直接进行快速生成：
 ```java
 public class ShortUrlTest {
 
-    @Test
-    public void test(){
-        // 获取 generator 生成器
-        Generator generator = new ShortUrlGeneratorBuilder(new ShortUrlExt("https://www.github.com/hk-hub"))
-                .length(6)
-                .generateStrategy(new RandomStringStrategy())
-                .enableCache(false)
-                .encryptStrategy(EncryptStrategy.NONE)
-                .build();
+	static String longUrl = "http://localhost:8080/cloud/45464uy6terju54grfea464uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders64uy6terju54grfea44hytejorders4hytejorders/user/15645juytkuy4648/dehtrehgvsfd114545glete";
 
-        // 使用生成器进行链接生成
-        ShortURL shortURL = generator.generate();
-        System.out.println(shortURL);
-    }
+	// 最小 API 方式: 完全使用默认配置
+	@Test
+	public void minApiBuildTest(){
+
+		// 全部使用默认配置，只需要传入一个 长链接即可
+		ShortUrlGenerator generator = new ShortUrlGeneratorBuilder(longUrl).build();
+
+		// 生产短链接
+		ShortUrl shortUrl = generator.generate();
+
+		System.out.println(shortUrl);
+
+	}
+
+	// 较为完整的API
+	@Test
+	public void fullConfigApi(){
+
+		// 通过建造者模式 获取生成器
+		ShortUrlGenerator generator = new ShortUrlGeneratorBuilder(longUrl)
+				.provider(new RandomStringProvider())
+				.length(8)
+				.syncStrategy(SyncStrategy.DISABLE)
+				.expireStrategy(ExpirationStrategy.ONE_DAYS)
+				.build();
+
+		// 生产短链接
+		ShortUrl shortUrl = generator.generate();
+
+		System.out.println(shortUrl);
+	}
 }
 ```
-更多的使用方式请参考 `Short-Url`的源码工程，根据里面的策略来进行配置，选择。
+更多的使用方式请参考官方网站里面的指南文档或者可以阅读 `Short-Url`的源码工程，根据里面的策略来进行配置。
 
 
 ## 使用
@@ -108,15 +127,15 @@ public class ShortUrlTest {
 
 **待办：**
 
-- 添加：base64 的压缩，二维码的压缩
-- 添加：302 重定向日志
-- 添加：短链接信息统计
-- 添加：用户偏好信息记录
-- 完善：压缩算法更新补充
-- 完善：发号器算法重构
-- 完善：雪花算法优化
-- 构建：Spring Boot Starter 构建
-- 构建：发布Maven 仓库依赖
+- [ ] 添加：base64 的压缩，二维码的压缩
+- [ ] 添加：302 重定向日志
+- [ ] 添加：短链接信息统计
+- [ ] 添加：用户偏好信息记录
+- [x] 完善：压缩算法更新补充
+- [x] 完善：发号器算法重构
+- [x] 完善：雪花算法优化
+- [ ] 构建：Spring Boot Starter 构建
+- [ ] 构建：发布Maven 仓库依赖
 
 
 

@@ -1,6 +1,6 @@
 package com.hk.surl.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,6 +24,10 @@ import java.time.LocalDateTime;
 public class VisitLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "id 号")
+    @TableId(type = IdType.ASSIGN_ID)
+    private String id ;
 
     @ApiModelProperty(value = "短链接ID")
     private String shortUrlId;
@@ -50,12 +54,15 @@ public class VisitLog implements Serializable {
     private String method;
 
     @ApiModelProperty(value = "访问时间")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "跟新时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     @ApiModelProperty(value = "逻辑删除：1删除，0未删除")
+    @TableLogic
     private Boolean deleted;
 
 

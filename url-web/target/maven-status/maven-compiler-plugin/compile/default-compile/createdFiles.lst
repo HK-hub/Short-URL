@@ -1,0 +1,6 @@
+com\hk\surl\web\controller\LongUrlController.class
+com\hk\surl\web\controller\AnonymousUserController.class
+com\hk\surl\web\controller\VisitLogController.class
+com\hk\surl\web\controller\ShortUrlController.class
+com\hk\surl\web\controller\AppUserController.class
+com\hk\surl\web\controller\UrlMapController.class

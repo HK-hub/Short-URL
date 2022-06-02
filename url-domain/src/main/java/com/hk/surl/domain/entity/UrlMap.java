@@ -1,5 +1,8 @@
 package com.hk.surl.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -44,6 +47,7 @@ public class UrlMap implements Serializable {
     private Boolean visible;
 
     @ApiModelProperty(value = "映射关系创建时间")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "映射关系失效时间=创建时间+有效时长")
@@ -53,9 +57,11 @@ public class UrlMap implements Serializable {
     private Integer version;
 
     @ApiModelProperty(value = "更新时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     @ApiModelProperty(value = "逻辑删除:1删除，0未删除")
+    @TableLogic
     private Boolean deleted;
 
 

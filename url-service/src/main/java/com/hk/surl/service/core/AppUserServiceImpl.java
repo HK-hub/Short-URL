@@ -21,4 +21,5 @@ import org.springframework.stereotype.Service;
 public class AppUserServiceImpl extends ServiceImpl<AppUserMapper, AppUser> implements IAppUserService {
 
 
+
 }
