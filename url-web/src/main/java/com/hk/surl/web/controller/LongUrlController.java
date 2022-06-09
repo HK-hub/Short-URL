@@ -30,11 +30,6 @@ public class LongUrlController {
     private ILongUrlService longUrlService ;
 
 
-
-
-    
-    
-
     /**
      * @methodName : getLongUrlByLongUrlString
      * @author : HK意境
@@ -81,7 +76,7 @@ public class LongUrlController {
      * @Modified :
      * @Version : 1.0.0
      */
-    @GetMapping("/all")
+    @GetMapping("/get/all")
     public ResponseResult<LongUrl> getAllLongUrl(@RequestParam(name = "visible", defaultValue = "false",required = false)Boolean visible,
                                                  @RequestParam(name = "deleted", defaultValue = "false", required = false)Boolean deleted
                                                  ){
