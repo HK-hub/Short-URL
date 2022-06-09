@@ -273,6 +273,12 @@ create index idx_vl_sid_lid on tb_visit_log(short_url_id,long_url_id);
 
 
 
+## 配置
+- 私钥：hk_hub_short_url
+
+
+
+
 
 
 

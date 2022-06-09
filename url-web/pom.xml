@@ -21,6 +21,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.hk.surl</groupId>
+            <artifactId>url-common</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.hk.surl</groupId>
+            <artifactId>url-service</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>

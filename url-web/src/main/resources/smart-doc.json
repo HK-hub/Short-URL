@@ -1,0 +1,15 @@
+{
+
+  "outPath": "src/main/resources/static/doc",
+  "serverUrl": "http://127.0.0.1",
+  "pathPrefix": "",
+  "allInOne": true,
+  "coverOld": true,
+  "createDebugPage": true,
+  "sortByTitle":false,
+  "showAuthor":true,
+  "inlineEnum":true,
+  "allInOneDocFileName":"index.html",
+  "packageFilters": "com.hk.surl.web.controller.*"
+
+}

@@ -48,18 +48,27 @@ public class ResponseResult<T extends Object> {
     public static ResponseResult ErrorResponse = new ResponseResult(ResultCode.REMOTE_INTERFACE_ERROR,"exception");
 
     // 快捷返回对象
-    public static ResponseResult SUCCESS(){
+    public static <T> ResponseResult<T> SUCCESS(){
         return new ResponseResult(ResultCode.SUCCESS);
     }
 
-    public static ResponseResult ERROR(){
+    public static <T> ResponseResult<T> ERROR(){
         return new ResponseResult(ResultCode.SERVER_ERROR);
     }
 
-    public static ResponseResult FAIL(){
+    public static <T> ResponseResult<T> FAIL(){
         return new ResponseResult(ResultCode.FAIL);
     }
 
+
+    public ResponseResult(boolean flag){
+        if (flag){
+            // 成功
+            this.setResultCode(ResultCode.SUCCESS);
+        }else{
+            this.setResultCode(ResultCode.FAIL);
+        }
+    }
 
     public ResponseResult(ResultCode code) {
         this.success = code.success();
