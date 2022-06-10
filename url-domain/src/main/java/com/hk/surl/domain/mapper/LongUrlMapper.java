@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hk.surl.domain.entity.LongUrl;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 
 /**
  * <p>
@@ -16,4 +18,20 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface LongUrlMapper extends BaseMapper<LongUrl> {
 
+    /**
+     * @methodName : selectListByIds
+     * @author : HK意境
+     * @date : 2022/6/10 21:26
+     * @description : 使用 xml 方式 in 集合查询，速度由于 mybatis plus 的批量查询
+     * @Todo :
+     * @apiNote : 根据 id 集合查询长链接对象集合
+     * @params :
+         * @param ids 长链接对象 id 集合列表
+     * @return List<LongUrl>
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    List<LongUrl> selectListByIds(List<String> ids);
 }

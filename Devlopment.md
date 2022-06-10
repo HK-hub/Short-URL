@@ -270,7 +270,7 @@ create index idx_vl_sid_lid on tb_visit_log(short_url_id,long_url_id);
 
 ## 引用
 [函数式接口](https://blog.csdn.net/qq_46653783/article/details/115033226)
-
+![img.png](img.png)
 
 
 ## 配置

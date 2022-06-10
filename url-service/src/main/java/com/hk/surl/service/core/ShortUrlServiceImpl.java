@@ -20,4 +20,30 @@ import org.springframework.stereotype.Service;
 @Service
 public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> implements IShortUrlService {
 
+
+
+    /**
+     * @methodName : newShortUrl
+     * @author : HK意境
+     * @date : 2022/6/10 21:44
+     * @description : 根据 长链接字符串 对象, 调用生产工具，生成
+     * @Todo : 短链接对象，长链接对象，映射对象
+     * @apiNote :
+     * @params :
+         * @param longUrl 长链接字符串
+         * @param null
+         * @param null
+     * @return null
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @Override
+    public ShortUrl newShortUrl(String longUrl) {
+
+
+
+
+    }
 }

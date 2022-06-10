@@ -8,6 +8,7 @@ import com.hk.surl.domain.entity.ShortUrl;
 import com.hk.surl.entity.ShortUrlExt;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,6 +27,7 @@ import java.util.concurrent.TimeUnit;
  * @Version : 1.0
  */
 @Data
+@Accessors(fluent = true)
 @NoArgsConstructor
 public class ShortUrlGenerator implements IShortUrlGenerator {
 
@@ -156,5 +158,12 @@ public class ShortUrlGenerator implements IShortUrlGenerator {
     public void setLongUrl(String longUrl){
         this.urlExt.longUrl(longUrl);
     }
+
+
+    public ShortUrlGenerator longUrl(String longUrl){
+        this.setLongUrl(longUrl);
+        return this ;
+    }
+
     
 }

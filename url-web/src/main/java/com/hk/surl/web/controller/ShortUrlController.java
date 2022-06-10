@@ -34,6 +34,20 @@ public class ShortUrlController {
     private IShortUrlService shortUrlService ;
 
 
+
+    // 通过 外部传入的 长链接字符串，生成对应的短链接对象字符串
+    // 设置过期策略，生成对应的长链接对象，长短链接映射关系
+    @PostMapping("/new")
+    public ResponseResult<ShortUrl> newShortUrlByLongUrl(String longUrl){
+
+        // 调用 service 服务
+        ShortUrl shortUrl = shortUrlService.newShortUrl(longUrl);
+
+
+    }
+
+
+
     /**
      * @methodName : ResponseResult
      * @author : HK意境
@@ -49,7 +63,8 @@ public class ShortUrlController {
      * @Modified :
      * @Version : 1.0.0
      */
-    public ResponseResult<ShortUrl> getByShortUrl(String shortUrl) throws MalformedURLException {
+    @GetMapping("/get/surl")
+    public ResponseResult<ShortUrl> getByShortUrl(@RequestParam(name = "shortUrl") String shortUrl) throws MalformedURLException {
 
         // 获取 uri 部分
         shortUrl = ParseURLPairUtil.getUri(shortUrl);
@@ -110,7 +125,6 @@ public class ShortUrlController {
 
         return ResponseResult.SUCCESS().setData(shortUrlList);
     }
-
 
 
     /**

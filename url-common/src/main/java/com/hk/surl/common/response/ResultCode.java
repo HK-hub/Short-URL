@@ -12,6 +12,8 @@ public enum ResultCode {
     REDIRECT(true,301, "redirect"),
     //请求语法错误，请求参数错误
     BAD_REQUEST(false, 400 ,"request parameters error"),
+    // 请求参数错误异常
+    PARAMETER_ERROR(false,444, "request parameters is not valid"),
     //未授权
     UNAUTHORIZED(false,401,"unauthorized"),
     //未认证

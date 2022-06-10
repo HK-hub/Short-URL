@@ -1,7 +1,10 @@
 package com.hk.surl.api.core;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hk.surl.domain.entity.LongUrl;
 import com.hk.surl.domain.entity.UrlMap;
+
+import java.util.List;
 
 /**
  * @ClassName : IUrlMapService
@@ -15,4 +18,6 @@ import com.hk.surl.domain.entity.UrlMap;
  */
 public interface IUrlMapService extends IService<UrlMap> {
 
+    // 根据 短链接字符串 查询对应的长链接对象集合
+    List<LongUrl> getLongUrlListByShortUrl(String shortUrl);
 }

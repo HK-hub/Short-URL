@@ -14,7 +14,9 @@ import com.hk.surl.domain.entity.ShortUrl;
  * @Version : 1.0
  */
 public interface IShortUrlService extends IService<ShortUrl> {
-    
 
-    
+
+    // 根据 长链接字符串 新增 短链接对象，长链接对象，映射对象
+    ShortUrl newShortUrl(String longUrl);
+
 }

@@ -2,4 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hk.surl.domain.mapper.LongUrlMapper">
 
+    <select id="selectListByIds" resultType="com.hk.surl.domain.entity.LongUrl" parameterType="list">
+        select * from tb_long_url
+        <where>
+            <if test="list != null and list.size() > 0">
+                and id in
+                <foreach collection="list" item="id" separator="," open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
 </mapper>

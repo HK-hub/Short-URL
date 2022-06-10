@@ -49,7 +49,7 @@ public class ResponseResult<T extends Object> {
 
     // 快捷返回对象
     public static <T> ResponseResult<T> SUCCESS(){
-        return new ResponseResult(ResultCode.SUCCESS);
+        return new ResponseResult<T>(ResultCode.SUCCESS);
     }
 
     public static <T> ResponseResult<T> ERROR(){
@@ -89,7 +89,7 @@ public class ResponseResult<T extends Object> {
         this.success = success;
     }
 
-    public ResponseResult setResultCode(ResultCode code){
+    public ResponseResult<T> setResultCode(ResultCode code){
         this.success = code.success();
         this.code = code.code();
         this.message = code.message();

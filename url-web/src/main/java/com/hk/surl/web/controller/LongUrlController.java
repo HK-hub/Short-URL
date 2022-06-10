@@ -77,7 +77,7 @@ public class LongUrlController {
      * @Version : 1.0.0
      */
     @GetMapping("/get/all")
-    public ResponseResult<LongUrl> getAllLongUrl(@RequestParam(name = "visible", defaultValue = "false",required = false)Boolean visible,
+    public ResponseResult getAllLongUrl(@RequestParam(name = "visible", defaultValue = "false",required = false)Boolean visible,
                                                  @RequestParam(name = "deleted", defaultValue = "false", required = false)Boolean deleted
                                                  ){
         LambdaQueryChainWrapper<LongUrl> wrapper = longUrlService.lambdaQuery();
