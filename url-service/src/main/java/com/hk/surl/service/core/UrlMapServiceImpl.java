@@ -64,7 +64,34 @@ public class UrlMapServiceImpl extends ServiceImpl<UrlMapMapper, UrlMap> impleme
     }
 
 
+    /**
+     * @methodName : getLongUrlListBySId
+     * @author : HK意境
+     * @date : 2022/6/11 19:53
+     * @description :
+     * @Todo :
+     * @apiNote : 短链接id 值，查询对应长链接集合
+     * @params :
+         * @param sid 短链接id
+     * @return List
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @Override
+    public List<LongUrl> getLongUrlListBySId(String sid) {
+        // 构造查询条件
+        LambdaQueryChainWrapper<UrlMap> wrapper = new LambdaQueryChainWrapper<>(urlMapMapper)
+                .eq(UrlMap::getShortId, sid);
+        List<UrlMap> urlMaps = urlMapMapper.selectList(wrapper);
 
+        // 收集长链接对象 id 集合
+        List<String> ids = urlMaps.stream().map(UrlMap::getLongId).collect(Collectors.toList());
+        List<LongUrl> longUrls = longUrlMapper.selectListByIds(ids);
+
+        return longUrls;
+    }
 
 
 }

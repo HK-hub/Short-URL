@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -81,6 +82,40 @@ public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> i
         }
 
         return shortUrl ;
+    }
+
+
+
+    /**
+     * @methodName : removeShortUrlById
+     * @author : HK意境
+     * @date : 2022/6/11 20:20
+     * @description :  根据 短链接 id删除对象
+     * @Todo : 删除短链接对象，长链接对象，映射对象
+     * @apiNote : 异步删除
+     * @params :
+         * @param sid 短链接id
+     * @return boolean
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @Override
+    @Transactional
+    public boolean removeShortUrlById(String sid) {
+
+        // 删除 shortUrl 对象
+        int shortRm = this.shortUrlMapper.deleteById(sid);
+        // 查询出短链接对象对应的所有长链接id
+        List<String> longIds = urlMapMapper.selectLongIdByShortId(sid);
+        int longRm = this.longUrlMapper.deleteBatchIds(longIds);
+
+        // 删除 映射对象
+        int mapRm = urlMapMapper.deleteById(sid);
+
+        // 如果都能偶成功删除，则认为删除成功
+        return shortRm >0 && longRm > 0 && mapRm > 0;
     }
 
 

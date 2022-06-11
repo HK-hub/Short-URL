@@ -20,4 +20,7 @@ public interface IUrlMapService extends IService<UrlMap> {
 
     // 根据 短链接字符串 查询对应的长链接对象集合
     List<LongUrl> getLongUrlListByShortUrl(String shortUrl);
+
+    // 根据 短链接id值 查询对应的长链接对象集合
+    List<LongUrl> getLongUrlListBySId(String sid);
 }

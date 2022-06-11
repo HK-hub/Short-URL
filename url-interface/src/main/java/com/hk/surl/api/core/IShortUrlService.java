@@ -22,4 +22,6 @@ public interface IShortUrlService extends IService<ShortUrl> {
     // 根据 长链接字符串 新增 短链接对象，长链接对象，映射对象
     ShortUrl newShortUrl(String longUrl, LocalDateTime expirationTime) throws ExecutionException, InterruptedException;
 
+    // 根据 id 删除 短链接对象，映射对象，长链接对象
+    boolean removeShortUrlById(String id);
 }

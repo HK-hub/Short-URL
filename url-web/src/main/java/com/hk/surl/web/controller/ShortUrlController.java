@@ -277,7 +277,7 @@ public class ShortUrlController {
     public ResponseResult<Boolean> deleteById(@PathVariable(name = "id",required = true)String id){
 
         // 根据id ,删除对象，返回是否伤删除成功
-        boolean rm = shortUrlService.removeById(id);
+        boolean rm = shortUrlService.removeShortUrlById(id);
 
         // 返回删除结果对象
         return new ResponseResult<Boolean>(rm);

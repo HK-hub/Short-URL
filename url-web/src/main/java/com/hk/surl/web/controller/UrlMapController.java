@@ -32,11 +32,49 @@ public class UrlMapController {
     private IUrlMapService urlMapService ;
 
 
-    // 根据 短链接查询对应的所有长链接
-    @PostMapping("/surl")
+    /**
+     * @methodName : getLongUrsByShortUrl
+     * @author : HK意境
+     * @date : 2022/6/11 19:28
+     * @description : 根据短链接字符串获取全部的长链接实体
+     * @Todo :
+     * @apiNote : 根据短链接字符串获取全部的长链接实体
+     * @params :
+         * @param shortUrl 短链接字符串
+     * @return ResponseResult
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @PostMapping("/get/surl")
     public ResponseResult<List<LongUrl>> getLongUrsByShortUrl(String shortUrl){
         // 批量查询
         List<LongUrl> longUrls = urlMapService.getLongUrlListByShortUrl(shortUrl);
+
+        return ResponseResult.SUCCESS().setData(longUrls);
+    }
+
+
+    /**
+     * @methodName :
+     * @author : HK意境
+     * @date : 2022/6/11 19:28
+     * @description :
+     * @Todo :
+     * @apiNote : 通过 短链接 id 获取对应的长链接对象
+     * @params :
+         * @param sid 短链接id值
+     * @return ResponseResult
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @PostMapping("/get/sid")
+    public ResponseResult<List<LongUrl>> getLongUrlsByShortUrlId(String sid){
+        // 查询集合
+        List<LongUrl> longUrls = urlMapService.getLongUrlListBySId(sid);
 
         return ResponseResult.SUCCESS().setData(longUrls);
     }

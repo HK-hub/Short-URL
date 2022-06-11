@@ -34,4 +34,7 @@ public interface LongUrlMapper extends BaseMapper<LongUrl> {
      * @Version : 1.0.0
      */
     List<LongUrl> selectListByIds(List<String> ids);
+
+
+
 }
