@@ -1,12 +1,15 @@
 package com.hk.surl.domain.entity;
 
+import cn.hutool.http.Method;
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.net.URL;
 import java.time.LocalDateTime;
 
 /**
@@ -21,6 +24,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @TableName("tb_long_url")
 @ApiModel(value="LongUrl对象", description="长链接")
+@NoArgsConstructor
 public class LongUrl implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -74,6 +78,18 @@ public class LongUrl implements Serializable {
     @TableLogic
     private Boolean deleted;
 
+
+    // 通过 URL 类对象 建立 longUrl 对象
+    public LongUrl(String content ,URL url){
+        // 设置长链接
+        this.setUrl(content);
+        this.setHost(url.getHost());
+        this.setParams(url.getQuery());
+        this.setMethod(Method.GET.name());
+        this.setPort(url.getPort());
+        this.setProtocol(url.getProtocol());
+        this.setUri(url.getPath());
+    }
 
 
 }

@@ -1,11 +1,24 @@
 package com.hk.surl.service.core;
 
 
+import com.baomidou.mybatisplus.core.toolkit.Assert;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.surl.api.core.IShortUrlService;
+import com.hk.surl.core.generator.template.DefaultShortUrlGenerator;
+import com.hk.surl.domain.entity.LongUrl;
 import com.hk.surl.domain.entity.ShortUrl;
+import com.hk.surl.domain.entity.UrlMap;
+import com.hk.surl.domain.mapper.LongUrlMapper;
 import com.hk.surl.domain.mapper.ShortUrlMapper;
+import com.hk.surl.domain.mapper.UrlMapMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @ClassName : ShortUrlServiceImpl
@@ -20,6 +33,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> implements IShortUrlService {
 
+    // 自动注入 默认 短链接生成器
+    @Resource
+    private DefaultShortUrlGenerator shortUrlGenerator;
+    @Resource
+    private AsyncTaskService asyncTaskService ;
+    @Resource
+    private LongUrlMapper longUrlMapper ;
+    @Resource
+    private ShortUrlMapper shortUrlMapper ;
+    @Resource
+    private UrlMapMapper urlMapMapper ;
 
 
     /**
@@ -27,23 +51,87 @@ public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> i
      * @author : HK意境
      * @date : 2022/6/10 21:44
      * @description : 根据 长链接字符串 对象, 调用生产工具，生成
-     * @Todo : 短链接对象，长链接对象，映射对象
+     * @Todo : 短链接对象，长链接对象，映射对象-> 使用异步任务优化效率
      * @apiNote :
      * @params :
-         * @param longUrl 长链接字符串
-         * @param null
-         * @param null
-     * @return null
+         * @param longUrlStr 长链接字符串
+     * @param expirationTime 短链接对象过期时间
+     * @return ShortUrl
      * @throws:
      * @Bug :
      * @Modified :
      * @Version : 1.0.0
      */
     @Override
-    public ShortUrl newShortUrl(String longUrl) {
+    public ShortUrl newShortUrl(String longUrlStr, LocalDateTime expirationTime) throws ExecutionException, InterruptedException {
 
+        // 返回对象
+        ShortUrl shortUrl = null ;
 
+        // 首先校验 数据库中是否存在 对应的 长链接对象
+        LongUrl longUrl = longUrlMapper.selectOne(new LambdaQueryChainWrapper<>(longUrlMapper)
+                .eq(LongUrl::getUrl, longUrlStr).eq(LongUrl::getVisible, true));
+        if (longUrl == null){
+            // 不存在
+            shortUrl = this.doNewShortUrl(longUrlStr, expirationTime);
 
+        }else{
+            // 以及存在了长链接 对象，并且是可见的，返回对应的短链接对象
+            shortUrl = shortUrlMapper.selectByLongUrl(longUrl);
+        }
 
+        return shortUrl ;
     }
+
+
+    /**
+     * @methodName : doNewShortUrl
+     * @author : HK意境
+     * @date : 2022/6/11 14:52
+     * @description : 执行生成新的 短链接
+     * @Todo :
+     * @apiNote :
+     * @params :
+         * @param longUrlStr 长链接字符串
+     * @param expirationTime 短链接过期时间
+     * @return ShortUrl 生成后的短链接对象
+     * @throws:
+     * @Bug : 问题很大， 三个数据的插入不是原子性的
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @Transactional
+    public ShortUrl doNewShortUrl(String longUrlStr, LocalDateTime expirationTime) throws ExecutionException, InterruptedException {
+        // 生产短链接对象
+        ShortUrl shortUrl = this.shortUrlGenerator.generate(longUrlStr);
+        shortUrl.setExpirationTime(expirationTime);
+        // 使用异步任务插入保存短链接对象
+        CompletableFuture<ShortUrl> shortUrlFuture = asyncTaskService.newAndSaveShortUrl(shortUrl);
+
+        // 生产长链接对象
+        CompletableFuture<LongUrl> longUrlFuture =  asyncTaskService.newAndSaveLongUrl(longUrlStr);
+
+        // 获取异步任务执行结果
+        shortUrl = shortUrlFuture.get();
+        LongUrl longUrl  = longUrlFuture.get();
+        // 异步插入 : 废弃
+        // 这里不能使用异步插入，因为存在插入失败的情况，会存在数据库，长短链接关联数据不一致的情况
+        //CompletableFuture<UrlMap> urlMapFuture = asyncTaskService.newAndSaveUrlMap(shortUrl, longUrl);
+
+        // 必须使用同步插入
+
+        if (shortUrl != null && longUrl != null){
+            // 长短链接对象都不为空，插入数据库成功了
+            // 构造映射对象
+            UrlMap urlMap = new UrlMap(shortUrl, longUrl);
+            urlMap.setExpirationTime(expirationTime);
+            // 插入保存
+            int insert = urlMapMapper.insert(urlMap);
+        }
+
+
+        return shortUrl;
+    }
+
+
 }

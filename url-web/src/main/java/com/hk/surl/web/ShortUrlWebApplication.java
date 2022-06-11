@@ -2,6 +2,7 @@ package com.hk.surl.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * @author : HK意境
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Modified :
  * @Version : 1.0
  */
+@EnableAsync
 @SpringBootApplication(scanBasePackages = "com.hk.surl")
 public class ShortUrlWebApplication {
 

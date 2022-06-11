@@ -1,6 +1,7 @@
 package com.hk.surl.web.controller;
 
 
+import cn.hutool.core.date.DateTime;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
@@ -8,6 +9,7 @@ import com.hk.surl.api.core.IShortUrlService;
 import com.hk.surl.common.response.ResponseResult;
 import com.hk.surl.common.response.ResultCode;
 import com.hk.surl.common.util.ParseURLPairUtil;
+import com.hk.surl.core.common.util.DateTimeUtil;
 import com.hk.surl.domain.entity.ShortUrl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import java.net.MalformedURLException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @ClassName : ShortUrlController
@@ -37,13 +41,32 @@ public class ShortUrlController {
 
     // 通过 外部传入的 长链接字符串，生成对应的短链接对象字符串
     // 设置过期策略，生成对应的长链接对象，长短链接映射关系
+    /**
+     * @methodName : newShortUrlByLongUrl
+     * @author : HK意境
+     * @date : 2022/6/11 16:19
+     * @description :
+     * @Todo :
+     * @apiNote :
+     * @params :
+         * @param longUrl 长链接字符串
+         * @param time 时间度量
+         * @param timeUnit 时间单位
+     * @return null
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
     @PostMapping("/new")
-    public ResponseResult<ShortUrl> newShortUrlByLongUrl(String longUrl){
+    public ResponseResult<ShortUrl> newShortUrlByLongUrl(String longUrl, Integer time , String timeUnit) throws ExecutionException, InterruptedException {
 
-        // 调用 service 服务
-        ShortUrl shortUrl = shortUrlService.newShortUrl(longUrl);
+        // 构造过期时间
+        LocalDateTime expirationTime = DateTimeUtil.getExpirationTimeByTimeEntry(time, timeUnit);
+        // 如果数据库不存在长链接字符串对应的短链接那就生成，如果存在那就直接返回存在的数据对象
+        ShortUrl shortUrl = shortUrlService.newShortUrl(longUrl,expirationTime);
 
-
+        return ResponseResult.SUCCESS().setData(shortUrl);
     }
 
 

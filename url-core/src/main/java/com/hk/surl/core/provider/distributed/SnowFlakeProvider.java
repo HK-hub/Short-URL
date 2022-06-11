@@ -50,7 +50,7 @@ public class SnowFlakeProvider implements GenerateProvider {
     public String provideShortUrl(ShortUrlGenerator generator) {
 
         // 因为雪花算法获取到的分布式ID 是连续的，存在生成后的短链接不安全的问题，所以需要更具加密策略进行选择
-        String shortUrl = SnowFlakeProvider.createWithSnowFlake(generator.getLength());
+        String shortUrl = SnowFlakeProvider.createWithSnowFlake(generator.length());
 
         // 如果采用了 加密算法，在外部进行加密
         // 在外部使用加密工具进行加密

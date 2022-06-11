@@ -19,7 +19,7 @@ public class EncryptionProvider implements GenerateProvider {
     @Override
     public String provideShortUrl(ShortUrlGenerator generator) {
         // 获取源字符串
-        String longUrl = generator.getUrlExt().longUrl();
+        String longUrl = generator.urlExt().longUrl();
         // 获取加密策略
         //EncryptStrategy encryptStrategy = generator.getEncryptStrategy();
 

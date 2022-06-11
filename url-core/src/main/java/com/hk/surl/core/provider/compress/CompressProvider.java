@@ -28,13 +28,13 @@ public class CompressProvider implements GenerateProvider {
     public String provideShortUrl(ShortUrlGenerator generator) {
 
         // 获取长链接字符串
-        String longUrl = generator.getUrlExt().longUrl();
+        String longUrl = generator.urlExt().longUrl();
 
         // 压缩后的数据缓冲buffer
         String shortUrl;
 
         // 获取压缩策略
-        CompressStrategy compressStrategy = generator.getCompressStrategy();
+        CompressStrategy compressStrategy = generator.compressStrategy();
 
         // 更具选择的压缩算法来执行具体的压缩行为
         switch (compressStrategy){

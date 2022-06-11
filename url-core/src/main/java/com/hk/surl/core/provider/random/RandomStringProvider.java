@@ -85,7 +85,7 @@ public class RandomStringProvider implements GenerateProvider {
         if(this.enableShuffle){
             shuffleStringPool();
         }
-        String shortUrl = this.createWithRandom(generator.getLength());
+        String shortUrl = this.createWithRandom(generator.length());
 
         return shortUrl ;
     }

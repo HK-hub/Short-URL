@@ -2,4 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hk.surl.domain.mapper.ShortUrlMapper">
 
+    <select id="selectByLongUrl" resultType="com.hk.surl.domain.entity.ShortUrl" parameterType="com.hk.surl.domain.entity.LongUrl">
+        -- // select su.*  from tb_short_url as su where su.id in (
+        -- //      select m.short_url_id from tn_url_map as m where m.long_url = #{longUrl} and m.visible = true ;
+        -- // )
+        select su.* from tb_short_url as su
+            where su.id in (
+                select m.short_id from tb_url_map as m
+                where m.long_id = #{longUrl.id} and m.visible = true
+            );
+    </select>
 </mapper>

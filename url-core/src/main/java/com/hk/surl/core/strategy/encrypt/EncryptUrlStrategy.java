@@ -25,10 +25,10 @@ public class EncryptUrlStrategy{
     public static String encryptString(ShortUrlGenerator generator){
 
         // 获取长链接
-        String longUrl = generator.getUrlExt().longUrl();
+        String longUrl = generator.urlExt().longUrl();
 
         // 获取加密策略
-        EncryptStrategy encryptStrategy = generator.getEncryptStrategy();
+        EncryptStrategy encryptStrategy = generator.encryptStrategy();
 
         // 根据加密策略选择加密算法
         if(EncryptStrategy.NONE == encryptStrategy){
