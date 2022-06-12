@@ -32,6 +32,9 @@ public class ShortUrlExt extends ShortUrl {
     @ApiModelProperty(value = "生成后的短链接")
     private String shortUrl;
 
+    @ApiModelProperty(value = "短链接域名")
+    private String domain = "";
+
     @ApiModelProperty(value = "短链接类型: http 请求链接，二维码，base64")
     private Integer type;
 

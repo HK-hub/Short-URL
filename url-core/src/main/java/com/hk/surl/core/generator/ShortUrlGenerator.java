@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 public class ShortUrlGenerator implements IShortUrlGenerator {
 
     // 短链接扩展实体
-    protected ShortUrlExt urlExt ;
+    protected ShortUrlExt urlExt = new ShortUrlExt();
 
     // 选择的算法策略 : 默认使用 randomStringProvider
     protected GenerateProvider provider = new RandomStringProvider();
@@ -119,6 +119,9 @@ public class ShortUrlGenerator implements IShortUrlGenerator {
     private ShortUrl doGenerateWithoutSync(){
         // 目标链接：短链接
         String targetUrl = provider.provideShortUrl(this);
+
+        // 在这里设置域名系统
+        targetUrl = this.urlExt.domain() + "/" + targetUrl ;
 
         // 设置创建时间，跟新时间
         ShortUrl shortUrl = new ShortUrl(targetUrl);

@@ -50,8 +50,8 @@ public class ShortUrlController {
      * @apiNote :
      * @params :
          * @param longUrl 长链接字符串
-         * @param time 时间度量
-         * @param timeUnit 时间单位
+         * @param time 时间度量,默认-1
+         * @param timeUnit 时间单位，默认day
      * @return null
      * @throws:
      * @Bug :
@@ -59,7 +59,8 @@ public class ShortUrlController {
      * @Version : 1.0.0
      */
     @PostMapping("/new")
-    public ResponseResult<ShortUrl> newShortUrlByLongUrl(String longUrl, Integer time , String timeUnit) throws ExecutionException, InterruptedException {
+    public ResponseResult<ShortUrl> newShortUrlByLongUrl(String longUrl, @RequestParam(name = "time" ,defaultValue = "-1",required = false) Integer time ,
+                                                         @RequestParam(name = "timeUnit" ,defaultValue ="day", required = false)String timeUnit) throws ExecutionException, InterruptedException {
 
         // 构造过期时间
         LocalDateTime expirationTime = DateTimeUtil.getExpirationTimeByTimeEntry(time, timeUnit);
@@ -252,8 +253,8 @@ public class ShortUrlController {
     @DeleteMapping("/delete")
     public ResponseResult<Boolean> delete(@RequestBody ShortUrl shortUrl){
         // 根据 id 删除
-        boolean rm = shortUrlService.removeById(shortUrl.getId());
-
+        //boolean rm = shortUrlService.removeById(shortUrl.getId());
+        Boolean rm = shortUrlService.removeShortUrl(shortUrl);
         return new ResponseResult<Boolean>(rm);
     }
 

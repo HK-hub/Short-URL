@@ -119,6 +119,69 @@ public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> i
     }
 
 
+
+    /**
+     * @methodName : removeShortUrl
+     * @author : HK意境
+     * @date : 2022/6/12 13:14
+     * @description :
+     * @Todo :
+     * @apiNote :
+     * @params :
+         * @param shortUrl 待删除的短链接对象
+     * @return Boolean
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @Override
+    public Boolean removeShortUrl(ShortUrl shortUrl) {
+
+        Boolean res = null ;
+
+        // 判断 id 是否为空, 和 短链接字符串
+        if (shortUrl.getId() != null) {
+            res = this.removeShortUrlById(shortUrl.getId());
+        }else{
+            // 通过 短链接字符串删除
+            res = this.removeShortUrlByUrl(shortUrl.getShortUrl());
+        }
+
+
+
+
+        return res;
+    }
+
+
+    /**
+     * @methodName :
+     * @author : HK意境
+     * @date : 2022/6/12 13:18
+     * @description : 根据短链接字符串删除短链接对象，长链接对象，urlMap 映射对象
+     * @Todo :
+     * @apiNote :
+     * @params :
+         * @param shortUrlStr 待删除短链接字符串
+     * @return Boolean
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @Override
+    public Boolean removeShortUrlByUrl(String shortUrlStr){
+
+        // 查询获取到短链接对应的 id 值
+        ShortUrl shortUrl = shortUrlMapper.selectByShortUrl(shortUrlStr);
+        // 根据id 删除
+        boolean res = this.removeShortUrlById(shortUrl.getId());
+
+        return res;
+    }
+
+
     /**
      * @methodName : doNewShortUrl
      * @author : HK意境

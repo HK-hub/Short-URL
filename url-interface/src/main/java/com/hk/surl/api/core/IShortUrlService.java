@@ -24,4 +24,12 @@ public interface IShortUrlService extends IService<ShortUrl> {
 
     // 根据 id 删除 短链接对象，映射对象，长链接对象
     boolean removeShortUrlById(String id);
+
+    // 删除指定短链接对象，连带删除长链接对象，映射对象
+    Boolean removeShortUrl(ShortUrl shortUrl);
+
+    // 删除指定短链接字符串的短链接对象
+    Boolean removeShortUrlByUrl(String shortUrlStr);
+
+
 }

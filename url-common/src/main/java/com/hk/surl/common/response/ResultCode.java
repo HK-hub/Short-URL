@@ -8,8 +8,10 @@ public enum ResultCode {
     SUCCESS_CREATE(true ,201,"success create resource"),
     //请求执行成功, 但是没有数据返回
     SUCCESS_NO_CONTENT(true,204,"success and no data response"),
-    // 重定向
-    REDIRECT(true,301, "redirect"),
+    // 永久重定向
+    REDIRECT_PERMANENT(true,301, "permanent redirection"),
+    // 临时重定向
+    REDIRECT_TEMPORARY(true, 302 ,"temporary redirection"),
     //请求语法错误，请求参数错误
     BAD_REQUEST(false, 400 ,"request parameters error"),
     // 请求参数错误异常
@@ -27,7 +29,7 @@ public enum ResultCode {
     ACCOUNT_PASSWORDS_ERROR(false,101,"account or password error"),
     //token 校验不合法
     TOKEN_ERROR(false,108,"token is illegal or invalid"),
-
+    // 远程过程调用接口异常
     REMOTE_INTERFACE_ERROR(false,700, "接口调用异常"),
     // 服务器错误
     SERVER_ERROR(false,500,"server error"),

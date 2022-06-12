@@ -1,7 +1,7 @@
 package com.hk.surl.web.config;
 
-import com.hk.surl.core.generator.ShortUrlGenerator;
 import com.hk.surl.core.generator.template.DefaultShortUrlGenerator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,15 +18,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ShortUrlGeneratorConfig {
 
+    @Value("${short.url.system.domain}")
+    private String domain ;
 
     /**
-     * 将 shorUrlGenerator 将默认的短链接生成器注入到容器中
+     * 设置短链接系统域名
+     * 将 shorUrlGenerator 将默认的短链接生成器注入到容器中,
      * @return ShortUrlGenerator
      */
     @Bean
     public DefaultShortUrlGenerator getDefaultShortUrlGenerator(){
-        return new DefaultShortUrlGenerator();
+        return new DefaultShortUrlGenerator(domain);
     }
+
 
 
 }

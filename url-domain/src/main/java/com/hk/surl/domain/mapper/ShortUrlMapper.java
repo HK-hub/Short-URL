@@ -28,6 +28,11 @@ public interface ShortUrlMapper extends BaseMapper<ShortUrl> {
     // )
     ShortUrl selectByLongUrl(LongUrl longUrl);
 
+
+    // 查询指定短链接字符串的链接对象
+    @Select("select * from tb_short_url where short_url = #{shortUrlStr} " + "and visible = true")
+    ShortUrl selectByShortUrl(String shortUrlStr);
+
     // 查询指定时间内新增的短链接
     /**
      * @methodName : selectAllByCreateTime
@@ -45,7 +50,7 @@ public interface ShortUrlMapper extends BaseMapper<ShortUrl> {
      * @Modified :
      * @Version : 1.0.0
      */
-    @Select("select * from tb_short_url where create_time between(#{startTime,endTime})")
+    @Select("select * from tb_short_url where create_time between(#{startTime},#{endTime})")
     List<ShortUrl> selectAllByCreateTime(LocalDateTime startTime , LocalDateTime endTime);
 
     // 查询指定有效期内的短链接对象
@@ -67,6 +72,8 @@ public interface ShortUrlMapper extends BaseMapper<ShortUrl> {
      */
     @Select("select * from tb_short_url where expiration_time between(#{startTime}, #{expirationTime}")
     List<ShortUrl> selectAllByExpirationTime(LocalDateTime startTime ,LocalDateTime expirationTime);
+
+
 
 
 

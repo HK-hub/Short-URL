@@ -7,6 +7,7 @@ import com.hk.surl.core.generator.ShortUrlGenerator;
 import com.hk.surl.core.generator.builder.ShortUrlGeneratorBuilder;
 import com.hk.surl.core.provider.random.RandomStringProvider;
 import com.hk.surl.domain.entity.ShortUrl;
+import com.hk.surl.entity.ShortUrlExt;
 import lombok.Data;
 
 import javax.sql.DataSource;
@@ -27,6 +28,9 @@ public class DefaultShortUrlGenerator extends ShortUrlGenerator{
     private ShortUrlGenerator generator ;
 
     public DefaultShortUrlGenerator() {
+
+        this.urlExt = new ShortUrlExt();
+
         // 通过建造者模式 获取生成器
          this.generator = new ShortUrlGeneratorBuilder()
                 .provider(new RandomStringProvider())
@@ -35,6 +39,15 @@ public class DefaultShortUrlGenerator extends ShortUrlGenerator{
                 .expireStrategy(ExpirationStrategy.FOREVER)
                 .build();
     }
+
+    // 域名系统 配置
+    public DefaultShortUrlGenerator(String domain){
+
+        // 域名系统：用于生成短链接后的访问前缀部分
+        this() ;
+        this.urlExt.domain(domain) ;
+    }
+
 
     public DefaultShortUrlGenerator(ShortUrlGenerator generator){
         this.generator = generator;

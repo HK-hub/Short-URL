@@ -3,6 +3,7 @@ package com.hk.surl.domain.vo;
 import com.baomidou.mybatisplus.annotation.*;
 import com.hk.surl.domain.entity.ShortUrl;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
  * @Modified :
  * @Version : 1.0
  */
+@Data
 public class ShortUrlVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,6 +42,11 @@ public class ShortUrlVo implements Serializable {
     @ApiModelProperty(value = "跟新时间 ")
     private LocalDateTime updateTime;
 
+    public ShortUrlVo() {
+    }
 
-
+    public ShortUrlVo(String shortUrl, String longUrl) {
+        this.shortUrl = shortUrl;
+        this.longUrl = longUrl;
+    }
 }
