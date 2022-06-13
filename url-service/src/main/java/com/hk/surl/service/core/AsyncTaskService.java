@@ -7,6 +7,7 @@ import com.hk.surl.domain.mapper.LongUrlMapper;
 import com.hk.surl.domain.mapper.ShortUrlMapper;
 import com.hk.surl.domain.mapper.UrlMapMapper;
 import com.hk.surl.util.LongUrlUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -26,6 +27,7 @@ import java.util.concurrent.CompletableFuture;
  * @Modified :
  * @Version : 1.0
  */
+@Slf4j
 @Service
 public class AsyncTaskService {
 
@@ -91,6 +93,8 @@ public class AsyncTaskService {
     public CompletableFuture<LongUrl> newAndSaveLongUrl(String longUrlStr) {
         // 生成对应的长链接对象
         LongUrl longUrl = LongUrlUtil.analyzeStringToLongUrl(longUrlStr);
+        log.info("longUrl: {}", longUrl);
+
         // 校验
         if (longUrl != null) {
             // url 长链接合法, 保存

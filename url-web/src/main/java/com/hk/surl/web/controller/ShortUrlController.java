@@ -11,6 +11,7 @@ import com.hk.surl.common.response.ResultCode;
 import com.hk.surl.common.util.ParseURLPairUtil;
 import com.hk.surl.core.common.util.DateTimeUtil;
 import com.hk.surl.domain.entity.ShortUrl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,7 @@ import java.util.concurrent.TimeUnit;
  * @Modified :
  * @Version : 1.0
  */
+@Slf4j
 @RestController
 @RequestMapping("/short-url")
 public class ShortUrlController {
@@ -39,31 +41,31 @@ public class ShortUrlController {
 
 
 
-    // 通过 外部传入的 长链接字符串，生成对应的短链接对象字符串
-    // 设置过期策略，生成对应的长链接对象，长短链接映射关系
+
     /**
      * @methodName : newShortUrlByLongUrl
      * @author : HK意境
      * @date : 2022/6/11 16:19
-     * @description :
+     * @description : 通过 外部传入的 长链接字符串，生成对应的短链接对象字符串,设置过期策略，生成对应的长链接对象，长短链接映射关系
      * @Todo :
-     * @apiNote :
+     * @apiNote 通过长链接字符串，生成对应的短链接对象,设置过期策略，生成对应的长链接对象，长短链接映射关系
      * @params :
          * @param longUrl 长链接字符串
          * @param time 时间度量,默认-1
          * @param timeUnit 时间单位，默认day
-     * @return null
+     * @return ResponseResult
      * @throws:
      * @Bug :
      * @Modified :
      * @Version : 1.0.0
      */
     @PostMapping("/new")
-    public ResponseResult<ShortUrl> newShortUrlByLongUrl(String longUrl, @RequestParam(name = "time" ,defaultValue = "-1",required = false) Integer time ,
+    public ResponseResult<ShortUrl> newShortUrlByLongUrl(@RequestParam(name = "longUrl", required = true) String longUrl, @RequestParam(name = "time" ,defaultValue = "-1",required = false) Integer time ,
                                                          @RequestParam(name = "timeUnit" ,defaultValue ="day", required = false)String timeUnit) throws ExecutionException, InterruptedException {
 
         // 构造过期时间
         LocalDateTime expirationTime = DateTimeUtil.getExpirationTimeByTimeEntry(time, timeUnit);
+
         // 如果数据库不存在长链接字符串对应的短链接那就生成，如果存在那就直接返回存在的数据对象
         ShortUrl shortUrl = shortUrlService.newShortUrl(longUrl,expirationTime);
 
@@ -78,7 +80,7 @@ public class ShortUrlController {
      * @date : 2022/6/9 21:41
      * @description :
      * @Todo :
-     * @apiNote : 根据短链接字符串 进行查询
+     * @apiNote 根据短链接字符串 进行查询
      * @params :
          * @param shortUrl 短链接字符串
      * @return ResponseResult
@@ -91,7 +93,7 @@ public class ShortUrlController {
     public ResponseResult<ShortUrl> getByShortUrl(@RequestParam(name = "shortUrl") String shortUrl) throws MalformedURLException {
 
         // 获取 uri 部分
-        shortUrl = ParseURLPairUtil.getUri(shortUrl);
+        //shortUrl = ParseURLPairUtil.getUri(shortUrl);
 
         // 可见性，逻辑删除性
         LambdaQueryChainWrapper<ShortUrl> wrapper = shortUrlService.lambdaQuery().eq(ShortUrl::getVisible, true).eq(ShortUrl::getDeleted, false);
@@ -110,7 +112,7 @@ public class ShortUrlController {
      * @date : 2022/6/9 21:24
      * @description :
      * @Todo :
-     * @apiNote : 获取全部 短链接对象列表，可选是否可见，过期，删除的
+     * @apiNote 获取全部 短链接对象列表，可选是否可见，过期，删除的
      * @params :
          * @param visible 是否查询不可见的短链接
          * @param deleted 是否查询逻辑删除的短链接
@@ -126,10 +128,13 @@ public class ShortUrlController {
                                          @RequestParam(name = "deleted", defaultValue = "false", required = false)Boolean deleted,
                                          @RequestParam(name = "expired", defaultValue = "false", required = false)Boolean expired){
         // 处理请求参数
-        LambdaUpdateChainWrapper<ShortUrl> wrapper = shortUrlService.lambdaUpdate();
+        LambdaUpdateChainWrapper<ShortUrl> wrapper = shortUrlService.lambdaUpdate()
+                .eq(!visible,ShortUrl::getVisible, true);
+
+        // shortUrlService.getAllShortUrlByVisible();
 
         // 是否查询不可见的短链接
-        if (!visible){
+        /*if (!visible){
             // 不查询
             wrapper.eq(ShortUrl::getVisible,true);
         }
@@ -142,10 +147,10 @@ public class ShortUrlController {
         if (!expired){
             // 不查询: 只查询过期时间大于当前时间的
             wrapper.ge(ShortUrl::getExpirationTime , LocalDateTime.now());
-        }
+        }*/
 
         // 查询
-        List<ShortUrl> shortUrlList = shortUrlService.list(wrapper);
+        List<ShortUrl> shortUrlList = shortUrlService.list();
 
         return ResponseResult.SUCCESS().setData(shortUrlList);
     }
@@ -157,7 +162,7 @@ public class ShortUrlController {
      * @date : 2022/6/9 20:50
      * @description :
      * @Todo :
-     * @apiNote : 根据 shortUrl 对象id 值查询
+     * @apiNote 根据 shortUrl 对象id 值查询
      * @params :
          * @param id shortUrl 对象id值
      * @return ResponseResult
@@ -183,7 +188,7 @@ public class ShortUrlController {
      * @date : 2022/6/9 21:00
      * @description :
      * @Todo :
-     * @apiNote : 添加或者保存 shortUrl 对象, 返回成功保存后的对象和保存结果
+     * @apiNote 添加或者保存 shortUrl 对象, 返回成功保存后的对象和保存结果
      * @params :
          * @param shortUrl 带保存的短链接对象
      * @return ResponseResult
@@ -211,7 +216,7 @@ public class ShortUrlController {
      * @date : 2022/6/9 21:06
      * @description :
      * @Todo :
-     * @apiNote : 根据 id 值，更新 shortUrl 对象，返回受影响的行数
+     * @apiNote 根据 id 值，更新 shortUrl 对象，返回受影响的行数
      * @params :
          * @param shortUrl 待更新的对象
      * @return : ResponseResult
@@ -223,12 +228,15 @@ public class ShortUrlController {
     @PutMapping("/update")
     public ResponseResult<ShortUrl> updateById(@RequestBody ShortUrl shortUrl){
 
+        log.info("{}", shortUrl);
+
         // 根据 id 更新 shorUrl 对象
         boolean update = shortUrlService.update(shortUrl,
-                shortUrlService.lambdaUpdate().eq(ShortUrl::getId, shortUrl.getId()));
+                shortUrlService.lambdaUpdate()
+                        .eq(ShortUrl::getId, shortUrl.getId()).eq(ShortUrl::getVisible, true));
 
         // 响应更新结果
-        ResponseResult<ShortUrl> result = new ResponseResult<>(update);
+        ResponseResult<ShortUrl> result = new ResponseResult<>(true);
         result.setData(shortUrl);
 
         return result;
@@ -241,7 +249,7 @@ public class ShortUrlController {
      * @date : 2022/6/9 20:59
      * @description :
      * @Todo :
-     * @apiNote : 删除指定 shortUrl 对象，id必须值， 返回是否删除成功
+     * @apiNote 删除指定 shortUrl 对象，id必须值， 返回是否删除成功
      * @params :
          * @param shortUrl 待删除的短链接对象
      * @return : ResponseResult
@@ -265,7 +273,7 @@ public class ShortUrlController {
      * @date : 2022/6/9 20:55
      * @description :
      * @Todo :
-     * @apiNote : 根据短链接对象id 删除
+     * @apiNote 根据短链接对象id 删除
      * @params :
          * @param id shortUrl对象的id值
      * @return : ResponseResult
@@ -279,7 +287,7 @@ public class ShortUrlController {
 
         // 根据id ,删除对象，返回是否伤删除成功
         boolean rm = shortUrlService.removeShortUrlById(id);
-
+        //boolean rm = shortUrlService.removeById(id);
         // 返回删除结果对象
         return new ResponseResult<Boolean>(rm);
 

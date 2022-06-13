@@ -1,6 +1,6 @@
 com\hk\surl\service\core\LongUrlServiceImpl.class
 com\hk\surl\service\core\VisitLogServiceImpl.class
-com\hk\surl\service\core\ShortUrlServiceImpl.class
 com\hk\surl\service\core\AnonymousUserServiceImpl.class
-com\hk\surl\service\core\AppUserServiceImpl.class
 com\hk\surl\service\core\UrlMapServiceImpl.class
+com\hk\surl\service\core\ShortUrlServiceImpl.class
+com\hk\surl\service\core\AppUserServiceImpl.class

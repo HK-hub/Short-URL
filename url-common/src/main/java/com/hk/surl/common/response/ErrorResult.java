@@ -1,7 +1,9 @@
 package com.hk.surl.common.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -12,6 +14,7 @@ public class ErrorResult implements Serializable {
     private boolean success = false;
     private Integer code;
     private String message;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime time = LocalDateTime.now();
     @JsonIgnore
     private ResultCode resultCode;
@@ -45,4 +48,9 @@ public class ErrorResult implements Serializable {
        result.setMessage(message);
        return result;
    }
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    public LocalDateTime getTime() {
+        return time;
+    }
 }

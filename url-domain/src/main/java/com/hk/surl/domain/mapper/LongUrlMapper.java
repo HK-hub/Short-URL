@@ -3,6 +3,7 @@ package com.hk.surl.domain.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hk.surl.domain.entity.LongUrl;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -33,8 +34,11 @@ public interface LongUrlMapper extends BaseMapper<LongUrl> {
      * @Modified :
      * @Version : 1.0.0
      */
-    List<LongUrl> selectListByIds(List<String> ids);
+    List<LongUrl> selectLongUrlListByIds(List<String> ids);
 
+    // 通过 长链接字符串获取长链接字符串
+    @Select("select * from tb_long_url where url = #{longUrl} limit 1")
+    LongUrl selectOneByLongUrl(String longUrl);
 
 
 }

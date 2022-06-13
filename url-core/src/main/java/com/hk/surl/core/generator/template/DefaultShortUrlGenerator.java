@@ -72,6 +72,8 @@ public class DefaultShortUrlGenerator extends ShortUrlGenerator{
     public ShortUrl generate(String longUrl){
         // 使用默认provider 进行生产
         ShortUrl shortUrl = this.generator.longUrl(longUrl).generate();
+        shortUrl.setShortUrl(this.urlExt.domain()+"/"+shortUrl.getShortUrl());
+
         return shortUrl ;
     }
 

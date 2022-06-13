@@ -6,11 +6,13 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.security.Security;
@@ -53,9 +55,13 @@ public class UrlMap implements Serializable {
 
     @ApiModelProperty(value = "映射关系创建时间")
     @TableField(fill = FieldFill.INSERT)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "映射关系失效时间=创建时间+有效时长")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime expirationTime;
 
     @ApiModelProperty(value = "乐观锁")
@@ -63,6 +69,8 @@ public class UrlMap implements Serializable {
 
     @ApiModelProperty(value = "更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
     @ApiModelProperty(value = "逻辑删除:1删除，0未删除")
@@ -78,5 +86,20 @@ public class UrlMap implements Serializable {
         this.setLongId(longUrl.getId());
         this.setLongUrl(longUrl.getUrl());
         this.setLongMd(SecureUtil.md5(this.longUrl));
+    }
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    public LocalDateTime getExpirationTime() {
+        return expirationTime;
+    }
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
     }
 }

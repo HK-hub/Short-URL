@@ -1,6 +1,6 @@
 package com.hk.surl.web.controller;
 
-import cn.hutool.core.lang.Assert;
+import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.hk.surl.api.core.IShortUrlService;
 import com.hk.surl.api.core.IUrlMapService;
 import com.hk.surl.common.response.ResponseResult;
@@ -14,10 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +35,7 @@ import java.util.function.Supplier;
  */
 @Slf4j
 @RestController
+//@RequestMapping("/access")
 @RequestMapping("/")
 public class AccessController {
 
@@ -62,22 +60,23 @@ public class AccessController {
      * @Todo :
      * @apiNote : 根据短链接跳转到对应的长链接
      * @params :
-         * @param shortUrl 短链接字符串
+         * @param surl 短链接字符串
      * @return ResponseResult
      * @throws:
-     * @Bug :
+     * @Bug : favor.ico 图标存在访问问题，浏览器首先会访问图标然后在访问短链接
      * @Modified :
      * @Version : 1.0.0
      */
-    @GetMapping("/{shortUrl}")
-    public ResponseResult<ShortUrlVo> redirectUrl(@PathVariable(name = "shortUrl", required = true)String shortUrl,
+    @GetMapping("/{surl}")
+    public ResponseResult<ShortUrlVo> redirectUrl(@PathVariable(name = "surl") String surl,
                                                   HttpServletRequest request ,
                                                   HttpServletResponse response) throws IOException {
         // 参数校验
-        Assertions.assertThat(shortUrl).isNotNull();
+        Assert.notEmpty(surl, "shortUrl must be not null but provide is a null string");
 
         // 获取参数: 完整的短链接地址
-        shortUrl = this.domain + "/" + shortUrl ;
+        String shortUrl = this.domain + "/" + surl ;
+        //log.info("shortUrl: {}", shortUrl);
 
         // 获取到需要重定向的长链接对象: 根据选择策略
         LongUrl redirectLongUrl = this.accessService.getRedirectLongUrl(shortUrl);
@@ -91,6 +90,9 @@ public class AccessController {
         return ResponseResult.SUCCESS().setResultCode(ResultCode.REDIRECT_TEMPORARY)
                 .setData(new ShortUrlVo(shortUrl,redirectLongUrl.getUrl()));
     }
+
+
+
 
 
 

@@ -121,7 +121,7 @@ public class ShortUrlGenerator implements IShortUrlGenerator {
         String targetUrl = provider.provideShortUrl(this);
 
         // 在这里设置域名系统
-        targetUrl = this.urlExt.domain() + "/" + targetUrl ;
+        //targetUrl = this.urlExt.domain() + "/" + targetUrl ;
 
         // 设置创建时间，跟新时间
         ShortUrl shortUrl = new ShortUrl(targetUrl);

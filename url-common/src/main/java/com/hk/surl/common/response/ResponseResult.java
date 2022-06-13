@@ -1,9 +1,11 @@
 package com.hk.surl.common.response;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -38,6 +40,7 @@ public class ResponseResult<T extends Object> {
     //返回数据
     private T data;
     // 响应时间
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateTime = LocalDateTime.now() ;
     // 响应ID： 后期进行链路追踪
     private String traceId;
@@ -101,6 +104,8 @@ public class ResponseResult<T extends Object> {
         return this;
     }
 
-
-
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
 }

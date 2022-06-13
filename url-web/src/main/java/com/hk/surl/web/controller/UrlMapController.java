@@ -2,16 +2,23 @@ package com.hk.surl.web.controller;
 
 
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.hk.surl.api.common.FileService;
 import com.hk.surl.api.core.IUrlMapService;
 import com.hk.surl.common.response.ResponseResult;
 import com.hk.surl.domain.entity.LongUrl;
 import com.hk.surl.domain.entity.UrlMap;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AssertionsKt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -24,13 +31,18 @@ import java.util.List;
  * @Modified :
  * @Version : 1.0
  */
+@Slf4j
 @RestController
 @RequestMapping("/url-map")
 public class UrlMapController {
 
-    @Autowired
-    private IUrlMapService urlMapService ;
+    @Value("${short.url.system.longUrl.template}")
+    private String longUrlTemplate ;
 
+    @Resource
+    private IUrlMapService urlMapService ;
+    @Resource
+    private FileService fileService ;
 
     /**
      * @methodName : getLongUrsByShortUrl
@@ -38,7 +50,7 @@ public class UrlMapController {
      * @date : 2022/6/11 19:28
      * @description : 根据短链接字符串获取全部的长链接实体
      * @Todo :
-     * @apiNote : 根据短链接字符串获取全部的长链接实体
+     * @apiNote 根据短链接字符串获取全部的长链接实体
      * @params :
          * @param shortUrl 短链接字符串
      * @return ResponseResult
@@ -62,7 +74,7 @@ public class UrlMapController {
      * @date : 2022/6/11 19:28
      * @description :
      * @Todo :
-     * @apiNote : 通过 短链接 id 获取对应的长链接对象
+     * @apiNote 通过 短链接 id 获取对应的长链接对象
      * @params :
          * @param sid 短链接id值
      * @return ResponseResult
@@ -80,8 +92,57 @@ public class UrlMapController {
     }
 
 
+    // 批量生成短链接
+    /**
+     * @methodName : createBatchUrlMap
+     * @author : HK意境
+     * @date : 2022/6/13 20:26
+     * @description :
+     * @Todo :
+     * @apiNote :
+     * @params :
+         * @param file 长链接excel 文件,建议数据量不要太大
+     * @return ResponseResult
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @PostMapping("/batch")
+    public ResponseResult createBatchUrlMap(MultipartFile file){
 
 
 
+        return null ;
+    }
+
+
+
+
+    /**
+     * @methodName :
+     * @author : HK意境
+     * @date : 2022/6/13 20:38
+     * @description :
+     * @Todo :
+     * @apiNote :
+     * @params :
+     * @return null
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @GetMapping("/download/template")
+    public void downloadLongUrlTemplate(HttpServletResponse response) throws IOException {
+
+        // 默认版本：最新版本
+        String path = this.longUrlTemplate;
+
+        //log.info("template name : " + path);
+
+        // 下载文件
+        Boolean res = fileService.downloadFile(path, response);
+    }
 
 }

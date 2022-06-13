@@ -25,6 +25,8 @@ public enum ResultCode {
     FORBIDDEN(false,403,"no permission"),
     // 资源未找到
     NOT_FOUND(false,404, "not found"),
+    // 文件上传下载失败
+    RESOURCE_DOWNLOAD_OR_UPLOAD_ERROR(false,424,"resouce downlowd or upload error"),
     //账号或者密码错误
     ACCOUNT_PASSWORDS_ERROR(false,101,"account or password error"),
     //token 校验不合法

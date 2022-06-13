@@ -66,7 +66,7 @@ public class LongUrlController {
      * @date : 2022/6/9 9:06
      * @description : 获取全部的 长链接对象，不包括过期的，对外不可见的，如果需要查询已经删除，过期的，对外不可见的，请使用请求参数来进行选择查询
      * @Todo :
-     * @apiNote : 获取全部的 长链接对象，可选对外不可见的，删除的
+     * @apiNote 获取全部的 长链接对象，可选对外不可见的，删除的
      * @params :
          * @param : visible 是否选择查询不可见的长链接
          * @param : deleted 是否选择逻辑删除的长链接
@@ -80,7 +80,8 @@ public class LongUrlController {
     public ResponseResult getAllLongUrl(@RequestParam(name = "visible", defaultValue = "false",required = false)Boolean visible,
                                                  @RequestParam(name = "deleted", defaultValue = "false", required = false)Boolean deleted
                                                  ){
-        LambdaQueryChainWrapper<LongUrl> wrapper = longUrlService.lambdaQuery();
+        LambdaQueryChainWrapper<LongUrl> wrapper = longUrlService.lambdaQuery()
+                .eq(LongUrl::getVisible, true).eq(LongUrl::getDeleted, false);
 
         // 根据可见性，过期，删除 逻辑条件 来进行查询
         if (!visible) {
@@ -104,7 +105,7 @@ public class LongUrlController {
      * @date : 2022/6/9 8:53
      * @description : 通过 id 查询长链接，返回查询的结果对象
      * @Todo :
-     * @apiNote : 通过 id 查询长链接
+     * @apiNote 通过 id 查询长链接
      * @params :
          * @param : id 长链接id
      * @return : ResponseResult
@@ -134,7 +135,7 @@ public class LongUrlController {
      * @date : 2022/6/8 23:45
      * @description :
      * @Todo : 保存一个长链接实体
-     * @apiNote : 保存/新增/添加一个 longUrl 长链接
+     * @apiNote 保存/新增/添加一个 longUrl 长链接
      * @params :
          * @param : longUrl 长链接对象
      * @return : ResponseResult
@@ -158,7 +159,7 @@ public class LongUrlController {
      * @date : 2022/6/9 0:03
      * @description : // 删除长链接对象，删除成功返回 true，并且把删除对象返回
      * @Todo :
-     * @apiNote : 根据 longUrl 的id 删除长链接对象
+     * @apiNote 根据 longUrl 的id 删除长链接对象
      * @params :
          * @param : longUrl 长链接实体
      * @return : ResponseResult
@@ -182,7 +183,7 @@ public class LongUrlController {
      * @date : 2022/6/9 0:03
      * @description : // 删除长链接对象，删除成功返回 true，并且把删除对象返回
      * @Todo :
-     * @apiNote : 根据 longUrl 的id 删除长链接对象
+     * @apiNote 根据 longUrl 的id 删除长链接对象
      * @params :
      * @param : id 长链接实体的id 值
      * @return : ResponseResult
@@ -206,7 +207,7 @@ public class LongUrlController {
      * @date : 2022/6/9 0:10
      * @description :
      * @Todo :
-     * @apiNote : 根据 长链接id ,修改对象， 返回成功修改后的对象
+     * @apiNote 根据 长链接id ,修改对象， 返回成功修改后的对象
      * @params :
          * @param : longUrl 长链接对象
      * @return : ResponseResult

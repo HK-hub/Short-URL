@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hk.surl.domain.entity.LongUrl;
 import com.hk.surl.domain.entity.ShortUrl;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDateTime;
@@ -26,7 +27,7 @@ public interface ShortUrlMapper extends BaseMapper<ShortUrl> {
     // select su.*  from tb_short_url as su where su.id in (
     //      select m.short_url_id from tn_url_map as m where m.long_url = #{longUrl} and m.visible = true ;
     // )
-    ShortUrl selectByLongUrl(LongUrl longUrl);
+    ShortUrl selectShortUrlByLongUrl(@Param(value = "longUrl") LongUrl longUrl);
 
 
     // 查询指定短链接字符串的链接对象

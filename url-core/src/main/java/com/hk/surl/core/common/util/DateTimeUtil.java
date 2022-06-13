@@ -91,7 +91,7 @@ public class DateTimeUtil {
         // 判断是否为永久有效
         if (timeEntry.getKey() == -1){
             // 永久有效
-            expirationTime = LocalDateTime.MAX ;
+            expirationTime = LocalDateTime.now().plusYears(99) ;
 
         }else{
             // 有过期时间

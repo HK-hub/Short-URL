@@ -1,6 +1,7 @@
 package com.hk.surl.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -55,10 +56,12 @@ public class VisitLog implements Serializable {
 
     @ApiModelProperty(value = "访问时间")
     @TableField(fill = FieldFill.INSERT)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "跟新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
     @ApiModelProperty(value = "逻辑删除：1删除，0未删除")
@@ -66,4 +69,13 @@ public class VisitLog implements Serializable {
     private Boolean deleted;
 
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
 }

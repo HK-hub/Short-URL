@@ -8,6 +8,7 @@ import com.hk.surl.domain.entity.LongUrl;
 import com.hk.surl.domain.entity.UrlMap;
 import com.hk.surl.domain.mapper.LongUrlMapper;
 import com.hk.surl.domain.mapper.UrlMapMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
  * @Modified :
  * @Version : 1.0
  */
+@Slf4j
 @Service
 public class UrlMapServiceImpl extends ServiceImpl<UrlMapMapper, UrlMap> implements IUrlMapService {
 
@@ -50,15 +52,20 @@ public class UrlMapServiceImpl extends ServiceImpl<UrlMapMapper, UrlMap> impleme
     @Override
     public List<LongUrl> getLongUrlListByShortUrl(String shortUrl) {
 
-        // 查询 短链接对应的长链接对象id 值
+        /*// 查询 短链接对应的长链接对象id 值
         LambdaQueryChainWrapper<UrlMap> wrapper = new LambdaQueryChainWrapper<>(urlMapMapper);
-        wrapper.eq(UrlMap::getShortUrl, shortUrl);
+        wrapper.eq(UrlMap::getShortUrl, shortUrl).eq(UrlMap::getVisible, true);
+
         // 查询 得到集合
-        List<UrlMap> urlMaps = urlMapMapper.selectList(wrapper);
+        //List<UrlMap> urlMaps = urlMapMapper.selectList(wrapper);*/
+
+        // 查询 短链接对应的长链接对象id 值
+        List<UrlMap> urlMaps = this.urlMapMapper.selectByShortUrl(shortUrl);
+
         // 收集出 id 列表
         List<String> ids = urlMaps.stream().map(UrlMap::getLongId).collect(Collectors.toList());
         // 批量查询 得到 长链接对象
-        List<LongUrl> longUrls = longUrlMapper.selectListByIds(ids);
+        List<LongUrl> longUrls = longUrlMapper.selectLongUrlListByIds(ids);
 
         return longUrls;
     }
@@ -88,7 +95,7 @@ public class UrlMapServiceImpl extends ServiceImpl<UrlMapMapper, UrlMap> impleme
 
         // 收集长链接对象 id 集合
         List<String> ids = urlMaps.stream().map(UrlMap::getLongId).collect(Collectors.toList());
-        List<LongUrl> longUrls = longUrlMapper.selectListByIds(ids);
+        List<LongUrl> longUrls = longUrlMapper.selectLongUrlListByIds(ids);
 
         return longUrls;
     }

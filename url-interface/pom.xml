@@ -11,6 +11,19 @@
 
     <artifactId>url-interface</artifactId>
     <dependencies>
+
+        <dependency>
+            <groupId>com.hk.surl</groupId>
+            <artifactId>url-common</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+
         <dependency>
             <groupId>com.hk.surl</groupId>
             <artifactId>url-domain</artifactId>

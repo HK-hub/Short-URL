@@ -3,6 +3,7 @@ package com.hk.surl.service.core;
 
 import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.surl.api.core.IShortUrlService;
 import com.hk.surl.core.generator.template.DefaultShortUrlGenerator;
@@ -12,6 +13,8 @@ import com.hk.surl.domain.entity.UrlMap;
 import com.hk.surl.domain.mapper.LongUrlMapper;
 import com.hk.surl.domain.mapper.ShortUrlMapper;
 import com.hk.surl.domain.mapper.UrlMapMapper;
+import com.hk.surl.util.LongUrlUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +34,7 @@ import java.util.concurrent.ExecutionException;
  * @Modified :
  * @Version : 1.0
  */
+@Slf4j
 @Service
 public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> implements IShortUrlService {
 
@@ -70,15 +74,14 @@ public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> i
         ShortUrl shortUrl = null ;
 
         // 首先校验 数据库中是否存在 对应的 长链接对象
-        LongUrl longUrl = longUrlMapper.selectOne(new LambdaQueryChainWrapper<>(longUrlMapper)
-                .eq(LongUrl::getUrl, longUrlStr).eq(LongUrl::getVisible, true));
+        //LambdaQueryChainWrapper<LongUrl> wrapper = new LambdaQueryChainWrapper<LongUrl>(longUrlMapper).eq(LongUrl::getUrl, longUrlStr);
+        LongUrl longUrl = this.longUrlMapper.selectOneByLongUrl(longUrlStr);
         if (longUrl == null){
             // 不存在
             shortUrl = this.doNewShortUrl(longUrlStr, expirationTime);
-
         }else{
             // 以及存在了长链接 对象，并且是可见的，返回对应的短链接对象
-            shortUrl = shortUrlMapper.selectByLongUrl(longUrl);
+            shortUrl = shortUrlMapper.selectShortUrlByLongUrl(longUrl);
         }
 
         return shortUrl ;
@@ -148,9 +151,6 @@ public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> i
             res = this.removeShortUrlByUrl(shortUrl.getShortUrl());
         }
 
-
-
-
         return res;
     }
 
@@ -203,6 +203,7 @@ public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> i
         // 生产短链接对象
         ShortUrl shortUrl = this.shortUrlGenerator.generate(longUrlStr);
         shortUrl.setExpirationTime(expirationTime);
+
         // 使用异步任务插入保存短链接对象
         CompletableFuture<ShortUrl> shortUrlFuture = asyncTaskService.newAndSaveShortUrl(shortUrl);
 
@@ -212,12 +213,12 @@ public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> i
         // 获取异步任务执行结果
         shortUrl = shortUrlFuture.get();
         LongUrl longUrl  = longUrlFuture.get();
+
         // 异步插入 : 废弃
         // 这里不能使用异步插入，因为存在插入失败的情况，会存在数据库，长短链接关联数据不一致的情况
         //CompletableFuture<UrlMap> urlMapFuture = asyncTaskService.newAndSaveUrlMap(shortUrl, longUrl);
 
         // 必须使用同步插入
-
         if (shortUrl != null && longUrl != null){
             // 长短链接对象都不为空，插入数据库成功了
             // 构造映射对象
@@ -226,7 +227,6 @@ public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> i
             // 插入保存
             int insert = urlMapMapper.insert(urlMap);
         }
-
 
         return shortUrl;
     }
