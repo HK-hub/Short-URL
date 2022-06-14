@@ -1,11 +1,13 @@
 package com.hk.surl.service.core;
 
+import com.hk.surl.common.log.LogTrance;
 import com.hk.surl.domain.entity.LongUrl;
 import com.hk.surl.domain.entity.ShortUrl;
 import com.hk.surl.domain.entity.UrlMap;
 import com.hk.surl.domain.mapper.LongUrlMapper;
 import com.hk.surl.domain.mapper.ShortUrlMapper;
 import com.hk.surl.domain.mapper.UrlMapMapper;
+import com.hk.surl.domain.mapper.VisitLogMapper;
 import com.hk.surl.util.LongUrlUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
@@ -37,6 +39,9 @@ public class AsyncTaskService {
     private LongUrlMapper longUrlMapper ;
     @Resource
     private UrlMapMapper urlMapMapper ;
+    @Resource
+    private VisitLogMapper logMapper ;
+
 
     /**
      * @methodName :newAndSaveShortUrl
@@ -142,4 +147,29 @@ public class AsyncTaskService {
         }
         return CompletableFuture.completedFuture(null);
     }*/
+
+
+    /**
+     * @methodName : writeLogToDatabase
+     * @author : HK意境
+     * @date : 2022/6/14 16:33
+     * @description : 异步写入日志
+     * @Todo :
+     * @apiNote :
+     * @params :
+         * @param logTrance 日志追踪
+     * @return null
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @Async("asyncTaskExecutor")
+    public CompletableFuture<Boolean> writeLogToDatabase(LogTrance logTrance){
+
+
+
+    }
+
+
 }

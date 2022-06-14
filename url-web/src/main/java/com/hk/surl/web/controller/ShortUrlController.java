@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.hk.surl.api.core.IShortUrlService;
+import com.hk.surl.common.log.SysLog;
 import com.hk.surl.common.response.ResponseResult;
 import com.hk.surl.common.response.ResultCode;
 import com.hk.surl.common.util.ParseURLPairUtil;
@@ -123,6 +124,7 @@ public class ShortUrlController {
      * @Modified :
      * @Version : 1.0.0
      */
+    @SysLog(businessType = "查看全部短链接",method = "getAllShortUrl",operate = "查询全部")
     @GetMapping("/get/all")
     public ResponseResult getAllShortUrl(@RequestParam(name = "visible", defaultValue = "false", required = false)Boolean visible,
                                          @RequestParam(name = "deleted", defaultValue = "false", required = false)Boolean deleted,

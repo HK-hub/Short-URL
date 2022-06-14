@@ -3,12 +3,15 @@ package com.hk.surl.web.controller;
 
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.hk.surl.api.core.ILongUrlService;
+import com.hk.surl.common.log.SysLog;
 import com.hk.surl.common.response.ResponseResult;
 import com.hk.surl.common.response.ResultCode;
+import com.hk.surl.common.util.IPUtil;
 import com.hk.surl.domain.entity.LongUrl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -76,10 +79,11 @@ public class LongUrlController {
      * @Modified :
      * @Version : 1.0.0
      */
+    @SysLog(businessType = "查询群不长连接对象",method = "getAllLongUrl",operate = "查询")
     @GetMapping("/get/all")
     public ResponseResult getAllLongUrl(@RequestParam(name = "visible", defaultValue = "false",required = false)Boolean visible,
-                                                 @RequestParam(name = "deleted", defaultValue = "false", required = false)Boolean deleted
-                                                 ){
+                                        @RequestParam(name = "deleted", defaultValue = "false", required = false)Boolean deleted){
+
         LambdaQueryChainWrapper<LongUrl> wrapper = longUrlService.lambdaQuery()
                 .eq(LongUrl::getVisible, true).eq(LongUrl::getDeleted, false);
 
@@ -94,7 +98,8 @@ public class LongUrlController {
         }
         
         // 查询所有
-        List<LongUrl> longUrlList = longUrlService.list(wrapper);
+        //List<LongUrl> longUrlList = longUrlService.list(wrapper);
+        List<LongUrl> longUrlList = longUrlService.list();
 
         return ResponseResult.SUCCESS().setData(longUrlList);
     }

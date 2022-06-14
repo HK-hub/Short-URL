@@ -45,6 +45,20 @@
             <version>2.1.6</version>
         </dependency>
 
+        <!-- ip 地址信息 -->
+        <dependency>
+            <groupId>com.maxmind.geoip2</groupId>
+            <artifactId>geoip2</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.lionsoul</groupId>
+            <artifactId>ip2region</artifactId>
+            <version>1.7.2</version>
+        </dependency>
+
+
 
     </dependencies>
 

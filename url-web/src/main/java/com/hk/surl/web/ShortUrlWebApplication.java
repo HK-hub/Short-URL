@@ -1,7 +1,9 @@
 package com.hk.surl.web;
 
+import com.hk.surl.web.aop.EnableSysLog;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
@@ -14,7 +16,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * @Modified :
  * @Version : 1.0
  */
+
 @EnableAsync
+@EnableAspectJAutoProxy
 @SpringBootApplication(scanBasePackages = "com.hk.surl")
 public class ShortUrlWebApplication {
 

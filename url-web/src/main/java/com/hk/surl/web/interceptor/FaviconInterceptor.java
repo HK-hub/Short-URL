@@ -32,6 +32,8 @@ public class FaviconInterceptor implements HandlerInterceptor {
         }
     }
 
+
+
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
