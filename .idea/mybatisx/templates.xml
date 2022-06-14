@@ -5,8 +5,8 @@
       <TemplateContext>
         <option name="generateConfig">
           <GenerateConfig>
-            <option name="annotationType" value="NONE" />
-            <option name="basePackage" value="com.hk.surl" />
+            <option name="annotationType" value="MYBATIS_PLUS3" />
+            <option name="basePackage" value="com.hk.surl.common" />
             <option name="basePath" value="src/main/java" />
             <option name="encoding" value="UTF-8" />
             <option name="extraClassSuffix" value="" />
@@ -64,8 +64,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="TinyId" />
-                  <option name="tableName" value="tb_tiny_id" />
+                  <option name="className" value="LogTrance" />
+                  <option name="tableName" value="tb_log_trance" />
                 </TableUIInfo>
               </list>
             </option>

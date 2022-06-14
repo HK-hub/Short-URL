@@ -1,6 +1,7 @@
 package com.hk.surl.web;
 
 import com.hk.surl.web.aop.EnableSysLog;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -17,6 +18,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * @Version : 1.0
  */
 
+@MapperScan(basePackages = "com.hk.surl.domain.mapper")
 @EnableAsync
 @EnableAspectJAutoProxy
 @SpringBootApplication(scanBasePackages = "com.hk.surl")

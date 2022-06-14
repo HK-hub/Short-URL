@@ -1,13 +1,13 @@
 package com.hk.surl.web.aop;
 
 import cn.hutool.json.JSONUtil;
-import com.hk.surl.common.log.LogTrance;
+import com.hk.surl.domain.entity.LogTrance;
 import com.hk.surl.common.log.SysLog;
 import com.hk.surl.common.response.ResponseResult;
 import com.hk.surl.common.response.ResultCode;
 import com.hk.surl.common.util.IPUtil;
 import com.hk.surl.common.util.TranceIdUtil;
-import com.maxmind.geoip2.exception.GeoIp2Exception;
+import com.hk.surl.service.core.AsyncTaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -17,9 +17,8 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 
@@ -37,6 +36,10 @@ import java.time.LocalDateTime;
 @Slf4j
 @Aspect
 public class SysLogAspect {
+
+    @Resource
+    private AsyncTaskService taskService ;
+
 
     @Pointcut("@annotation(com.hk.surl.common.log.SysLog)")
     public void pointcut(){ }
@@ -73,7 +76,8 @@ public class SysLogAspect {
             logTrance.setMsg(throwable.getMessage());
             logTrance.setCode(ResultCode.FAIL.code());
             // 入库
-            log.info("{}",logTrance);
+            taskService.writeLogToDatabase(logTrance);
+
             throw throwable;
         }
         // 执行时间
@@ -82,7 +86,9 @@ public class SysLogAspect {
         logTrance.setResult(result.getClass().getName());
         // 响应结果
         logTrance.setCode(((ResponseResult) result).getCode());
-        log.info("{}",logTrance);
+
+        // 入库
+        taskService.writeLogToDatabase(logTrance);
         return result ;
     }
 

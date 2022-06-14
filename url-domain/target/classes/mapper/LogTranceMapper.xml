@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.surl.domain.mapper.LogTranceMapper">
+
+    <resultMap id="BaseResultMap" type="com.hk.surl.domain.entity.LogTrance">
+            <id property="tranceId" column="trance_id" jdbcType="VARCHAR"/>
+            <result property="businessType" column="business_type" jdbcType="VARCHAR"/>
+            <result property="level" column="level" jdbcType="VARCHAR"/>
+            <result property="path" column="path" jdbcType="VARCHAR"/>
+            <result property="ipAddress" column="ip_address" jdbcType="VARCHAR"/>
+            <result property="userAgent" column="user_agent" jdbcType="VARCHAR"/>
+            <result property="location" column="location" jdbcType="VARCHAR"/>
+            <result property="parameters" column="parameters" jdbcType="VARCHAR"/>
+            <result property="requestMethod" column="request_method" jdbcType="VARCHAR"/>
+            <result property="operate" column="operate" jdbcType="VARCHAR"/>
+            <result property="operator" column="operator" jdbcType="VARCHAR"/>
+            <result property="result" column="result" jdbcType="VARCHAR"/>
+            <result property="code" column="code" jdbcType="INTEGER"/>
+            <result property="msg" column="msg" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="executeTime" column="execute_time" jdbcType="TIMESTAMP"/>
+            <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        trance_id,business_type,level,
+        path,ip_address,user_agent,
+        location,parameters,request_method,
+        operate,operator,result,
+        code,msg,create_time,
+        execute_time,end_time
+    </sql>
+</mapper>

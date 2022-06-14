@@ -44,10 +44,6 @@ public class AccessController {
     private String domain ;
 
     @Resource
-    private IUrlMapService urlMapService ;
-    @Resource
-    private IShortUrlService shortUrlService;
-    @Resource
     private AccessService accessService ;
 
 

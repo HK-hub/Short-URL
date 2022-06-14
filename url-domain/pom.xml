@@ -17,6 +17,12 @@
             <artifactId>hutool-crypto</artifactId>
             <version>5.7.15</version>
         </dependency>
+        <dependency>
+            <groupId>com.hk.surl</groupId>
+            <artifactId>url-common</artifactId>
+            <version>0.1.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 

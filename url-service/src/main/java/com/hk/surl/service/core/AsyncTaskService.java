@@ -1,17 +1,11 @@
 package com.hk.surl.service.core;
 
-import com.hk.surl.common.log.LogTrance;
+import com.hk.surl.domain.entity.LogTrance;
 import com.hk.surl.domain.entity.LongUrl;
 import com.hk.surl.domain.entity.ShortUrl;
-import com.hk.surl.domain.entity.UrlMap;
-import com.hk.surl.domain.mapper.LongUrlMapper;
-import com.hk.surl.domain.mapper.ShortUrlMapper;
-import com.hk.surl.domain.mapper.UrlMapMapper;
-import com.hk.surl.domain.mapper.VisitLogMapper;
+import com.hk.surl.domain.mapper.*;
 import com.hk.surl.util.LongUrlUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +35,9 @@ public class AsyncTaskService {
     private UrlMapMapper urlMapMapper ;
     @Resource
     private VisitLogMapper logMapper ;
+    @Resource
+    private LogTranceMapper logTranceMapper ;
+
 
 
     /**
@@ -158,7 +155,7 @@ public class AsyncTaskService {
      * @apiNote :
      * @params :
          * @param logTrance 日志追踪
-     * @return null
+     * @return CompletableFuture
      * @throws:
      * @Bug :
      * @Modified :
@@ -167,8 +164,10 @@ public class AsyncTaskService {
     @Async("asyncTaskExecutor")
     public CompletableFuture<Boolean> writeLogToDatabase(LogTrance logTrance){
 
+        // 写入日志
+        int insert = logTranceMapper.insert(logTrance);
 
-
+        return CompletableFuture.completedFuture(insert>0);
     }
 
 
