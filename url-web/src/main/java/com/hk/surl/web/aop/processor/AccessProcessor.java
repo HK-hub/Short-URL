@@ -8,7 +8,7 @@ import com.hk.surl.common.util.TranceIdUtil;
 import com.hk.surl.domain.entity.VisitLog;
 import com.hk.surl.domain.mapper.VisitLogMapper;
 import com.hk.surl.domain.vo.ShortUrlVo;
-import com.hk.surl.service.core.AsyncTaskService;
+import com.hk.surl.service.util.AsyncTaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;

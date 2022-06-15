@@ -38,12 +38,6 @@
             <version>3.3.3</version>
         </dependency>
 
-        <!-- easyExcel -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>easyexcel</artifactId>
-            <version>2.1.6</version>
-        </dependency>
 
         <!-- ip 地址信息 -->
         <dependency>

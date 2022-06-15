@@ -1,9 +1,12 @@
 package com.hk.surl.web.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.Assert;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.hk.surl.api.core.IVisitLogService;
 import com.hk.surl.common.response.ResponseResult;
 import com.hk.surl.common.response.ResultCode;
 import com.hk.surl.domain.entity.LongUrl;
+import com.hk.surl.domain.entity.VisitLog;
 import com.hk.surl.domain.vo.ShortUrlVo;
 import com.hk.surl.service.core.AccessService;
 import com.hk.surl.web.aop.SysLog;
@@ -16,6 +19,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author : HK意境
@@ -39,7 +43,8 @@ public class AccessController {
 
     @Resource
     private AccessService accessService ;
-
+    @Resource
+    private IVisitLogService visitLogService;
 
 
     /**
@@ -84,7 +89,47 @@ public class AccessController {
     }
 
 
+    /**
+     * @methodName : getAll
+     * @author : HK意境
+     * @date : 2022/6/15 20:51
+     * @description :
+     * @Todo :
+     * @apiNote 查询全部短链接访问数据
+     * @params :
+     * @return nuResponseResultll
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @SysLog(businessType = "获取全部短链接访问日志",operate = "查询")
+    @GetMapping("/access/get/all")
+    public ResponseResult<List<VisitLog>> getAll(){
 
+        List<VisitLog> list = this.visitLogService.list();
+
+        return new ResponseResult<List<VisitLog>>(ResultCode.SUCCESS, list);
+    }
+
+
+
+    // 查询指定短链接的访问日志
+    @GetMapping("/access/get/surl")
+    public ResponseResult<List<VisitLog>> getListByShortUrl(@RequestParam(name = "shortUrl")String shortUrl){
+
+        // 构造查询条件
+        LambdaQueryChainWrapper<VisitLog> wrapper = this.visitLogService.lambdaQuery().eq(VisitLog::getShortUrl, shortUrl);
+        // 查询
+        List<VisitLog> visitLogList = this.visitLogService.list(wrapper);
+
+        // 响应结果
+        return new ResponseResult<>(ResultCode.SUCCESS, visitLogList);
+    }
+
+
+
+    // 导出文件
 
 
 

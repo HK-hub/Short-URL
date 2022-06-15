@@ -9,7 +9,7 @@ import com.hk.surl.common.response.ResultCode;
 import com.hk.surl.common.util.IPUtil;
 import com.hk.surl.common.util.TranceIdUtil;
 import com.hk.surl.domain.entity.LogTrance;
-import com.hk.surl.service.core.AsyncTaskService;
+import com.hk.surl.service.util.AsyncTaskService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * @author : HK意境

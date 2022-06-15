@@ -1,12 +1,15 @@
 package com.hk.surl.web.controller;
 
-
 import com.hk.surl.api.common.FileService;
+import com.hk.surl.api.core.IShortUrlService;
 import com.hk.surl.api.core.IUrlMapService;
 import com.hk.surl.common.response.ResponseResult;
 import com.hk.surl.common.response.ResultCode;
+import com.hk.surl.core.common.util.DateTimeUtil;
 import com.hk.surl.domain.entity.LongUrl;
+import com.hk.surl.domain.entity.ShortUrl;
 import com.hk.surl.domain.entity.UrlMap;
+import com.hk.surl.service.util.ExcelResolveService;
 import com.hk.surl.web.aop.SysLog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @ClassName : UrlMapController
@@ -35,11 +41,14 @@ public class UrlMapController {
 
     @Value("${short.url.system.longUrl.template}")
     private String longUrlTemplate ;
-
     @Resource
     private IUrlMapService urlMapService ;
     @Resource
     private FileService fileService ;
+    @Resource
+    private ExcelResolveService excelResolveService;
+    @Resource
+    private IShortUrlService shortUrlService ;
 
     /**
      * @methodName : getLongUrsByShortUrl
@@ -105,15 +114,22 @@ public class UrlMapController {
      * @Modified :
      * @Version : 1.0.0
      */
-    @PostMapping("/batch")
-    public ResponseResult createBatchUrlMap(MultipartFile file){
+    @PostMapping("/new/batch")
+    public ResponseResult<List<ShortUrl>> createBatchUrlMap(MultipartFile file,
+                                            @RequestParam(name = "time" ,defaultValue = "1",required = false) Integer time ,
+                                            @RequestParam(name = "timeUnit" ,defaultValue ="day", required = false)String timeUnit) throws IOException, ExecutionException, InterruptedException {
 
+        // 获取输入流
+        List<String> longUrls = excelResolveService.resolveImportExcel(file.getInputStream());
 
+        // 构造过期时间
+        LocalDateTime expirationTime = DateTimeUtil.getExpirationTimeByTimeEntry(time, timeUnit);
 
-        return null ;
+        // 批量生产
+        List<ShortUrl> shortUrlList = this.shortUrlService.batchNewShortUrl(longUrls, expirationTime);
+
+        return new ResponseResult<>(ResultCode.SUCCESS, shortUrlList) ;
     }
-
-
 
 
     /**

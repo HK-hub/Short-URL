@@ -1,4 +1,4 @@
-package com.hk.surl.service.core;
+package com.hk.surl.service.util;
 
 import com.hk.surl.api.core.IVisitLogService;
 import com.hk.surl.domain.entity.LogTrance;

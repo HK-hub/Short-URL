@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.surl.domain.entity.ShortUrl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -21,6 +22,9 @@ public interface IShortUrlService extends IService<ShortUrl> {
 
     // 根据 长链接字符串 新增 短链接对象，长链接对象，映射对象
     ShortUrl newShortUrl(String longUrl, LocalDateTime expirationTime) throws ExecutionException, InterruptedException;
+
+    // 批量创建短链接对象
+    List<ShortUrl> batchNewShortUrl(List<String> longUrls, LocalDateTime expirationTime) throws ExecutionException, InterruptedException;
 
     // 根据 id 删除 短链接对象，映射对象，长链接对象
     boolean removeShortUrlById(String id);

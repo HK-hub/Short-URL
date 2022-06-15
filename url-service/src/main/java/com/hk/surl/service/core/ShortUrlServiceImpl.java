@@ -1,9 +1,6 @@
 package com.hk.surl.service.core;
 
 
-import com.baomidou.mybatisplus.core.toolkit.Assert;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
-import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.surl.api.core.IShortUrlService;
 import com.hk.surl.core.generator.template.DefaultShortUrlGenerator;
@@ -13,13 +10,14 @@ import com.hk.surl.domain.entity.UrlMap;
 import com.hk.surl.domain.mapper.LongUrlMapper;
 import com.hk.surl.domain.mapper.ShortUrlMapper;
 import com.hk.surl.domain.mapper.UrlMapMapper;
-import com.hk.surl.util.LongUrlUtil;
+import com.hk.surl.service.util.AsyncTaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -86,7 +84,35 @@ public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> i
 
         return shortUrl ;
     }
+    
+    
+    /**
+     * @methodName :
+     * @author : HK意境
+     * @date : 2022/6/15 22:58
+     * @description :
+     * @Todo :
+     * @apiNote :
+     * @params : 
+         * @param longUrls 长连接集合
+         * @param expirationTime 过期时间
+     * @return List<ShortUrl>
+     * @throws: 
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @Override
+    public List<ShortUrl> batchNewShortUrl(List<String> longUrls, LocalDateTime expirationTime) throws ExecutionException, InterruptedException {
 
+        List<ShortUrl> shortUrlList = new ArrayList<>();
+        for (String longUrl : longUrls) {
+            ShortUrl shortUrl = this.newShortUrl(longUrl, expirationTime);
+            shortUrlList.add(shortUrl);
+        }
+
+        return shortUrlList;
+    }
 
 
     /**

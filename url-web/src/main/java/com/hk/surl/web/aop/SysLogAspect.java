@@ -2,7 +2,7 @@ package com.hk.surl.web.aop;
 
 import com.hk.surl.common.response.ResponseResult;
 import com.hk.surl.domain.vo.ShortUrlVo;
-import com.hk.surl.service.core.AsyncTaskService;
+import com.hk.surl.service.util.AsyncTaskService;
 import com.hk.surl.web.aop.processor.AccessProcessor;
 import com.hk.surl.web.aop.processor.DefaultProcessor;
 import com.hk.surl.web.aop.processor.LogProcessor;
