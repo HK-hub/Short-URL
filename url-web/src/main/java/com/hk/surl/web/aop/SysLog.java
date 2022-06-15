@@ -1,4 +1,4 @@
-package com.hk.surl.common.log;
+package com.hk.surl.web.aop;
 
 /**
  * @author : HK意境
@@ -10,6 +10,9 @@ package com.hk.surl.common.log;
  * @Modified :
  * @Version : 1.0
  */
+
+import com.hk.surl.web.aop.processor.DefaultProcessor;
+import com.hk.surl.web.aop.processor.LogProcessor;
 
 import java.lang.annotation.*;
 
@@ -44,6 +47,9 @@ public @interface SysLog {
      * @return string
      */
     String level() default "2";
+
+    // 处理器
+    Class<? extends LogProcessor> processor() default DefaultProcessor.class ;
 
 
 }

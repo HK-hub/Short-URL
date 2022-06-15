@@ -1,8 +1,10 @@
 package com.hk.surl.service.core;
 
+import com.hk.surl.api.core.IVisitLogService;
 import com.hk.surl.domain.entity.LogTrance;
 import com.hk.surl.domain.entity.LongUrl;
 import com.hk.surl.domain.entity.ShortUrl;
+import com.hk.surl.domain.entity.VisitLog;
 import com.hk.surl.domain.mapper.*;
 import com.hk.surl.util.LongUrlUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -32,13 +34,9 @@ public class AsyncTaskService {
     @Resource
     private LongUrlMapper longUrlMapper ;
     @Resource
-    private UrlMapMapper urlMapMapper ;
-    @Resource
-    private VisitLogMapper logMapper ;
-    @Resource
     private LogTranceMapper logTranceMapper ;
-
-
+    @Resource
+    private VisitLogMapper visitLogMapper ;
 
     /**
      * @methodName :newAndSaveShortUrl
@@ -171,4 +169,12 @@ public class AsyncTaskService {
     }
 
 
+    // 短链接访问日志入库
+    @Async("asyncTaskExecutor")
+    public CompletableFuture<Boolean> writeAccessLogToDatabase(VisitLog visitLog) {
+
+        // 写入日志
+        int insert = visitLogMapper.insert(visitLog);
+        return CompletableFuture.completedFuture(insert > 0);
+    }
 }

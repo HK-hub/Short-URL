@@ -102,4 +102,54 @@ public class UrlMapServiceImpl extends ServiceImpl<UrlMapMapper, UrlMap> impleme
     }
 
 
+    /**
+     * @methodName : getUrlMapByLongId
+     * @author : HK意境
+     * @date : 2022/6/15 16:14
+     * @description :
+     * @Todo :
+     * @apiNote
+     * @params :
+         * @param lid 长连接id
+     * @return List<UrlMap>
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @Override
+    public List<UrlMap> getUrlMapByLongId(String lid) {
+
+        List<UrlMap> urlMaps = this.urlMapMapper.selectAllByLongId(lid);
+
+        return urlMaps ;
+    }
+
+    
+    /**
+     * @methodName :
+     * @author : HK意境
+     * @date : 2022/6/15 16:22
+     * @description :
+     * @Todo :
+     * @apiNote :
+     * @params : 
+         * @param longUrl 长连接字符串
+     * @return UrlMap
+     * @throws: 
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @Override
+    public UrlMap getUrlMapByLongUrl(String longUrl) {
+
+        List<UrlMap> urlMaps = this.urlMapMapper.selectAllByLongUrl(longUrl);
+
+        if (urlMaps != null && urlMaps.size() > 0){
+            return urlMaps.get(0);
+        }else{
+            return null ;
+        }
+    }
 }

@@ -1,18 +1,15 @@
 package com.hk.surl.web.controller;
 
 
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.hk.surl.api.common.FileService;
 import com.hk.surl.api.core.IUrlMapService;
 import com.hk.surl.common.response.ResponseResult;
+import com.hk.surl.common.response.ResultCode;
 import com.hk.surl.domain.entity.LongUrl;
 import com.hk.surl.domain.entity.UrlMap;
+import com.hk.surl.web.aop.SysLog;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AssertionsKt;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -133,6 +130,7 @@ public class UrlMapController {
      * @Modified :
      * @Version : 1.0.0
      */
+    @SysLog(businessType = "下载长链接模板",operate = "下载")
     @GetMapping("/download/template")
     public void downloadLongUrlTemplate(HttpServletResponse response) throws IOException {
 
@@ -144,5 +142,81 @@ public class UrlMapController {
         // 下载文件
         Boolean res = fileService.downloadFile(path, response);
     }
+
+
+    /**
+     * @methodName :
+     * @author : HK意境
+     * @date : 2022/6/15 14:36
+     * @description :
+     * @Todo :
+     * @apiNote 通过长链接字符串查询UrlMap映射对象
+     * @params :
+         * @param longUrl 长链接字符串
+     * @return ResponseResult
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @PostMapping("/get/lurl")
+    public ResponseResult<UrlMap> getByLongUrl(String longUrl){
+
+        UrlMap urlMap = this.urlMapService.getUrlMapByLongUrl(longUrl);
+
+        return new ResponseResult<UrlMap>(ResultCode.SUCCESS, urlMap);
+    }
+
+
+    /**
+     * @methodName : getByLongId
+     * @author : HK意境
+     * @date : 2022/6/15 15:37
+     * @description :
+     * @Todo :
+     * @apiNote 通过长链接id字符串查询对应的映射对象
+     * @params :
+         * @param longId 长链接字符串id
+     * @return ResponseResult
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @PostMapping("/get/lid")
+    public ResponseResult<List<UrlMap>> getByLongId(String longId){
+
+        // 查询
+        List<UrlMap> urlMap = this.urlMapService.getUrlMapByLongId(longId);
+
+        // 返回
+        return new ResponseResult<List<UrlMap>>(ResultCode.SUCCESS, urlMap);
+    }
+
+
+    /**
+     * @methodName : getAll
+     * @author : HK意境
+     * @date : 2022/6/15 14:32
+     * @description :
+     * @Todo :
+     * @apiNote 获取全部urlMap 映射
+     * @params :
+     * @return ResponseResult
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @SysLog(businessType = "获取全部UrlMap 映射对象", operate = "查询")
+    @GetMapping("/get/all")
+    public ResponseResult<List<UrlMap>> getAll(){
+
+        List<UrlMap> urlMaps = this.urlMapService.list();
+
+        return new ResponseResult<>(ResultCode.SUCCESS,urlMaps);
+    }
+
+
 
 }

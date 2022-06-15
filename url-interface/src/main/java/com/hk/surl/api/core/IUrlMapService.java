@@ -23,4 +23,11 @@ public interface IUrlMapService extends IService<UrlMap> {
 
     // 根据 短链接id值 查询对应的长链接对象集合
     List<LongUrl> getLongUrlListBySId(String sid);
+
+    // 根据长连接 id 值查询对应的urlmap 映射对象
+    List<UrlMap> getUrlMapByLongId(String lid);
+
+    // 根据 长链接字符串查询映射对象
+    UrlMap getUrlMapByLongUrl(String longUrl);
+
 }

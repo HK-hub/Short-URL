@@ -3,15 +3,13 @@ package com.hk.surl.web.controller;
 
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.hk.surl.api.core.ILongUrlService;
-import com.hk.surl.common.log.SysLog;
+import com.hk.surl.web.aop.SysLog;
 import com.hk.surl.common.response.ResponseResult;
 import com.hk.surl.common.response.ResultCode;
-import com.hk.surl.common.util.IPUtil;
 import com.hk.surl.domain.entity.LongUrl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -48,6 +46,7 @@ public class LongUrlController {
      * @Modified :
      * @Version : 1.0.0
      */
+    @SysLog(businessType = "通过长链接字符串查询",operate = "查询")
     @PostMapping("/get/lurl")
     public ResponseResult<LongUrl> getLongUrlByLongUrlString(String longUrlString){
 
@@ -79,7 +78,7 @@ public class LongUrlController {
      * @Modified :
      * @Version : 1.0.0
      */
-    @SysLog(businessType = "查询群不长连接对象",method = "getAllLongUrl",operate = "查询")
+    @SysLog(businessType = "查询全部长连接对象",method = "getAllLongUrl",operate = "查询")
     @GetMapping("/get/all")
     public ResponseResult getAllLongUrl(@RequestParam(name = "visible", defaultValue = "false",required = false)Boolean visible,
                                         @RequestParam(name = "deleted", defaultValue = "false", required = false)Boolean deleted){
@@ -119,6 +118,7 @@ public class LongUrlController {
      * @Modified :
      * @Version : 1.0.0
      */
+    @SysLog(businessType = "根据id获取长链接对象",operate = "查询")
     @GetMapping(value = "/get/{id}")
     public ResponseResult<LongUrl> getLongUrlById(@PathVariable(name = "id")String id ){
 
@@ -174,6 +174,7 @@ public class LongUrlController {
      * @Version : 1.0.0
      */
     @DeleteMapping("/delete")
+    @SysLog(businessType = "删除长链接对象",operate = "删除")
     public ResponseResult deleteLongUrl(@RequestBody LongUrl longUrl){
         // 删除长链接对象，删除成功返回 true，并且把删除对象返回
         boolean rmRes = longUrlService.removeById(longUrl.getId());
@@ -198,6 +199,7 @@ public class LongUrlController {
      * @Version : 1.0.0
      */
     @DeleteMapping("/delete/{id}")
+    @SysLog(businessType = "根据id删除长链接对象",operate = "删除")
     public ResponseResult deleteLongUrlById(@PathVariable(name = "id") String id){
         // 删除长链接对象，删除成功返回 true，并且把删除对象返回
         boolean rmRes = longUrlService.removeById(id);
@@ -221,6 +223,7 @@ public class LongUrlController {
      * @Modified :
      * @Version : 1.0.0
      */
+    @SysLog(businessType = "更新长链接对象",operate = "删除")
     @PutMapping("/update")
     public ResponseResult updateLongUrlById(@RequestBody LongUrl longUrl){
         // 根据id 更新

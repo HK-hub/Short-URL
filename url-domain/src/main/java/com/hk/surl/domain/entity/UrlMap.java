@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -35,13 +36,18 @@ public class UrlMap implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+
     @ApiModelProperty(value = "短链接ID号")
+    @TableField("short_id")
+    @MppMultiId
     private String shortId;
 
     @ApiModelProperty(value = "短链接url")
     private String shortUrl;
 
     @ApiModelProperty(value = "长链接ID")
+    @TableField("long_id")
+    @MppMultiId
     private String longId;
 
     @ApiModelProperty(value = "长链接url")

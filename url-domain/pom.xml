@@ -23,6 +23,13 @@
             <version>0.1.0</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.jeffreyning</groupId>
+            <artifactId>mybatisplus-plus</artifactId>
+            <version>1.5.1-RELEASE</version>
+        </dependency>
+
     </dependencies>
 
 

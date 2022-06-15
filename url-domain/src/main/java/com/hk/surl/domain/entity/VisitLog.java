@@ -30,11 +30,11 @@ public class VisitLog implements Serializable {
     @TableId(type = IdType.ASSIGN_ID)
     private String id ;
 
-    @ApiModelProperty(value = "短链接ID")
-    private String shortUrlId;
+    @ApiModelProperty(value = "短链接")
+    private String shortUrl;
 
-    @ApiModelProperty(value = "长链接ID")
-    private String longUrlId;
+    @ApiModelProperty(value = "长链接")
+    private String longUrl;
 
     @ApiModelProperty(value = "访问者的IP地址")
     private String visitorIp;

@@ -1,27 +1,21 @@
 package com.hk.surl.web.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.Assert;
-import com.hk.surl.api.core.IShortUrlService;
-import com.hk.surl.api.core.IUrlMapService;
 import com.hk.surl.common.response.ResponseResult;
 import com.hk.surl.common.response.ResultCode;
 import com.hk.surl.domain.entity.LongUrl;
 import com.hk.surl.domain.vo.ShortUrlVo;
 import com.hk.surl.service.core.AccessService;
-import com.hk.surl.service.core.ShortUrlServiceImpl;
-import com.hk.surl.service.core.UrlMapServiceImpl;
+import com.hk.surl.web.aop.SysLog;
+import com.hk.surl.web.aop.processor.AccessProcessor;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.function.Supplier;
 
 /**
  * @author : HK意境
@@ -63,10 +57,11 @@ public class AccessController {
      * @Modified :
      * @Version : 1.0.0
      */
+    @SysLog(businessType = "访问短链接重定向到长链接",operate = "访问重定向", processor = AccessProcessor.class)
     @GetMapping("/{surl}")
     public ResponseResult<ShortUrlVo> redirectUrl(@PathVariable(name = "surl") String surl,
-                                                  HttpServletRequest request ,
-                                                  HttpServletResponse response) throws IOException {
+                                      HttpServletRequest request ,
+                                      HttpServletResponse response) throws IOException {
         // 参数校验
         Assert.notEmpty(surl, "shortUrl must be not null but provide is a null string");
 
@@ -83,8 +78,9 @@ public class AccessController {
         // 302 重定向
         response.sendRedirect(redirectLongUrl.getUrl());
 
-        return ResponseResult.SUCCESS().setResultCode(ResultCode.REDIRECT_TEMPORARY)
-                .setData(new ShortUrlVo(shortUrl,redirectLongUrl.getUrl()));
+        // 构造响应对象
+        ResponseResult<ShortUrlVo> result = new ResponseResult<>(ResultCode.REDIRECT_TEMPORARY, new ShortUrlVo(shortUrl, redirectLongUrl.getUrl()));
+        return result;
     }
 
 
