@@ -128,8 +128,32 @@ public class AccessController {
     }
 
 
+    /**
+     * @methodName : getAccessDataByShortUrl
+     * @author : HK意境
+     * @date : 2022/6/16 10:55
+     * @description :
+     * @Todo :
+     * @apiNote 获取短链接的访问数据
+     * @params :
+         * @param shortUrl 需要获取数据的短链接字符串
+     * @return ResponseResult
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @PostMapping("/access/data/surl")
+    public ResponseResult<List<VisitLog>> getAccessDataByShortUrl(@RequestParam(name = "shortUrl")String shortUrl){
 
-    // 导出文件
+        // 构造查询条件
+
+        LambdaQueryChainWrapper<VisitLog> wrapper = this.visitLogService.lambdaQuery().eq(VisitLog::getShortUrl, shortUrl);
+        List<VisitLog> visitLogs = this.visitLogService.list(wrapper);
+
+        return new ResponseResult<>(ResultCode.SUCCESS, visitLogs);
+    }
+
 
 
 
