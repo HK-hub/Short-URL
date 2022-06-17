@@ -118,10 +118,8 @@ public class AccessController {
     @GetMapping("/access/get/surl")
     public ResponseResult<List<VisitLog>> getListByShortUrl(@RequestParam(name = "shortUrl")String shortUrl){
 
-        // 构造查询条件
-        LambdaQueryChainWrapper<VisitLog> wrapper = this.visitLogService.lambdaQuery().eq(VisitLog::getShortUrl, shortUrl);
-        // 查询
-        List<VisitLog> visitLogList = this.visitLogService.list(wrapper);
+        // 构造查询条件,查询
+        List<VisitLog> visitLogList = this.visitLogService.getListByShortUrl(shortUrl);
 
         // 响应结果
         return new ResponseResult<>(ResultCode.SUCCESS, visitLogList);
@@ -134,7 +132,7 @@ public class AccessController {
      * @date : 2022/6/16 10:55
      * @description :
      * @Todo :
-     * @apiNote 获取短链接的访问数据
+     * @apiNote 获取短链接的访问数据, 导出为 excel 文件
      * @params :
          * @param shortUrl 需要获取数据的短链接字符串
      * @return ResponseResult
