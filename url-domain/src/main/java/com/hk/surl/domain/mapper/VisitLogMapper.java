@@ -31,4 +31,6 @@ public interface VisitLogMapper extends BaseMapper<VisitLog> {
                                                     @Param(value = "startTime")LocalDateTime startTime ,
                                                     @Param(value = "endTime")LocalDateTime endTime);
 
+    //
+
 }

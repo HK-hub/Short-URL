@@ -1,5 +1,6 @@
 package com.hk.surl.web.controller;
 
+import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.hk.surl.api.core.IVisitLogService;
@@ -13,12 +14,19 @@ import com.hk.surl.web.aop.SysLog;
 import com.hk.surl.web.aop.processor.AccessProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -114,7 +122,21 @@ public class AccessController {
 
 
 
-    // 查询指定短链接的访问日志
+    /**
+     * @methodName : getListByShortUrl
+     * @author : HK意境
+     * @date : 2022/6/18 14:18
+     * @description :
+     * @Todo :
+     * @apiNote 获取指定短链接的访问记录列表
+     * @params :
+         * @param shortUrl 短链接
+     * @return ResponseResult
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
     @GetMapping("/access/get/surl")
     public ResponseResult<List<VisitLog>> getListByShortUrl(@RequestParam(name = "shortUrl")String shortUrl){
 
@@ -135,24 +157,68 @@ public class AccessController {
      * @apiNote 获取短链接的访问数据, 导出为 excel 文件
      * @params :
          * @param shortUrl 需要获取数据的短链接字符串
+     * @return null
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @GetMapping("/access/data/surl")
+    public void getAccessDataByShortUrl(@RequestParam(name = "shortUrl")String shortUrl,
+                                                                  HttpServletResponse response) throws IOException {
+
+        // 查询数据，构造writer
+        ExcelWriter excelWriter = this.visitLogService.exportAccessDataToExcel(shortUrl);
+
+        // 响应到浏览器
+        //设置content—type
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset:utf-8");
+
+        //设置标题
+        String fileName= URLEncoder.encode(shortUrl+"短链接访问数据", StandardCharsets.UTF_8);
+        //Content-disposition是MIME协议的扩展，MIME协议指示MIME用户代理如何显示附加的文件。
+        response.setHeader("Content-Disposition","attachment;filename="+fileName+".xlsx");
+        ServletOutputStream outputStream= response.getOutputStream();
+
+        //将Writer刷新到OutPut
+        excelWriter.flush(outputStream,true);
+        outputStream.close();
+        excelWriter.close();
+
+        // 响应结果
+        return ;
+    }
+
+    /**
+     * @methodName :
+     * @author : HK意境
+     * @date : 2022/6/18 14:36
+     * @description :
+     * @Todo :
+     * @apiNote 获取指定日期内的访问数据
+     * @params :
+         * @param shorUrl 指定短链接
+         * @param startTime 指定开始时间
+         * @param endTime 指定结束时间
      * @return ResponseResult
      * @throws:
      * @Bug :
      * @Modified :
      * @Version : 1.0.0
      */
-    @PostMapping("/access/data/surl")
-    public ResponseResult<List<VisitLog>> getAccessDataByShortUrl(@RequestParam(name = "shortUrl")String shortUrl){
+    @PostMapping("/access/get/datetime")
+    public ResponseResult<List<VisitLog>> getListByDateTime(@RequestParam(name = "shorUrl", required = false)String shorUrl,
+                                                            @RequestParam(name = "startTime", required = false)@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime startTime,
+                                                            @RequestParam(name = "endTime",required = false)@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endTime){
+        // 参数校验
+        //log.info("{},{},{}",shorUrl,startTime,endTime);
 
-        // 构造查询条件
+        // 查询数据
+        List<VisitLog> visitLogList = this.visitLogService.getListByDateTime(shorUrl, startTime, endTime);
 
-        LambdaQueryChainWrapper<VisitLog> wrapper = this.visitLogService.lambdaQuery().eq(VisitLog::getShortUrl, shortUrl);
-        List<VisitLog> visitLogs = this.visitLogService.list(wrapper);
-
-        return new ResponseResult<>(ResultCode.SUCCESS, visitLogs);
+        // 响应数据
+        return new ResponseResult<>(ResultCode.SUCCESS, visitLogList);
     }
-
-
 
 
 }

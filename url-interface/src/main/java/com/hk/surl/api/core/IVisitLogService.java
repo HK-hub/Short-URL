@@ -1,8 +1,11 @@
 package com.hk.surl.api.core;
 
+import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.surl.domain.entity.VisitLog;
 
+import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -19,6 +22,14 @@ public interface IVisitLogService extends IService<VisitLog> {
 
     // 获取指定短链接的访问日志
     List<VisitLog> getListByShortUrl(String shortUrl);
+
+    // 获取指定时间内的访问数据
+    List<VisitLog> getListByDateTime(String shortUrl , LocalDateTime startTime, LocalDateTime endTime);
+
+
+    // 获取指定短链接的访问数据：excel 文件数据
+    // 导出指点短链接访问数据到 excel 文件种
+    ExcelWriter exportAccessDataToExcel(String shortUrl);
 
 
 }
