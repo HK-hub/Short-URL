@@ -1,6 +1,5 @@
 package com.hk.surl.web.interceptor;
 
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -9,27 +8,25 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author : HK意境
- * @ClassName : FaviconInterceptor
- * @date : 2022/6/13 19:13
- * @description :
+ * @ClassName : LoginInterceptor
+ * @date : 2022/6/19 14:08
+ * @description : 登录用户空间拦截器
  * @Todo :
  * @Bug :
  * @Modified :
  * @Version : 1.0
  */
-public class FaviconInterceptor implements HandlerInterceptor {
+public class LoginInterceptor implements HandlerInterceptor {
+
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        String requestURI = request.getRequestURI();
-        // 拦截 图标请求
-        if ("/favicon.ico".equals(requestURI)){
-            // 拦截不予以放行
-            return false;
-        }else{
-            return true ;
-        }
+        // 查看是否存在 短链接和 短链接密钥(RSA 派发的密钥)
+        // 或者是否存在用户名密码
+
+
+        return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 
     @Override

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Version : 1.0
  */
 @RestController
-@RequestMapping("/entity/visit-log")
+@RequestMapping("/visit")
 public class VisitLogController {
 
 
