@@ -2,6 +2,7 @@
 *.mmdb
 # IntelliJ project files
 /target/
+/url-frontend
 .idea
 *.iml
 # Compiled class file
