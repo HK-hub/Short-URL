@@ -39,6 +39,9 @@ public class VisitLog implements Serializable {
     @ApiModelProperty(value = "访问者的IP地址")
     private String visitorIp;
 
+    @ApiModelProperty(value = "请求者refer")
+    private String referrer = "direct to access";
+
     @ApiModelProperty(value = "请求的域名")
     private String requestHost;
 

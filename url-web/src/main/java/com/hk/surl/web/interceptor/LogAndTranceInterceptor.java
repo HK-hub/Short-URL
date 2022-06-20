@@ -42,8 +42,6 @@ public class LogAndTranceInterceptor implements HandlerInterceptor {
 
         // 获取请求路径，参数，用户浏览器等信息
 
-
-
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 

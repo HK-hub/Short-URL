@@ -53,4 +53,10 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new FaviconInterceptor())
                 .addPathPatterns("/favicon.ico");
     }
+
+
+
+
+
+
 }

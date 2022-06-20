@@ -15,6 +15,7 @@ import com.hk.surl.web.aop.processor.AccessProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.mobile.device.Device;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -73,8 +74,8 @@ public class AccessController {
     @SysLog(businessType = "访问短链接重定向到长链接",operate = "访问重定向", processor = AccessProcessor.class)
     @GetMapping("/{surl}")
     public ResponseResult<ShortUrlVo> redirectUrl(@PathVariable(name = "surl") String surl,
-                                      HttpServletRequest request ,
-                                      HttpServletResponse response) throws IOException {
+                                                  HttpServletRequest request ,
+                                                  HttpServletResponse response, Device device) throws IOException {
         // 参数校验
         Assert.notEmpty(surl, "shortUrl must be not null but provide is a null string");
 

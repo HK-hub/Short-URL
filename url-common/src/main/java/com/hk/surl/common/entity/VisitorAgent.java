@@ -24,8 +24,14 @@ public class VisitorAgent {
     // 浏览器
     private String browser ;
     // 平台操作系统
+    private String os ;
+
+    // 设备平台
     private String platform ;
 
 
-
+    public VisitorAgent(String browser, String os) {
+        this.browser = browser;
+        this.os = os;
+    }
 }

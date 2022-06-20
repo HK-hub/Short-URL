@@ -287,6 +287,17 @@ create index idx_vl_sid_lid on tb_visit_log(short_url_id,long_url_id);
 
 
 
+## 开始进行服务器持续集成持续部署
+## 宝塔搭建配置
+![img_1.png](img_1.png)
+> 外网面板地址: http://42.193.55.146:8888/58d2485b
+内网面板地址: http://10.0.0.12:8888/58d2485b
+username: t1puwuye
+password: 02be18d0
+If you cannot access the panel,
+release the following panel port [8888] in the security group
+若无法访问面板，请检查防火墙/安全组是否有放行面板[8888]端口
+> 
 
 
 
