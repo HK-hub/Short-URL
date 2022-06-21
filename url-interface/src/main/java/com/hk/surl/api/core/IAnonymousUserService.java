@@ -16,4 +16,6 @@ import com.hk.surl.domain.entity.AnonymousUser;
  */
 public interface IAnonymousUserService extends IService<AnonymousUser> {
 
+    // 匿名用户登录
+    AnonymousUser anonymousLogin(String shortUrl, String secretKey);
 }

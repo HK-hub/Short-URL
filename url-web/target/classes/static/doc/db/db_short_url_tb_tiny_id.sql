@@ -1,0 +1,1 @@
+INSERT INTO db_short_url.tb_tiny_id (biz_type, begin_id, max_id, step, delta, remainder, remain_rate, create_time, update_time, version) VALUES ('short_url', 1013000, 1013000, 10000, 1, 10000, 0.2, '2022-05-31 16:57:14', '2022-06-08 20:45:37', 1013132);

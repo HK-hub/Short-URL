@@ -23,8 +23,7 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(fluent = true)
 @NoArgsConstructor
-public class ShortUrlExt extends ShortUrl {
-
+public class ShortUrlExt {
 
     @ApiModelProperty(value = "原始的长链接")
     private String longUrl ;
