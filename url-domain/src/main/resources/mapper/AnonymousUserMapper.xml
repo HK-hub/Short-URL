@@ -2,4 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hk.surl.domain.mapper.AnonymousUserMapper">
 
+    <select id="anonymousUserLogin" resultType="com.hk.surl.domain.entity.AnonymousUser" >
+        select * from tb_anonymous_user where short_url = #{shortUrl} and secret_key = #{secretKey}
+    </select>
 </mapper>

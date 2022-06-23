@@ -1,10 +1,7 @@
 package com.hk.surl.service.util;
 
 import com.hk.surl.api.core.IVisitLogService;
-import com.hk.surl.domain.entity.LogTrance;
-import com.hk.surl.domain.entity.LongUrl;
-import com.hk.surl.domain.entity.ShortUrl;
-import com.hk.surl.domain.entity.VisitLog;
+import com.hk.surl.domain.entity.*;
 import com.hk.surl.domain.mapper.*;
 import com.hk.surl.util.LongUrlUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +34,8 @@ public class AsyncTaskService {
     private LogTranceMapper logTranceMapper ;
     @Resource
     private VisitLogMapper visitLogMapper ;
+    @Resource
+    private AnonymousUserMapper anonymousUserMapper ;
 
     /**
      * @methodName :newAndSaveShortUrl
@@ -176,5 +175,35 @@ public class AsyncTaskService {
         // 写入日志
         int insert = visitLogMapper.insert(visitLog);
         return CompletableFuture.completedFuture(insert > 0);
+    }
+
+
+    /**
+     * @methodName : newAndSaveAnonymousShortUrl
+     * @author : HK意境
+     * @date : 2022/6/21 23:52
+     * @description : 生成对应的短链接匿名用户对象
+     * @Todo :
+     * @apiNote :
+     * @params :
+         * @param shortUrl 短链接
+         * @param longUrl 长链接
+     * @return CompletableFuture<AnonymousUser>
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @Async("asyncTaskExecutor")
+    public CompletableFuture<AnonymousUser> newAndSaveAnonymousShortUrl(String shortUrl, String longUrl, String secretKey) {
+
+        // 构造存储对象
+        AnonymousUser anonymousUser = new AnonymousUser(shortUrl, longUrl, secretKey);
+        // 保存
+        int insert = anonymousUserMapper.insert(anonymousUser);
+        if (insert <= 0){
+            anonymousUser = null ;
+        }
+        return CompletableFuture.completedFuture(anonymousUser);
     }
 }

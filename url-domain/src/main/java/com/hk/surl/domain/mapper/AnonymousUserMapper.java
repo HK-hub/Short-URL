@@ -3,6 +3,8 @@ package com.hk.surl.domain.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hk.surl.domain.entity.AnonymousUser;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 
 /**
@@ -15,5 +17,10 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface AnonymousUserMapper extends BaseMapper<AnonymousUser> {
+
+
+    // 匿名用户登录
+    AnonymousUser anonymousUserLogin(@Param("shortUrl") String shortUrl, @Param("secretKey") String secretKey);
+
 
 }

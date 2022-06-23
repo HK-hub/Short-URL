@@ -4,6 +4,8 @@ package com.hk.surl.web.controller;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.hk.surl.api.core.IShortUrlService;
+import com.hk.surl.domain.entity.AnonymousUser;
+import com.hk.surl.domain.vo.ShortUrlVo;
 import com.hk.surl.web.aop.SysLog;
 import com.hk.surl.common.response.ResponseResult;
 import com.hk.surl.common.response.ResultCode;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.MalformedURLException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -36,9 +39,6 @@ public class ShortUrlController {
     @Autowired
     private IShortUrlService shortUrlService ;
 
-
-
-
     /**
      * @methodName : newShortUrlByLongUrl
      * @author : HK意境
@@ -57,16 +57,19 @@ public class ShortUrlController {
      * @Version : 1.0.0
      */
     @PostMapping("/new")
-    public ResponseResult<ShortUrl> newShortUrlByLongUrl(@RequestParam(name = "longUrl", required = true) String longUrl, @RequestParam(name = "time" ,defaultValue = "-1",required = false) Integer time ,
+    public ResponseResult<ShortUrlVo> newShortUrlByLongUrl(@RequestParam(name = "longUrl", required = true) String longUrl, @RequestParam(name = "time" ,defaultValue = "-1",required = false) Integer time ,
                                                          @RequestParam(name = "timeUnit" ,defaultValue ="day", required = false)String timeUnit) throws ExecutionException, InterruptedException {
 
         // 构造过期时间
         LocalDateTime expirationTime = DateTimeUtil.getExpirationTimeByTimeEntry(time, timeUnit);
 
         // 如果数据库不存在长链接字符串对应的短链接那就生成，如果存在那就直接返回存在的数据对象
-        ShortUrl shortUrl = shortUrlService.newShortUrl(longUrl,expirationTime);
+        Map.Entry<ShortUrl, AnonymousUser> entry = shortUrlService.newShortUrl(longUrl, expirationTime);
 
-        return ResponseResult.SUCCESS().setData(shortUrl);
+        // 封装ShortUrlVo 对象
+        ShortUrlVo shortUrlVo = new ShortUrlVo(entry.getKey(), entry.getValue());
+
+        return ResponseResult.SUCCESS().setData(shortUrlVo);
     }
 
 

@@ -1,15 +1,20 @@
 package com.hk.surl.service.core;
 
 
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.surl.api.core.IShortUrlService;
+import com.hk.surl.common.util.SecretKeyUtil;
 import com.hk.surl.core.generator.template.DefaultShortUrlGenerator;
+import com.hk.surl.domain.entity.AnonymousUser;
 import com.hk.surl.domain.entity.LongUrl;
 import com.hk.surl.domain.entity.ShortUrl;
 import com.hk.surl.domain.entity.UrlMap;
+import com.hk.surl.domain.mapper.AnonymousUserMapper;
 import com.hk.surl.domain.mapper.LongUrlMapper;
 import com.hk.surl.domain.mapper.ShortUrlMapper;
 import com.hk.surl.domain.mapper.UrlMapMapper;
+import com.hk.surl.domain.vo.ShortUrlVo;
 import com.hk.surl.service.util.AsyncTaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,6 +24,7 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -47,6 +53,8 @@ public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> i
     private ShortUrlMapper shortUrlMapper ;
     @Resource
     private UrlMapMapper urlMapMapper ;
+    @Resource
+    private AnonymousUserMapper anonymousUserMapper ;
 
 
     /**
@@ -66,10 +74,11 @@ public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> i
      * @Version : 1.0.0
      */
     @Override
-    public ShortUrl newShortUrl(String longUrlStr, LocalDateTime expirationTime) throws ExecutionException, InterruptedException {
+    public Map.Entry<ShortUrl, AnonymousUser> newShortUrl(String longUrlStr, LocalDateTime expirationTime) throws ExecutionException, InterruptedException {
 
         // 返回对象
         ShortUrl shortUrl = null ;
+        AnonymousUser anonymousUser = null ;
 
         // 首先校验 数据库中是否存在 对应的 长链接对象
         //LambdaQueryChainWrapper<LongUrl> wrapper = new LambdaQueryChainWrapper<LongUrl>(longUrlMapper).eq(LongUrl::getUrl, longUrlStr);
@@ -77,12 +86,18 @@ public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> i
         if (longUrl == null){
             // 不存在
             shortUrl = this.doNewShortUrl(longUrlStr, expirationTime);
+            // 生产匿名映射对象
+            anonymousUser = asyncTaskService.newAndSaveAnonymousShortUrl(shortUrl.getShortUrl(), longUrlStr,
+                    SecretKeyUtil.generateSecretKey(shortUrl.getShortUrl(), longUrlStr)).get();
+
         }else{
             // 以及存在了长链接 对象，并且是可见的，返回对应的短链接对象
             shortUrl = shortUrlMapper.selectShortUrlByLongUrl(longUrl);
+            anonymousUser = anonymousUserMapper.selectOne(new LambdaQueryChainWrapper<>(anonymousUserMapper)
+                    .eq(AnonymousUser::getShortUrl,shortUrl.getShortUrl()));
         }
 
-        return shortUrl ;
+        return Map.entry(shortUrl, anonymousUser) ;
     }
     
     
@@ -107,8 +122,8 @@ public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> i
 
         List<ShortUrl> shortUrlList = new ArrayList<>();
         for (String longUrl : longUrls) {
-            ShortUrl shortUrl = this.newShortUrl(longUrl, expirationTime);
-            shortUrlList.add(shortUrl);
+            Map.Entry<ShortUrl, AnonymousUser> entry = this.newShortUrl(longUrl, expirationTime);
+            shortUrlList.add(entry.getKey());
         }
 
         return shortUrlList;
@@ -239,6 +254,7 @@ public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> i
         // 获取异步任务执行结果
         shortUrl = shortUrlFuture.get();
         LongUrl longUrl  = longUrlFuture.get();
+
 
         // 异步插入 : 废弃
         // 这里不能使用异步插入，因为存在插入失败的情况，会存在数据库，长短链接关联数据不一致的情况

@@ -45,17 +45,10 @@ public class AnonymousUserServiceImpl extends ServiceImpl<AnonymousUserMapper, A
     @Override
     public AnonymousUser anonymousLogin(String shortUrl, String secretKey) {
 
-        // 构造查询构造器
-        LambdaQueryChainWrapper<AnonymousUser> wrapper = new LambdaQueryChainWrapper<>(anonymousUserMapper);
-        wrapper.eq(AnonymousUser::getShortUrl, shortUrl).eq(AnonymousUser::getSecretKey, secretKey);
         // 查询获取数据
-        AnonymousUser user = anonymousUserMapper.selectOne(wrapper);
+        AnonymousUser user = anonymousUserMapper.anonymousUserLogin(shortUrl, secretKey);
 
         // 判断是否存在，如果存在异步进行数据生成
-        if (user != null) {
-
-        }
-
-        return null;
+        return user;
     }
 }

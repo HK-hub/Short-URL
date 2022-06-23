@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -24,6 +25,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @TableName("tb_anonymous_user")
 @ApiModel(value="AnonymousUser对象", description="匿名用户，临时用户")
+@NoArgsConstructor
 public class AnonymousUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,17 +43,22 @@ public class AnonymousUser implements Serializable {
     @TableField(fill = FieldFill.INSERT)
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createTime;
+    private LocalDateTime createTime = LocalDateTime.now();
 
     @ApiModelProperty(value = "更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime updateTime;
+    private LocalDateTime updateTime = this.createTime;
 
     @ApiModelProperty(value = "逻辑删除")
     @TableLogic
     private Boolean deleted;
 
 
+    public AnonymousUser(String shortUrl, String longUrl, String secretKey) {
+        this.shortUrl = shortUrl ;
+        this.longUrl = longUrl ;
+        this.secretKey = secretKey ;
+    }
 }

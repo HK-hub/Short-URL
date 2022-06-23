@@ -1,10 +1,12 @@
 package com.hk.surl.api.core;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hk.surl.domain.entity.AnonymousUser;
 import com.hk.surl.domain.entity.ShortUrl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -21,7 +23,7 @@ public interface IShortUrlService extends IService<ShortUrl> {
 
 
     // 根据 长链接字符串 新增 短链接对象，长链接对象，映射对象
-    ShortUrl newShortUrl(String longUrl, LocalDateTime expirationTime) throws ExecutionException, InterruptedException;
+    Map.Entry<ShortUrl, AnonymousUser> newShortUrl(String longUrl, LocalDateTime expirationTime) throws ExecutionException, InterruptedException;
 
     // 批量创建短链接对象
     List<ShortUrl> batchNewShortUrl(List<String> longUrls, LocalDateTime expirationTime) throws ExecutionException, InterruptedException;

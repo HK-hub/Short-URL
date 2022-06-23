@@ -21,6 +21,8 @@ public enum ResultCode {
     //未认证
     UNAUTHENTICATED(false, 102, "unauthenticated") ,
     USER_HAS_EXITS(false,104,"user has exits"),
+    USER_NOT_FOUND(false , 103, "user not found"),
+    USER_LOGIN_ERROR(false, 105,"username or password or shortUrl or secretKey error"),
     //资源禁止访问, 可以用来控制权限
     FORBIDDEN(false,403,"no permission"),
     // 资源未找到
