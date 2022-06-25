@@ -3,6 +3,9 @@ package com.hk.surl.api.core;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.surl.domain.entity.AnonymousUser;
+import com.hk.surl.domain.entity.VisitLog;
+
+import java.util.List;
 
 /**
  * @ClassName : IAnonymousUserService
@@ -18,4 +21,11 @@ public interface IAnonymousUserService extends IService<AnonymousUser> {
 
     // 匿名用户登录
     AnonymousUser anonymousLogin(String shortUrl, String secretKey);
+
+    // 今日新增访问数据
+    List<VisitLog> getTodayNewAccessVisitData(String shortUrl);
+
+    // 今日新增访问IP
+    List<VisitLog> getTodayNewAccessVisitor(String shortUrl);
+
 }

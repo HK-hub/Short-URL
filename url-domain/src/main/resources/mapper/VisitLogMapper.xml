@@ -17,4 +17,18 @@
                </if>
             </where>
     </select>
+
+    <!-- 获取指定时间内的新增的访问用户:今日新增：在今日内，不在以前的时间内或者以后的时间 -->
+    <select id="getNewVisitDataByDatetime" resultType="com.hk.surl.domain.entity.VisitLog">
+        select * from tb_visit_log
+        where short_url = #{shortUrl}
+          and create_time between #{startTime} and #{endTime} and
+                visitor_ip not in (
+                select visitor_ip from tb_visit_log
+                where tb_visit_log.short_url = #{shortUrl} and (
+                    create_time &lt; #{startTime} or create_time > #{endTime}))
+    </select>
+
+
+
 </mapper>

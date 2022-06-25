@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 
 /**
  * <p>
@@ -21,6 +24,7 @@ public interface AnonymousUserMapper extends BaseMapper<AnonymousUser> {
 
     // 匿名用户登录
     AnonymousUser anonymousUserLogin(@Param("shortUrl") String shortUrl, @Param("secretKey") String secretKey);
+
 
 
 }

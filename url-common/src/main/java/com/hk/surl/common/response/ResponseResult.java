@@ -8,6 +8,7 @@ import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * 数据响应对象
@@ -37,13 +38,20 @@ public class ResponseResult<T extends Object> {
     private Integer code;
     //返回信息
     private String message;
-    //返回数据
+    //返回数据,分页数据
     private T data;
+
+    // 是否分页查询
+    private Boolean pageable = false;
+    // 分页参数
+    private PageResult pageResult;
+
     // 响应时间
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateTime = LocalDateTime.now() ;
     // 响应ID： 后期进行链路追踪
-    private String traceId;
+    private String traceId = UUID.randomUUID().toString().replaceAll("-","").substring(0,10);
+
 
     // 静态返回对象
     public static ResponseResult SuccessResponse = new ResponseResult(ResultCode.SUCCESS,"ok");

@@ -31,6 +31,10 @@ public interface VisitLogMapper extends BaseMapper<VisitLog> {
                                                     @Param(value = "startTime")LocalDateTime startTime ,
                                                     @Param(value = "endTime")LocalDateTime endTime);
 
-    //
+    // 指定时间内新增的访问用户
+    // 查询指定时间内的访问记录，投影取出ip 地址, 判断不属于指定时间以前的ip 地址
+    List<VisitLog> getNewVisitDataByDatetime(@Param("shortUrl") String shortUrl,
+                                                 @Param("startTime")LocalDateTime startTime, @Param("endTime")LocalDateTime endTime);
+
 
 }
