@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -23,7 +24,7 @@ public interface VisitLogMapper extends BaseMapper<VisitLog> {
 
 
     // 查询指定短链接的访问数据
-    @Select("select * from tb_visit_log where short_url = #{shortUrl} ")
+    @Select("select * from tb_visit_log where short_url = #{shortUrl} order by create_time desc")
     List<VisitLog> selectListByShortUrl(@Param(value = "shortUrl") String shortUrl);
 
     // 查询指定日期内的访问数据
@@ -36,5 +37,6 @@ public interface VisitLogMapper extends BaseMapper<VisitLog> {
     List<VisitLog> getNewVisitDataByDatetime(@Param("shortUrl") String shortUrl,
                                                  @Param("startTime")LocalDateTime startTime, @Param("endTime")LocalDateTime endTime);
 
-
+    // 查询指定短链接创建以来的每天的访问数据
+    List<Map<String, Object>> selectListEveryDayAccessData(String shortUrl);
 }

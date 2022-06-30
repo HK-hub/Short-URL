@@ -20,6 +20,8 @@ public enum ResultCode {
     UNAUTHORIZED(false,401,"unauthorized"),
     //未认证
     UNAUTHENTICATED(false, 102, "unauthenticated") ,
+    // 用户登录已过期
+    ACCESS_TOKEN_EXPIRED(false,106,"the access token is expired, please try login aging"),
     USER_HAS_EXITS(false,104,"user has exits"),
     USER_NOT_FOUND(false , 103, "user not found"),
     USER_LOGIN_ERROR(false, 105,"username or password or shortUrl or secretKey error"),

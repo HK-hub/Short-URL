@@ -41,7 +41,7 @@ public class QRCodeController {
      * @Modified :
      * @Version : 1.0.0
      */
-    @GetMapping("/get")
+    @GetMapping("/surl")
     public ResponseResult<ShortUrlVo> getQrCode(@RequestParam(name = "content") String content , HttpServletResponse response){
 
         //log.info("content: {}",content);

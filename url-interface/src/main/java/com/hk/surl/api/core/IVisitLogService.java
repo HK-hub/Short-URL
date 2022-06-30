@@ -4,9 +4,9 @@ import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.surl.domain.entity.VisitLog;
 
-import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName : IVisitLogService
@@ -31,5 +31,9 @@ public interface IVisitLogService extends IService<VisitLog> {
     // 导出指点短链接访问数据到 excel 文件种
     ExcelWriter exportAccessDataToExcel(String shortUrl);
 
+    // 获取短链接所有的独立访问IP
+    Map<String,Integer> getAloneTotalVisitorIp(String shortUrl);
 
+    // 获取每天的访问数据
+    List<Map<String, Object>> getEveryDayAccessData(String shortUrl);
 }

@@ -19,7 +19,7 @@
     </select>
 
     <!-- 获取指定时间内的新增的访问用户:今日新增：在今日内，不在以前的时间内或者以后的时间 -->
-    <select id="getNewVisitorsByDatetime" resultType="com.hk.surl.domain.entity.VisitLog">
+    <select id="getNewVisitDataByDatetime" resultType="com.hk.surl.domain.entity.VisitLog">
         select * from tb_visit_log
         where short_url = #{shortUrl}
           and create_time between #{startTime} and #{endTime} and
@@ -29,6 +29,28 @@
                     create_time &lt; #{startTime} or create_time > #{endTime}))
     </select>
 
+
+
+    <!-- 查询指定短链接创建以来的每天的访问数据 -->
+    <!-- 定义结果集 -->
+    <resultMap id="everyDayAccessDataMap" type="java.util.HashMap">
+        <result column="access_time" property="accessDate" />
+        <result column="access_count" property="accessCount" />
+        <result column="alone_user" property="aloneUser" />
+    </resultMap>
+    <!-- 查询封装为指定结果集 -->
+    <select id="selectListEveryDayAccessData" resultMap="everyDayAccessDataMap">
+
+        select
+            date_format(create_time,'%Y-%m-%d') as 'access_time', count(*) as 'access_count' , count(distinct visitor_ip) as 'alone_user'
+        from
+            tb_visit_log
+        where
+            short_url = #{shortUrl}
+        group by access_time
+        order by access_time;
+
+    </select>
 
 
 </mapper>

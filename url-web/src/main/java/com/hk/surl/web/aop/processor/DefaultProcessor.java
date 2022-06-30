@@ -69,18 +69,21 @@ public class DefaultProcessor extends LogProcessor {
 
             throw throwable;
         }
-        // 执行时间
-        logTrance.setExecuteTime(String.valueOf(this.doGetExecuteTime(beginTime)));
-        // 执行结果
-        logTrance.setResult(result.getClass().getName());
-        // 响应结果
-        logTrance.setCode(((ResponseResult) result).getCode());
 
-        // 入库
-        taskService.writeLogToDatabase(logTrance);
+        // 相应结果不为空
+        if (result != null){
+            // 执行时间
+            logTrance.setExecuteTime(String.valueOf(this.doGetExecuteTime(beginTime)));
+            // 执行结果
+            logTrance.setResult(result.getClass().getName());
+            // 响应结果
+            logTrance.setCode(((ResponseResult) result).getCode());
+
+            // 入库
+            taskService.writeLogToDatabase(logTrance);
+        }
 
         return result ;
-
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.hk.surl.common.response.ResponseResult;
 import com.hk.surl.common.response.ResultCode;
 import com.hk.surl.domain.entity.AnonymousUser;
 import com.hk.surl.domain.entity.VisitLog;
+import com.hk.surl.domain.mapper.VisitLogMapper;
 import com.hk.surl.service.core.AnonymousUserServiceImpl;
 import com.hk.surl.web.aop.SysLog;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,8 @@ public class AnonymousUserController {
 
     @Resource
     private IVisitLogService visitLogService ;
+    @Resource
+    private VisitLogMapper visitLogMapper ;
 
     @Resource
     private IAnonymousUserService anonymousUserService ;
@@ -97,7 +100,8 @@ public class AnonymousUserController {
      */
     @SysLog(businessType = "查询短链接今日访问量", operate = "查询")
     @GetMapping("/today/access/count")
-    public ResponseResult<List<VisitLog>> getShortUrlTodayAccessCount(@RequestParam(name = "shortUrl")String shortUrl){
+    public ResponseResult<List<VisitLog>> getShortUrlTodayAccessCount(@RequestParam(name = "shortUrl")String shortUrl,
+                                                                      @RequestParam(name = "limit" , defaultValue = "-1", required = false)Integer limit){
 
         // 构造开始时间，结束时间为今日
         LocalDateTime startTime = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
@@ -178,40 +182,92 @@ public class AnonymousUserController {
     public ResponseResult<List<VisitLog>> getTotalAccessData(@RequestParam(name = "shortUrl")String shortUrl){
 
         // 构造查询条件
-        LambdaQueryChainWrapper<VisitLog> wrapper = this.visitLogService.lambdaQuery().eq(VisitLog::getShortUrl, shortUrl);
+        //LambdaQueryChainWrapper<VisitLog> wrapper = this.visitLogService.lambdaQuery().eq(VisitLog::getShortUrl, shortUrl);
         // 查询获取数据
-        List<VisitLog> visitLogList = this.visitLogService.list(wrapper);
+        List<VisitLog> visitLogs = visitLogMapper.selectListByShortUrl(shortUrl);
+        //List<VisitLog> visitLogList = this.visitLogService.list(wrapper);
 
         // 响应数据
-        return new ResponseResult<>(ResultCode.SUCCESS, visitLogList);
+        return new ResponseResult<>(ResultCode.SUCCESS, visitLogs);
 
     }
 
 
-    // 查询一共的访问数据中的独立IP用户数量
     /**
      * @methodName : getTotalAccessAloneUser
      * @author : HK意境
      * @date : 2022/6/24 21:37
-     * @description :
+     * @description :查询一共的访问数据中的独立IP用户数量
      * @Todo :
-     * @apiNote 获取所有独立IP用户的访问记录数据
+     * @apiNote 获取所有独立IP用户的访问记录数据: IP->访问次数
      * @params :
          * @param shortUrl 短链接
-     * @return null
+     * @return ResponseResult<Map<String ,Integer>>
      * @throws:
      * @Bug :
      * @Modified :
      * @Version : 1.0.0
      */
     @GetMapping("/total/access/alone")
-    public ResponseResult<List<Map.Entry<String, Integer>>> getTotalAccessAloneUser(@RequestParam(name = "shortUrl")String shortUrl){
+    public ResponseResult<Map<String ,Integer>> getTotalAccessAloneUser(@RequestParam(name = "shortUrl")String shortUrl){
 
+        // 获取独立用户IP 以及对应访问次数
+        Map<String, Integer> aloneTotalVisitorIp = this.visitLogService.getAloneTotalVisitorIp(shortUrl);
 
-
-
-        return new ResponseResult<>(ResultCode.SUCCESS);
+        // 响应数据
+        return new ResponseResult<>(ResultCode.SUCCESS, aloneTotalVisitorIp);
     }
+
+
+
+
+    // 获取每天的短链接访问数据
+    /**
+     * @methodName : getTotalAccessDataByDays
+     * @author : HK意境
+     * @date : 2022/6/25 17:07
+     * @description :获取每天的短链接访问数据
+     * @Todo :
+     * @apiNote 获取每天的短链接访问数据：<日期,访问次数>
+     * @params :
+         * @param shortUrl
+     * @return ResponseResult<List<Map<String, Object>>>
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @GetMapping("/total/access/days")
+    public ResponseResult<List<Map<String, Object>>> getTotalAccessDataByDays(@RequestParam(name = "shortUrl")String shortUrl){
+
+        // 查询每天的访问数量和独立访问人数
+        /**
+         *      查询结果数据
+         *      [
+         *         {
+         *             "accessCount": 2,
+         *             "accessDate": "2022-06-15",
+         *             "aloneUser": 1
+         *         },
+         *         {
+         *             "accessCount": 5,
+         *             "accessDate": "2022-06-24",
+         *             "aloneUser": 3
+         *         }
+         *     ],
+         *
+         *
+         *
+         *
+         */
+        List<Map<String, Object>> everyDayAccessData =  this.visitLogService.getEveryDayAccessData(shortUrl);
+
+        // 响应数据
+        return new ResponseResult<>(ResultCode.SUCCESS , everyDayAccessData);
+    }
+
+
+
 
 
 
