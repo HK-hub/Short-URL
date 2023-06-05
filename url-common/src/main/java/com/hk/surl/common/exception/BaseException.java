@@ -19,16 +19,17 @@ import java.time.LocalDateTime;
 public class BaseException extends RuntimeException{
 
     // 是否成功
-    protected Boolean isSuccess = false;
+    protected Boolean success = false;
     // 错误代码
-    protected Integer code ;
+    protected Integer code;
     // 错误信息
-    protected String msg ;
+    protected String message;
+
     // 错误时间
     protected LocalDateTime time = LocalDateTime.now();
 
     // 错误链路
-    protected String traceId ;
+    protected String traceId;
 
 
     // 基本异常类型错误码
@@ -41,44 +42,44 @@ public class BaseException extends RuntimeException{
     public BaseException() {
         super(BASE_EXCEPTION_MESSAGE);
         this.code = BASE_EXCEPTION_CODE;
-        this.msg = BASE_EXCEPTION_MESSAGE;
+        this.message = BASE_EXCEPTION_MESSAGE;
    }
 
     public BaseException(String message) {
         super(message);
         this.code = BASE_EXCEPTION_CODE;
-        this.msg = message;
+        this.message = message;
     }
 
     public BaseException(ResultCode resultCode) {
         super(resultCode.message());
         this.code = resultCode.code();
-        this.msg = resultCode.message();
-        this.isSuccess = resultCode.success();
+        this.message = resultCode.message();
+        this.success = resultCode.success();
     }
 
     public BaseException(Throwable cause) {
         super(cause);
         this.code = BASE_EXCEPTION_CODE;
-        this.msg = BASE_EXCEPTION_MESSAGE;
+        this.message = BASE_EXCEPTION_MESSAGE;
     }
 
     public BaseException(String message, Throwable cause) {
         super(message, cause);
         this.code = BASE_EXCEPTION_CODE;
-        this.msg = message;
+        this.message = message;
     }
 
     public BaseException(Integer code, String message) {
         super(message);
         this.code = code;
-        this.msg = message;
+        this.message = message;
     }
 
     public BaseException(Integer code, String message, Throwable cause) {
         super(message, cause);
         this.code = code;
-        this.msg = message;
+        this.message = message;
     }
 
 

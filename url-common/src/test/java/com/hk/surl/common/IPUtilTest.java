@@ -41,7 +41,7 @@ public class IPUtilTest {
     @Test
     public void getCityInfoTest() throws IOException, InvocationTargetException, IllegalAccessException {
 
-        InputStream stream = new FileInputStream("src/main/resources/GeoLite2-City.mmdb");
+        InputStream stream = new FileInputStream("location/GeoLite2-City.mmdb");
 
         if (stream != null) {
             System.out.println("stream is not nll");

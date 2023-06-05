@@ -15,7 +15,31 @@ api[0].list.push({
 api[0].list[0].list.push({
     order: '1',
     deprecated: 'false',
-    url: 'http://127.0.0.1:80/access/{shortUrl}',
+    url: 'http://127.0.0.1:80/{surl}',
+    desc: '',
+});
+api[0].list[0].list.push({
+    order: '2',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/access/get/all',
+    desc: '',
+});
+api[0].list[0].list.push({
+    order: '3',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/access/get/surl',
+    desc: '',
+});
+api[0].list[0].list.push({
+    order: '4',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/access/data/surl',
+    desc: '',
+});
+api[0].list[0].list.push({
+    order: '5',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/access/get/datetime',
     desc: '',
 });
 api[0].list.push({
@@ -25,6 +49,48 @@ api[0].list.push({
     desc: '',
     list: []
 })
+api[0].list[1].list.push({
+    order: '1',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/anonymous/login',
+    desc: '',
+});
+api[0].list[1].list.push({
+    order: '2',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/anonymous/today/access/count',
+    desc: '',
+});
+api[0].list[1].list.push({
+    order: '3',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/anonymous/today/access/new/visit',
+    desc: '',
+});
+api[0].list[1].list.push({
+    order: '4',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/anonymous/today/access/new/alone',
+    desc: '',
+});
+api[0].list[1].list.push({
+    order: '5',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/anonymous/total/access/data',
+    desc: '',
+});
+api[0].list[1].list.push({
+    order: '6',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/anonymous/total/access/alone',
+    desc: '',
+});
+api[0].list[1].list.push({
+    order: '7',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/anonymous/total/access/days',
+    desc: '',
+});
 api[0].list.push({
     alias: 'AppUserController',
     order: '3',
@@ -82,7 +148,7 @@ api[0].list[3].list.push({
     desc: '',
 });
 api[0].list.push({
-    alias: 'ShortUrlController',
+    alias: 'QRCodeController',
     order: '5',
     link: '',
     desc: '',
@@ -91,73 +157,128 @@ api[0].list.push({
 api[0].list[4].list.push({
     order: '1',
     deprecated: 'false',
+    url: 'http://127.0.0.1:80/surl',
+    desc: '',
+});
+api[0].list.push({
+    alias: 'ShortUrlController',
+    order: '6',
+    link: '',
+    desc: '',
+    list: []
+})
+api[0].list[5].list.push({
+    order: '1',
+    deprecated: 'false',
     url: 'http://127.0.0.1:80/short-url/new',
     desc: '',
 });
-api[0].list[4].list.push({
+api[0].list[5].list.push({
     order: '2',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/short-url/simple/new',
+    desc: '',
+});
+api[0].list[5].list.push({
+    order: '3',
     deprecated: 'false',
     url: 'http://127.0.0.1:80/short-url/get/surl',
     desc: '',
 });
-api[0].list[4].list.push({
-    order: '3',
+api[0].list[5].list.push({
+    order: '4',
     deprecated: 'false',
     url: 'http://127.0.0.1:80/short-url/get/all',
     desc: '',
 });
-api[0].list[4].list.push({
-    order: '4',
+api[0].list[5].list.push({
+    order: '5',
     deprecated: 'false',
     url: 'http://127.0.0.1:80/short-url/get/{id}',
     desc: '',
 });
-api[0].list[4].list.push({
-    order: '5',
+api[0].list[5].list.push({
+    order: '6',
     deprecated: 'false',
     url: 'http://127.0.0.1:80/short-url/save',
     desc: '',
 });
-api[0].list[4].list.push({
-    order: '6',
+api[0].list[5].list.push({
+    order: '7',
     deprecated: 'false',
     url: 'http://127.0.0.1:80/short-url/update',
     desc: '',
 });
-api[0].list[4].list.push({
-    order: '7',
+api[0].list[5].list.push({
+    order: '8',
     deprecated: 'false',
     url: 'http://127.0.0.1:80/short-url/delete',
     desc: '',
 });
-api[0].list[4].list.push({
-    order: '8',
+api[0].list[5].list.push({
+    order: '9',
     deprecated: 'false',
     url: 'http://127.0.0.1:80/short-url/delete/{id}',
     desc: '',
 });
 api[0].list.push({
     alias: 'UrlMapController',
-    order: '6',
+    order: '7',
     link: '',
     desc: '',
     list: []
 })
-api[0].list[5].list.push({
+api[0].list[6].list.push({
     order: '1',
     deprecated: 'false',
     url: 'http://127.0.0.1:80/url-map/get/surl',
     desc: '',
 });
-api[0].list[5].list.push({
+api[0].list[6].list.push({
     order: '2',
     deprecated: 'false',
     url: 'http://127.0.0.1:80/url-map/get/sid',
     desc: '',
 });
+api[0].list[6].list.push({
+    order: '3',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/url-map/new/batch',
+    desc: '',
+});
+api[0].list[6].list.push({
+    order: '4',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/url-map/simple/new/batch',
+    desc: '',
+});
+api[0].list[6].list.push({
+    order: '5',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/url-map/download/template',
+    desc: '',
+});
+api[0].list[6].list.push({
+    order: '6',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/url-map/get/lurl',
+    desc: '',
+});
+api[0].list[6].list.push({
+    order: '7',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/url-map/get/lid',
+    desc: '',
+});
+api[0].list[6].list.push({
+    order: '8',
+    deprecated: 'false',
+    url: 'http://127.0.0.1:80/url-map/get/all',
+    desc: '',
+});
 api[0].list.push({
     alias: 'VisitLogController',
-    order: '7',
+    order: '8',
     link: '',
     desc: '',
     list: []

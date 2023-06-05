@@ -23,7 +23,7 @@ import java.io.IOException;
  * @Version : 1.0
  */
 @Slf4j
-@RestController("/qr")
+@RestController(value = "/qr")
 public class QRCodeController {
 
     /**

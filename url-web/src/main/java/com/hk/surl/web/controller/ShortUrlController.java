@@ -16,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.MalformedURLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -72,6 +75,38 @@ public class ShortUrlController {
         return ResponseResult.SUCCESS().setData(shortUrlVo);
     }
 
+
+    /**
+     * @methodName newShortUrlSimpleByLongUrl
+     * @author : HK意境
+     * @date : 2022/6/30 10:03
+     * @description :
+     * @Todo :
+     * @apiNote 简单简化的生产短链接
+     * @params :
+         * @param longUrl 长链接
+         * @param expirationTime 过期时间
+     * @return ResponseResult<ShortUrlVo>
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @PostMapping("/simple/new")
+    public ResponseResult<ShortUrlVo> newShortUrlSimpleByLongUrl(@RequestParam(name = "longUrl", required = true) String longUrl,
+                                                                 @RequestParam(name = "expirationTime")String expirationTime) throws ExecutionException, InterruptedException {
+        // 构造过期时间
+        LocalDate localDate = LocalDate.parse(expirationTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDateTime expirationDate = LocalDateTime.of(localDate, LocalTime.MIN);
+
+        // 如果数据库不存在长链接字符串对应的短链接那就生成，如果存在那就直接返回存在的数据对象
+        Map.Entry<ShortUrl, AnonymousUser> entry = shortUrlService.newShortUrl(longUrl, expirationDate);
+
+        // 封装ShortUrlVo 对象
+        ShortUrlVo shortUrlVo = new ShortUrlVo(entry.getKey(), entry.getValue());
+
+        return ResponseResult.SUCCESS().setData(shortUrlVo);
+    }
 
 
     /**

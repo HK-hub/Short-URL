@@ -1,6 +1,5 @@
 package com.hk.surl.common.util;
 
-import cn.hutool.core.io.resource.ClassPathResource;
 import com.hk.surl.common.entity.Location;
 import com.hk.surl.common.entity.VisitorAgent;
 import com.maxmind.geoip2.DatabaseReader;
@@ -10,16 +9,14 @@ import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
 import org.lionsoul.ip2region.Util;
+import org.springframework.core.io.ClassPathResource;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
-import java.net.URL;
 import java.net.UnknownHostException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @ClassName : IPUtil
@@ -47,20 +44,19 @@ public class IPUtil {
     static {
 
         // geoLite2
-        try {
-            database = new FileInputStream("url-common/src/main/resources/GeoLite2-City.mmdb");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        //database = new FileInputStream("url-common/src/main/resources/GeoLite2-City.mmdb");
+        database = IPUtil.class.getClassLoader().getResourceAsStream("location/GeoLite2-City.mmdb");
         try {
             reader = new DatabaseReader.Builder(database).build();
         } catch (IOException e) {
 
         }
 
-        File file =  new File("url-common/src/main/resources/ip2region.db");
+        //File file =  new File("F:\\JavaCode\\Short-URL\\url-common\\src\\main\\resources\\location\\ip2region.db");
+        File file =  new File("url-common/src/main/resources/location/ip2region.db");
+
         if (!file.exists()) {
-            System.out.println("Error: Invalid ip2region.db file, filePath：" + file.getPath());
+            System.out.println("Error: Invalid ip2region.db file, filePath：" + file.getAbsolutePath());
         }
 
         //查询算法
@@ -69,7 +65,7 @@ public class IPUtil {
         //DbSearcher.MEMORY_ALGORITYM //Memory
         try{
             DbConfig config = new DbConfig();
-            searcher = new DbSearcher(config, file.getPath());
+            searcher = new DbSearcher(config, file.getAbsolutePath());
             switch ( algorithm ){
                 case DbSearcher.BTREE_ALGORITHM:
                     method = searcher.getClass().getMethod("btreeSearch", String.class);
@@ -90,7 +86,6 @@ public class IPUtil {
         }
 
     }
-
 
     // 获取 ip 地址
     public static String getIpAddress(HttpServletRequest request) {

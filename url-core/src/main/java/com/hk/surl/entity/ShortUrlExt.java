@@ -49,7 +49,7 @@ public class ShortUrlExt {
     @ApiModelProperty(value = "过期时间：表示短链接从创建经过到使用到消亡的时间，是指失效的时间： expiration_time=create_time+有效时间")
     private LocalDateTime expirationTime;
 
-    @ApiModelProperty(value = "跟新时间 ")
+    @ApiModelProperty(value = "跟新时间")
     private LocalDateTime updateTime;
 
     @ApiModelProperty(value = "可见性:1可见，0不可见")

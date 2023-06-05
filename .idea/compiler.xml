@@ -10,23 +10,11 @@
         <module name="url-system" />
         <module name="url-service" />
         <module name="url-domain" />
-        <module name="url-core" />
         <module name="url-common" />
+        <module name="url-core" />
         <module name="url-interface" />
         <module name="url-web" />
       </profile>
     </annotationProcessing>
-  </component>
-  <component name="JavacSettings">
-    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Short-URL" options="" />
-      <module name="url-common" options="" />
-      <module name="url-core" options="" />
-      <module name="url-domain" options="" />
-      <module name="url-interface" options="" />
-      <module name="url-service" options="" />
-      <module name="url-system" options="" />
-      <module name="url-web" options="" />
-    </option>
   </component>
 </project>

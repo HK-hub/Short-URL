@@ -2,6 +2,7 @@ package com.hk.surl.domain.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hk.surl.domain.entity.AnonymousUser;
+import com.hk.surl.domain.entity.ShortUrl;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -26,5 +27,7 @@ public interface AnonymousUserMapper extends BaseMapper<AnonymousUser> {
     AnonymousUser anonymousUserLogin(@Param("shortUrl") String shortUrl, @Param("secretKey") String secretKey);
 
 
-
+    // 根据短链接查询
+    @Select("select * from tb_anonymous_user where short_url = #{shortUrl} and deleted = false")
+    AnonymousUser selectOneByShortUrl(ShortUrl shortUrl);
 }

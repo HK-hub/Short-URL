@@ -51,9 +51,5 @@ public class GeneratorBuilderTest {
         // 生产短链接
         ShortUrl shortUrl = generator.generate();
 
-        ShortUrl shortUrl1 = generator.longUrl("greg").generate();
-
-
-        System.out.println(shortUrl);
     }
 }

@@ -43,11 +43,11 @@ import java.util.Arrays;
 public class AccessProcessor extends LogProcessor{
 
     @Resource
-    private AsyncTaskService taskService ;
+    private AsyncTaskService taskService;
     @Resource
-    private VisitLogMapper visitLogMapper ;
+    private VisitLogMapper visitLogMapper;
     @Resource
-    private LocationUtil locationUtil ;
+    private LocationUtil locationUtil;
 
 
     @Override
@@ -169,6 +169,8 @@ public class AccessProcessor extends LogProcessor{
             return args[idx];
         } // otherwise your parameter does not exist by given name
         return null;
+
+
 
     }
 

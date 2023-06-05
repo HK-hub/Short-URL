@@ -93,8 +93,9 @@ public class ShortUrlServiceImpl extends ServiceImpl<ShortUrlMapper, ShortUrl> i
         }else{
             // 以及存在了长链接 对象，并且是可见的，返回对应的短链接对象
             shortUrl = shortUrlMapper.selectShortUrlByLongUrl(longUrl);
-            anonymousUser = anonymousUserMapper.selectOne(new LambdaQueryChainWrapper<>(anonymousUserMapper)
-                    .eq(AnonymousUser::getShortUrl,shortUrl.getShortUrl()));
+            /*anonymousUser = anonymousUserMapper.selectOne(new LambdaQueryChainWrapper<>(anonymousUserMapper)
+                    .eq(AnonymousUser::getShortUrl,shortUrl.getShortUrl()));*/
+            anonymousUser = anonymousUserMapper.selectOneByShortUrl(shortUrl);
         }
 
         return Map.entry(shortUrl, anonymousUser) ;

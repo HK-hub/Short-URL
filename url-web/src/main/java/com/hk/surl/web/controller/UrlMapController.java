@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -130,6 +131,39 @@ public class UrlMapController {
 
         return new ResponseResult<>(ResultCode.SUCCESS, shortUrlList) ;
     }
+
+
+    /**
+     * @methodName : createBatchUrlMapSimple
+     * @author : HK意境
+     * @date : 2022/6/30 10:15
+     * @description :
+     * @Todo :
+     * @apiNote :
+     * @params :
+         * @param file 短链接批量文件
+         * @param expirationTime 过期时间
+     * @return ResponseResult<List<ShortUrl>>
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0.0
+     */
+    @PostMapping("/simple/new/batch")
+    public ResponseResult<List<ShortUrl>> createBatchUrlMapSimple(MultipartFile file,@RequestParam(name = "expirationTime")String expirationTime) throws IOException, ExecutionException, InterruptedException {
+
+        // 获取输入流
+        List<String> longUrls = excelResolveService.resolveImportExcel(file.getInputStream());
+
+        // 构造过期时间
+        LocalDateTime expirationDate = LocalDateTime.parse(expirationTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        // 批量生产
+        List<ShortUrl> shortUrlList = this.shortUrlService.batchNewShortUrl(longUrls, expirationDate);
+
+        return new ResponseResult<>(ResultCode.SUCCESS, shortUrlList) ;
+    }
+
 
 
     /**
