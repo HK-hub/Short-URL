@@ -19,6 +19,6 @@ public interface IShortUrlGenerator<T extends ShortURI> {
      * 生成短链接实体抽象方法
      * @return {@link ShortURI}
      */
-    public T generate();
+    public T generate(T shortURI);
 
 }

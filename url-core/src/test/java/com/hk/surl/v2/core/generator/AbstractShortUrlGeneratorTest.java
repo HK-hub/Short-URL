@@ -25,7 +25,7 @@ class AbstractShortUrlGeneratorTest {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         for (int i = 0; i < 1000000; i++) {
-            generator.generate();
+            generator.generate(null);
         }
         stopWatch.stop();
 

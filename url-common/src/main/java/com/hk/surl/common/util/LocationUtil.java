@@ -2,7 +2,6 @@ package com.hk.surl.common.util;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;

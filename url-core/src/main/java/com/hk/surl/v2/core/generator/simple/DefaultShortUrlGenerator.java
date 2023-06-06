@@ -57,7 +57,7 @@ public class DefaultShortUrlGenerator extends AbstractShortUrlGenerator<ShortURL
     }
 
     @Override
-    public ShortURLExt doGenerate() {
+    public ShortURLExt doGenerate(ShortURLExt shortURLExt) {
 
         // 循环取余
         long number = this.adder.incrementAndGet();

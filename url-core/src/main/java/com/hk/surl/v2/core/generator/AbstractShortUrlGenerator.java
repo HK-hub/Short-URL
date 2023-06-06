@@ -39,13 +39,13 @@ public abstract class AbstractShortUrlGenerator<T extends ShortURI> implements I
      * @return T {@link ShortURI}
      */
     @Override
-    public T generate() {
+    public T generate(T shortUrl) {
 
         // 前置处理
         this.preProcess();
 
         // 生成方法
-        this.doGenerate();
+        this.doGenerate(shortUrl);
 
         // 后置处理
         this.postProcess();
@@ -58,7 +58,7 @@ public abstract class AbstractShortUrlGenerator<T extends ShortURI> implements I
      * 生成短链接
      * @return
      */
-    public abstract T doGenerate();
+    public abstract T doGenerate(T shortUrl);
 
 
     /**

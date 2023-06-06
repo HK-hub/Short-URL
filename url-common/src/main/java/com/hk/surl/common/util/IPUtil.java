@@ -9,8 +9,6 @@ import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
 import org.lionsoul.ip2region.Util;
-import org.springframework.core.io.ClassPathResource;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
