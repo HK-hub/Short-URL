@@ -10,9 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author : HK意境
- * @ClassName : MD5ShortUrlGenerator
- * @date : 2023/6/5 19:03
- * @description : Hash 算法，采用 MD5 进行hash，生成某个长度的 32 位的字符串
+ * @ClassName : MurmurHashShortUrlGenerator
+ * @date : 2023/6/6 20:42
+ * @description :
  * @Todo :
  * @Bug :
  * @Modified :
@@ -21,10 +21,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Data
 @Accessors(chain = true)
-public class MD5ShortUrlGenerator extends AbstractShortUrlGenerator<ShortURLExt> {
+public class MurmurHashShortUrlGenerator extends AbstractShortUrlGenerator<ShortURLExt> {
 
     /**
-     * 采用 MD5 算法
+     * 采用 murmurHash 算法
      */
     protected HashModeConfig hashModeConfig = new HashModeConfig()
             .setType(HashType.MD5);
@@ -51,13 +51,7 @@ public class MD5ShortUrlGenerator extends AbstractShortUrlGenerator<ShortURLExt>
         // hash 生成值
         String hash = hashMode.hash(longURI);
 
-
-        // 长度控制: 32 * 4 = 128 bit, 32 bit / 4 = 8 字符
-        boolean autoLengthControl = this.hashModeConfig.getAutoLengthControl() && hash.length() > longURI.length();
-        if (autoLengthControl) {
-            // 生成的长度比原始链接长度还长，需要进行控制：
-            this.lengthControl(hash);
-        }
+        // 长度控制: 32 bit / 4 = 8 字符， 所以 murmurHash 没有必要进行二次长度控制
 
         // 设置短链接hash值
         this.shortUrl.setShortCode(hash).setShortURI(hash);
@@ -97,4 +91,6 @@ public class MD5ShortUrlGenerator extends AbstractShortUrlGenerator<ShortURLExt>
 
         return null;
     }
+
+
 }

@@ -1,7 +1,9 @@
 package com.hk.surl.v2.core.generator;
 
+import com.google.common.hash.BloomFilter;
 import com.hk.surl.v2.core.config.CommonConfig;
 import com.hk.surl.v2.entity.ShortURI;
+import com.hk.surl.v2.filter.ShortUrlBloomFilter;
 
 /**
  * @author : HK意境
@@ -25,6 +27,11 @@ public abstract class AbstractShortUrlGenerator<T extends ShortURI> implements I
      * 通用配置
      */
     protected CommonConfig commonConfig;
+
+    /**
+     * 布隆过滤器
+     */
+    protected ShortUrlBloomFilter bloomFilter;
 
 
     /**
