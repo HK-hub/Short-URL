@@ -33,4 +33,7 @@ public class RandomConfig {
      */
     protected boolean threadSafe = true;
 
+
+    protected boolean shuffle = false;
+
 }

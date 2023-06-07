@@ -26,8 +26,7 @@ public class MurmurHashShortUrlGenerator extends AbstractShortUrlGenerator<Short
     /**
      * 采用 murmurHash 算法
      */
-    protected HashModeConfig hashModeConfig = new HashModeConfig()
-            .setType(HashType.MD5);
+    protected HashModeConfig hashModeConfig = new HashModeConfig();
 
     @Override
     public ShortURLExt preProcess() {
@@ -88,8 +87,7 @@ public class MurmurHashShortUrlGenerator extends AbstractShortUrlGenerator<Short
 
         // 在这里进行 bloom filter 布隆过滤器的校验
 
-
-        return null;
+        return this.shortUrl;
     }
 
 
