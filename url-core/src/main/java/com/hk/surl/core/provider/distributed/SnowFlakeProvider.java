@@ -96,10 +96,10 @@ public class SnowFlakeProvider implements GenerateProvider {
             length = SnowFlakeProvider.NORMAL_LENGTH;
         }else if (length <=SnowFlakeProvider.MID_LENGTH){
             // 中间长度
-            length = SnowFlakeProvider.MID_LENGTH ;
+            length = SnowFlakeProvider.MID_LENGTH;
         }else{
             // 最大长度
-            length = SnowFlakeProvider.MAX_LENGTH ;
+            length = SnowFlakeProvider.MAX_LENGTH;
         }
 
         // 获取待加工的 短链接url
@@ -110,12 +110,10 @@ public class SnowFlakeProvider implements GenerateProvider {
         url = urlSb.reverse().toString();
 
         // 去除高位: 需要去除的位数=数值总长度-保留位数
-        url = url.substring(0,length);
+        url = url.substring(0, length);
 
         return url ;
     }
-
-
 
 
     public static void main(String[] args) {
